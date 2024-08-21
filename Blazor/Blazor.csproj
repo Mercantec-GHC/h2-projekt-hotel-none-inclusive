@@ -9,6 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Components\Pages\HomePage.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Components\Pages\HomePage.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
   </ItemGroup>
 
