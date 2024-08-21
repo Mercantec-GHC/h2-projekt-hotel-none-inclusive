@@ -11,9 +11,9 @@ namespace HotelBooking.Data
         public DbSet<Product> Products { get; set; } = null!;
         public DbSet<OrderDetail> OrderDetails { get; set; } = null!;
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public DBContext(DbContextOptions<DBContext> options)
+            : base(options)
         {
-            optionsBuilder.UseNpgsql("Host=ep-bitter-salad-a2i17tas.eu-central-1.aws.neon.tech;Port=5432;Database=H2HotelBooking;Username=HotelNonInclusive;Password=N3rtzsXQjDF9");
         }
     }
 }
