@@ -16,6 +16,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\API\API.csproj" />
     <ProjectReference Include="..\..\Blazor\Blazor.csproj" />
+    <ProjectReference Include="..\..\DomainModels\DomainModels.csproj" />
+    <ProjectReference Include="..\Aspire.ServiceDefaults\Aspire.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>
