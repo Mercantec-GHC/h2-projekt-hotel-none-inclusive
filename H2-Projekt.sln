@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainModels", "DomainModel
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor", "Blazor\Blazor.csproj", "{C20D87D0-55C6-4F80-97E1-F9F09E5EED54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H2", "Aspire\Aspire.AppHost\H2.csproj", "{B8F22517-6F67-4CCA-8303-A1EC7D7F1F01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "H2", "Aspire\Aspire.AppHost\H2.csproj", "{B8F22517-6F67-4CCA-8303-A1EC7D7F1F01}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aspire.ServiceDefaults", "Aspire\Aspire.ServiceDefaults\Aspire.ServiceDefaults.csproj", "{290DDAFF-B780-4943-9362-9B4CEEA94ED7}"
 EndProject
