@@ -5,13 +5,13 @@ namespace API.Models
 {
     public class SignUp : User
     {
-        private readonly DBContext _context;
+        private readonly DBContext _dbContext;
 
-        // Constructor to inject the DbContext
-        public SignUp(DBContext context)
+        public SignUp(DBContext dbContext)
         {
-            _context = context;
+            _dbContext = dbContext;
         }
+
 
         // Method to register a user with dynamic parameters
         public void SignUpRegistreUser(string firstName, string lastName, string email, string address, string city, string country, string zip)
