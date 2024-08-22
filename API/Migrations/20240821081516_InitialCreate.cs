@@ -33,20 +33,20 @@ namespace API.Migrations
                     table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Products",  // Added definition for the "Products" table.
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.Id);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "Products", 
+            //    columns: table => new
+            //    {
+            //        Id = table.Column<int>(type: "integer", nullable: false)
+            //            .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+            //        Name = table.Column<string>(type: "text", nullable: false),
+            //        Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+            //        Description = table.Column<string>(type: "text", nullable: true)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_Products", x => x.Id);
+            //    });
 
             migrationBuilder.CreateTable(
                 name: "Orders",
@@ -56,14 +56,14 @@ namespace API.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     OrderPlace = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     OrderFulfilled = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    CustomerId = table.Column<int>(type: "integer", nullable: false)
+                    UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Users_CustomerId",
-                        column: x => x.CustomerId,
+                        name: "FK_Orders_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -88,12 +88,12 @@ namespace API.Migrations
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderDetails_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    //table.ForeignKey(
+                    //    name: "FK_OrderDetails_Products_ProductId",
+                    //    column: x => x.ProductId,
+                    //    principalTable: "Products",
+                    //    principalColumn: "Id",
+                    //    onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -101,15 +101,15 @@ namespace API.Migrations
                 table: "OrderDetails",
                 column: "OrderId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_ProductId",
-                table: "OrderDetails",
-                column: "ProductId");
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_OrderDetails_ProductId",
+            //    table: "OrderDetails",
+            //    column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomerId",
+                name: "IX_Orders_UserId",
                 table: "Orders",
-                column: "CustomerId");
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -121,8 +121,8 @@ namespace API.Migrations
             migrationBuilder.DropTable(
                 name: "Orders");
 
-            migrationBuilder.DropTable(
-                name: "Products");
+            //migrationBuilder.DropTable(
+            //    name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Users");
