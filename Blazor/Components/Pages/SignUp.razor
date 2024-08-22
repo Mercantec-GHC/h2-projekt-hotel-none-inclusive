@@ -1,4 +1,6 @@
-﻿@page "/SignUp"
+﻿@using API.Models;
+
+@page "/SignUp"
 
 <PageTitle>SignUp</PageTitle>
 
@@ -54,10 +56,14 @@
 </div>
 
 @code {
+
+
     private UserModel userModel = new UserModel();
+
 
     private void Submit()
     {
+        API.Models.SignUp.SignUpRegistreUser(userModel.Email, userModel.Password, userModel.Address, userModel.Address, userModel.City, userModel.Country, userModel.Zip);
         // Her kan du bruge userModel for at få adgang til de indtastede oplysninger
         Console.WriteLine($"Email: {userModel.Email}");
         Console.WriteLine($"Password: {userModel.Password}");
