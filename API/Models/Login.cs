@@ -2,7 +2,7 @@
 
 namespace API.Models
 {
-    public class Login : Customer
+    public class Login : User
     {
         public required string Password { get; set; }
     }
