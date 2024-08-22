@@ -14,13 +14,11 @@ namespace API.Models
 
 
         // Method to register a user with dynamic parameters
-        public void SignUpRegistreUser(string firstName, string lastName, string email, string address, string city, string country, string zip)
+        public void SignUpRegistreUser(string email, string address, string city, string country, string zip)
         {
             try
             {
                 // Set user properties
-                this.FirstName = firstName;
-                this.LastName = lastName;
                 this.Email = email;
                 this.Address = address;
                 this.City = city;
