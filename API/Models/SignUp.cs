@@ -27,10 +27,10 @@ namespace API.Models
 
 
                 // Adding new user - This to use DbSet
-                _context.Users.Add(this);
+                _dbContext.Users.Add(this);
 
                 // Save changes to database
-                _context.SaveChanges();
+                _dbContext.SaveChanges();
 
                 Console.WriteLine("User registered successfully");
             }

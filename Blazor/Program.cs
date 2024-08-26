@@ -1,4 +1,6 @@
 using Blazor.Components;
+using HotelBooking.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,7 @@ builder.Services.AddRazorComponents()
 
 var app = builder.Build();
 
+//builder.Services.AddControllers();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

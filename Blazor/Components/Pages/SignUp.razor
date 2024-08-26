@@ -59,11 +59,11 @@
 
 
     private UserModel userModel = new UserModel();
-    public API.Models.SignUp signUp = new API.Models.SignUp();
+    //public API.Models.SignUp signUp = new API.Models.SignUp();
 
     private void Submit()
     {
-        signUp.SignUpRegistreUser(userModel.Email, userModel.Password, userModel.Address, userModel.Address, userModel.City, userModel.Country, userModel.Zip);
+        //signUp.SignUpRegistreUser(userModel.Email, userModel.Password, userModel.Address, userModel.Address, userModel.City, userModel.Country, userModel.Zip);
         // Her kan du bruge userModel for at få adgang til de indtastede oplysninger
         Console.WriteLine($"Email: {userModel.Email}");
         Console.WriteLine($"Password: {userModel.Password}");

@@ -35,9 +35,24 @@ namespace API.Controllers
         }
 
         // GET: api/Users/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<User>> GetUser(int id)
+        //{
+        //    var user = await _context.Users.FindAsync(id);
+
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return user;
+        //}
+
+        // PUT: api/Users/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutUser(int id, UserEditDTO userEditDTO)
         {
+            // Find den eksisterende bruger i databasen
             var user = await _context.Users.FindAsync(id);
 
             if (user == null)
@@ -45,27 +60,28 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            return user;
-        }
+            // Opdater kun de felter, der er inkluderet i UserDTO
+            user.FirstName = userEditDTO.FirstName ?? throw new ArgumentNullException(nameof(userEditDTO.FirstName));
+            user.LastName = userEditDTO.LastName ?? throw new ArgumentNullException(nameof(userEditDTO.LastName));
+            user.Email = userEditDTO.Email ?? throw new ArgumentNullException(nameof(userEditDTO.Email));
+            user.Address = userEditDTO.Address ?? throw new ArgumentNullException(nameof(userEditDTO.Address));
+            user.PhoneNumber = userEditDTO.PhoneNumber ?? throw new ArgumentNullException(nameof(userEditDTO.PhoneNumber));
+            user.City = userEditDTO.City ?? throw new ArgumentNullException(nameof(userEditDTO.City));
+            user.Country = userEditDTO.Country ?? throw new ArgumentNullException(nameof(userEditDTO.Country));
+            user.Zip = userEditDTO.Zip ?? throw new ArgumentNullException(nameof(userEditDTO.Zip));
 
-        // PUT: api/Users/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
-        {
-            if (id != user.Id)
-            {
-                return BadRequest();
-            }
 
+            // Marker den opdaterede bruger som ændret
             _context.Entry(user).State = EntityState.Modified;
 
+            // Forsøg at gemme ændringerne
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!_context.Users.Any(u => u.Id == id))
                 {
                     return NotFound();
                 }
@@ -78,10 +94,23 @@ namespace API.Controllers
             return NoContent();
         }
 
+
         // POST: api/Users
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<User>> PostUser(UserCreateDTO userCreateDTO)
         {
+            User user = new User()
+            {
+                FirstName = userCreateDTO.FirstName,
+                LastName = userCreateDTO.LastName,
+                Email = userCreateDTO.Email,
+                Address = userCreateDTO.Address,
+                PhoneNumber = userCreateDTO.PhoneNumber,
+                City = userCreateDTO.City,
+                Country = userCreateDTO.Country,
+                Zip = userCreateDTO.Zip,
+                Role = "Customer"
+            };
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
