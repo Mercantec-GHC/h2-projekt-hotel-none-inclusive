@@ -1,7 +1,248 @@
 ﻿@page "/"
-
 <PageTitle>Home</PageTitle>
+@inject NavigationManager Navigation
 
-<h1>Hello, world!</h1>
 
-Welcome to your new app.
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-overlay">
+        <div class="hero-content">
+            <h1>Velkommen til None Inclusive</h1>
+            <p>Oplev uovertruffen komfort og luksus i hjertet af byen.</p>
+            <button class="booking-button" @onclick="NavigateToBooking">Book et værelse</button>
+        </div>
+    </div>
+</section>
+
+@code {
+    private void NavigateToBooking()
+    {
+        Navigation.NavigateTo("Booking");
+    }
+}
+
+<!-- Facilities Section -->
+<section class="facilities-section">
+    <div class="facility">
+        <i class="fas fa-swimming-pool fa-3x"></i>
+        <h3>Swimmingpool</h3>
+        <p>Slap af ved vores opvarmede pool med udsigt over vandet.</p>
+    </div>
+    <div class="facility">
+        <i class="fas fa-utensils fa-3x"></i>
+        <h3>Restaurant</h3>
+        <p>Nyd gourmetmåltider lavet af vores prisvindende kokke.</p>
+    </div>
+    <div class="facility">
+        <i class="fas fa-spa fa-3x"></i>
+        <h3>Spa og Wellness</h3>
+        <p>Forkæl dig selv med en afslappende massage eller ansigtsbehandling.</p>
+    </div>
+</section>
+
+<!-- Reviews Section -->
+<section class="reviews-section">
+    <h2>Gæsteanmeldelser</h2>
+    <div class="review">
+        <p>"Fantastisk ophold! Værelserne var rummelige og personalet var venlige. Jeg kommer helt sikkert tilbage!"</p>
+        <span>- Mette, Danmark</span>
+    </div>
+    <div class="review">
+        <p>"Hotellets beliggenhed var perfekt, og maden var utrolig! Højt anbefalet."</p>
+        <span>- John, USA</span>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about-section">
+    <div class="about-content">
+        <h2>Om os</h2>
+        <p>Vi er et femstjernet hotel, der tilbyder luksuriøse værelser, fremragende service og en uforglemmelig oplevelse i hjertet af byen. Kom og nyd en unik blanding af moderne komfort og klassisk elegance.</p>
+    </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="footer">
+    <div class="footer-content">
+        <p>&copy; 2024 None Inclusive. Alle rettigheder forbeholdes.</p>
+        <p>Kontakt os: info@HotelNoneInclusive.dk | +45 112</p>
+    </div>
+</footer>
+
+@code {
+    private void BookNow()
+    {
+        // Tilføj din booking logik her eller naviger til booking siden
+        // Eksempel: NavigationManager.NavigateTo("/booking");
+    }
+}
+
+<style>
+    /* Global Styling */
+    body {
+        font-family: 'Lora', serif;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        line-height: 1.6;
+    }
+
+    /* Hero Section Styling */
+    .hero-section {
+        position: relative;
+        width: 100%;
+        height: 85vh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: url('Images/Hotel.jpg') no-repeat center center;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        transition: background 0.3s ease;
+    }
+
+    .hero-content {
+        max-width: 700px;
+        padding: 20px;
+    }
+
+    .hero-content h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        animation: fadeIn 2s ease-in;
+    }
+
+    .hero-content p {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+    }
+
+    .booking-button {
+        background-color: #ff8c00;
+        border: none;
+        padding: 15px 30px;
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .booking-button:hover {
+        background-color: #e07a00;
+        transform: scale(1.1);
+    }
+
+    /* About Section Styling */
+    .about-section {
+        padding: 60px 20px;
+        text-align: center;
+        background-color: #f0f0f0;
+    }
+
+    .about-content h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .about-content p {
+        font-size: 1.2rem;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    /* Facilities Section Styling */
+    .facilities-section {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 60px 20px;
+        background-color: #fff;
+    }
+
+    .facility {
+        text-align: center;
+        margin: 20px;
+        width: 30%;
+        transition: transform 0.3s ease;
+    }
+
+    .facility:hover {
+        transform: scale(1.05);
+    }
+
+    .facility i {
+        color: #ff8c00;
+    }
+
+    .facility h3 {
+        margin-top: 15px;
+        font-size: 1.5rem;
+    }
+
+    .facility p {
+        font-size: 1rem;
+        color: #666;
+    }
+
+    /* Reviews Section Styling */
+    .reviews-section {
+        padding: 60px 20px;
+        text-align: center;
+        background-color: #f0f0f0;
+    }
+
+    .reviews-section h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .review {
+        max-width: 600px;
+        margin: 20px auto;
+        font-size: 1.2rem;
+        color: #333;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .review:hover {
+        transform: scale(1.02);
+    }
+
+    .review span {
+        display: block;
+        margin-top: 10px;
+        font-style: italic;
+        color: #888;
+    }
+
+    /* Footer Section Styling */
+    .footer {
+        background-color: #000;
+        color: white;
+        padding: 20px 0;
+        text-align: center;
+    }
+
+    .footer-content {
+        font-size: 0.9rem;
+    }
+</style>

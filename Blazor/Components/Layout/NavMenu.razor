@@ -1,30 +1,37 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Blazor</a>
+﻿<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-black shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img id="MDB-logo"
+                 src="/Images/Logo.png"
+                 alt="None Inclusive Logo"
+                 draggable="false" />
+        </a>
+        <button class="navbar-toggler"
+                type="button"
+                data-mdb-toggle="collapse"
+                data-mdb-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link mx-2" href="Booking"><i class="fas fa-plus-circle pe-2"></i>Værelser</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-2" href="#!"><i class="fas fa-bell pe-2"></i>Mine Bookings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-2" href="#!"><i class="fas fa-heart pe-2"></i>Tickets</a>
+                </li>
+                <li class="nav-item ms-3">
+                    <a class="btn btn-outline-light btn-rounded" href="#!">Login</a>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
-
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-    </nav>
-</div>
-
+</nav>
+<!-- Navbar -->
