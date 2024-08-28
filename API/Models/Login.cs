@@ -1,5 +1,4 @@
-﻿using HotelBooking.Models;
-
+﻿
 namespace API.Models
 {
     public class Login : User

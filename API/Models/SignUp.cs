@@ -1,5 +1,4 @@
 ﻿using HotelBooking.Data;
-using HotelBooking.Models;
 
 namespace API.Models
 {

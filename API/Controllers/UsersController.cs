@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HotelBooking.Data;
-using HotelBooking.Models;
 using API.Models;
 
 namespace API.Controllers
@@ -28,7 +27,7 @@ namespace API.Controllers
                 {
                     Id = user.Id,
                     FirstName = user.FirstName,
-                    LastName = user.LastName,
+                    LastName = user.LastName
 
                 }).ToListAsync();
 
@@ -36,18 +35,18 @@ namespace API.Controllers
         }
 
         // GET: api/Users/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<User>> GetUser(int id)
-        //{
-        //    var user = await _context.Users.FindAsync(id);
+        [HttpGet("{id}")]
+        public async Task<ActionResult<User>> GetUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
 
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-        //    return user;
-        //}
+            return user;
+        }
 
         // PUT: api/Users/5
         [HttpPut("{id}")]

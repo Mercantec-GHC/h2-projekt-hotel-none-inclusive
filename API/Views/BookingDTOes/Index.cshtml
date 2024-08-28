@@ -1,0 +1,113 @@
+﻿@model IEnumerable<API.Models.BookingDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingEndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HotelName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CheckInTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CheckOutTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfNights)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PricePerNight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReservationID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserPhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookingStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookingEndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HotelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckInTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckOutTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfNights)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PricePerNight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservationID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserPhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentStatus)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
