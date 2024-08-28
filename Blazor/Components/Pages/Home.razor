@@ -1,6 +1,10 @@
 ﻿@page "/"
-<PageTitle>Home</PageTitle>
+<PageTitle>Hjem</PageTitle>
 @inject NavigationManager Navigation
+
+<!-- Import Bootstrap CSS and Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 
 <!-- Hero Section -->
@@ -8,8 +12,8 @@
     <div class="hero-overlay">
         <div class="hero-content">
             <h1>Velkommen til None Inclusive</h1>
-            <p>Oplev uovertruffen komfort og luksus i hjertet af byen.</p>
-            <button class="booking-button" @onclick="NavigateToBooking">Book et værelse</button>
+            <p>Oplev uovertruffen komfort og elegance i hjertet af byen.</p>
+            <button class="booking-button" @onclick="NavigateToBooking">Book din oplevelse</button>
         </div>
     </div>
 </section>
@@ -22,33 +26,38 @@
 }
 
 <!-- Facilities Section -->
-<section class="facilities-section">
-    <div class="facility">
-        <i class="fas fa-swimming-pool fa-3x"></i>
-        <h3>Swimmingpool</h3>
-        <p>Slap af ved vores opvarmede pool med udsigt over vandet.</p>
-    </div>
-    <div class="facility">
-        <i class="fas fa-utensils fa-3x"></i>
-        <h3>Restaurant</h3>
-        <p>Nyd gourmetmåltider lavet af vores prisvindende kokke.</p>
-    </div>
-    <div class="facility">
-        <i class="fas fa-spa fa-3x"></i>
-        <h3>Spa og Wellness</h3>
-        <p>Forkæl dig selv med en afslappende massage eller ansigtsbehandling.</p>
+<section class="facilities-section py-5 bg-light">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-4 mb-4">
+                <i class="bi bi-water fa-4x text-gold mb-3"></i>
+                <h3 class="h4 mb-2">Swimmingpool</h3>
+                <p>Slap af i vores opvarmede pool med betagende udsigt over vandet.</p>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <i class="bi bi-cup-straw fa-4x text-gold mb-3"></i>
+                <h3 class="h4 mb-2">Restaurant</h3>
+                <p>Forkæl dig med gourmetretter tilberedt af vores prisvindende kokke.</p>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <i class="bi bi-luggage"></i>
+                <h3 class="h4 mb-2">Spa og Wellness</h3>
+                <p>Forkæl dig selv med eksklusive behandlinger og afslapning.</p>
+            </div>
+        </div>
     </div>
 </section>
 
+
 <!-- Reviews Section -->
 <section class="reviews-section">
-    <h2>Gæsteanmeldelser</h2>
+    <h2>Hvad siger vores gæster?</h2>
     <div class="review">
-        <p>"Fantastisk ophold! Værelserne var rummelige og personalet var venlige. Jeg kommer helt sikkert tilbage!"</p>
+        <p>"Et uforglemmeligt ophold! Værelserne var fantastiske, og personalet var exceptionelt. Jeg vender helt sikkert tilbage!"</p>
         <span>- Mette, Danmark</span>
     </div>
     <div class="review">
-        <p>"Hotellets beliggenhed var perfekt, og maden var utrolig! Højt anbefalet."</p>
+        <p>"Perfekt beliggenhed og udsøgt mad! En oplevelse, der virkelig er værd at anbefale."</p>
         <span>- John, USA</span>
     </div>
 </section>
@@ -56,8 +65,8 @@
 <!-- About Section -->
 <section class="about-section">
     <div class="about-content">
-        <h2>Om os</h2>
-        <p>Vi er et femstjernet hotel, der tilbyder luksuriøse værelser, fremragende service og en uforglemmelig oplevelse i hjertet af byen. Kom og nyd en unik blanding af moderne komfort og klassisk elegance.</p>
+        <h2>Om None Inclusive</h2>
+        <p>Vores femstjernede hotel kombinerer luksuriøse værelser med enestående service og en uforglemmelig oplevelse. Nyd en perfekt blanding af moderne komfort og tidløs elegance i hjertet af byen.</p>
     </div>
 </section>
 
@@ -65,7 +74,7 @@
 <footer class="footer">
     <div class="footer-content">
         <p>&copy; 2024 None Inclusive. Alle rettigheder forbeholdes.</p>
-        <p>Kontakt os: info@HotelNoneInclusive.dk | +45 112</p>
+        <p>Kontakt os: <a href="mailto:info@HotelNoneInclusive.dk">info@HotelNoneInclusive.dk</a> | +45 112</p>
     </div>
 </footer>
 
@@ -97,6 +106,7 @@
         align-items: center;
         justify-content: center;
         background: url('Images/Hotel.jpg') no-repeat center center;
+        background-size: cover;
     }
 
     .hero-overlay {
@@ -111,56 +121,58 @@
         justify-content: center;
         color: white;
         text-align: center;
-        transition: background 0.3s ease;
+        padding: 0 20px;
     }
 
     .hero-content {
-        max-width: 700px;
+        max-width: 800px;
         padding: 20px;
     }
 
-    .hero-content h1 {
-        font-size: 3rem;
-        margin-bottom: 20px;
-        animation: fadeIn 2s ease-in;
-    }
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+            animation: fadeIn 2s ease-in;
+        }
 
-    .hero-content p {
-        font-size: 1.5rem;
-        margin-bottom: 30px;
-    }
+        .hero-content p {
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+        }
 
     .booking-button {
-        background-color: #ff8c00;
+        background-color: #d4af37;
         border: none;
         padding: 15px 30px;
         color: white;
         font-size: 1.2rem;
         cursor: pointer;
-        border-radius: 5px;
+        border-radius: 8px;
         transition: background-color 0.3s ease, transform 0.3s ease;
     }
 
-    .booking-button:hover {
-        background-color: #e07a00;
-        transform: scale(1.1);
-    }
+        .booking-button:hover {
+            background-color: #b89c24;
+            transform: scale(1.05);
+        }
 
     /* About Section Styling */
     .about-section {
-        padding: 60px 20px;
+        padding: 80px 20px;
         text-align: center;
-        background-color: #f0f0f0;
+        background-color: #f8f8f8;
     }
 
     .about-content h2 {
-        font-size: 2rem;
+        font-size: 2.5rem;
         margin-bottom: 20px;
+        font-weight: bold;
     }
 
     .about-content p {
-        font-size: 1.2rem;
-        max-width: 800px;
+        font-size: 1.3rem;
+        max-width: 900px;
         margin: 0 auto;
     }
 
@@ -170,79 +182,91 @@
         justify-content: space-around;
         align-items: center;
         flex-wrap: wrap;
-        padding: 60px 20px;
-        background-color: #fff;
+        padding: 80px 20px;
+        background-color: #ffffff;
     }
 
     .facility {
         text-align: center;
-        margin: 20px;
+        margin: 30px;
         width: 30%;
-        transition: transform 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .facility:hover {
-        transform: scale(1.05);
-    }
+        .facility:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
 
-    .facility i {
-        color: #ff8c00;
-    }
+        .facility i {
+            color: #d4af37;
+        }
 
-    .facility h3 {
-        margin-top: 15px;
-        font-size: 1.5rem;
-    }
+        .facility h3 {
+            margin-top: 15px;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
 
-    .facility p {
-        font-size: 1rem;
-        color: #666;
-    }
+        .facility p {
+            font-size: 1.1rem;
+            color: #666;
+        }
 
     /* Reviews Section Styling */
     .reviews-section {
-        padding: 60px 20px;
+        padding: 80px 20px;
         text-align: center;
-        background-color: #f0f0f0;
+        background-color: #f8f8f8;
     }
 
-    .reviews-section h2 {
-        font-size: 2rem;
-        margin-bottom: 20px;
-    }
+        .reviews-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
 
     .review {
-        max-width: 600px;
+        max-width: 700px;
         margin: 20px auto;
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         color: #333;
-        background-color: #fff;
-        padding: 20px;
+        background-color: #ffffff;
+        padding: 30px;
         border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease;
     }
 
-    .review:hover {
-        transform: scale(1.02);
-    }
+        .review:hover {
+            transform: scale(1.02);
+        }
 
-    .review span {
-        display: block;
-        margin-top: 10px;
-        font-style: italic;
-        color: #888;
-    }
+        .review span {
+            display: block;
+            margin-top: 15px;
+            font-style: italic;
+            color: #888;
+        }
 
     /* Footer Section Styling */
     .footer {
-        background-color: #000;
+        background-color: #222;
         color: white;
-        padding: 20px 0;
+        padding: 30px 0;
         text-align: center;
     }
 
     .footer-content {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
+
+        .footer-content a {
+            color: #d4af37;
+            text-decoration: none;
+        }
+
+            .footer-content a:hover {
+                text-decoration: underline;
+            }
 </style>

@@ -59,7 +59,7 @@
 /* Mobilvisning */
 @media (max-width: 767px) {
     .navbar-brand img {
-        height: 50px; /* Mindre logo på små skærme */
+        height: 50px; 
     }
 
     .navbar-nav {
@@ -78,13 +78,13 @@
 /* Tabletvisning */
 @media (min-width: 768px) and (max-width: 991px) {
     .navbar-brand img {
-        height: 55px; /* Let reduceret logo på mellemstore skærme */
+        height: 55px; 
     }
 }
 
 /* Desktopvisning */
 @media (min-width: 992px) {
     .navbar-brand img {
-        height: 65px; /* Standard logo størrelse */
+        height: 65px; 
     }
 }

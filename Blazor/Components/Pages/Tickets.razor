@@ -1,5 +1,227 @@
-﻿<h3>Tickets</h3>
+﻿@page "/tickets"
+@using System.Linq
+@inject NavigationManager Navigation
 
 @code {
+    private List<UserTicket> UserTickets = new List<UserTicket>();
+    private string NewTicketSubject { get; set; }
+    private string NewTicketMessage { get; set; }
+    private bool ShowConfirmation { get; set; }
 
+    protected override void OnInitialized()
+    {
+        // Her kan du tilføje logik til at hente eksisterende billetter
+        // Til testformål tilføjes nogle dummy data
+        UserTickets.Add(new UserTicket { Id = 1, Subject = "Reservation Request", Message = "Jeg vil gerne reservere et værelse fra den 5. til den 7. september.", UserName = "John Doe" });
+        UserTickets.Add(new UserTicket { Id = 2, Subject = "Spørgsmål om faciliteter", Message = "Er der en fitnesscenter på hotellet?", UserName = "Jane Smith" });
+    }
+
+    private void SubmitTicket()
+    {
+        if (!string.IsNullOrWhiteSpace(NewTicketSubject) && !string.IsNullOrWhiteSpace(NewTicketMessage))
+        {
+            // Her tilføjes en ny ticket til listen (simuleret)
+            UserTickets.Add(new UserTicket { Id = UserTickets.Count + 1, Subject = NewTicketSubject, Message = NewTicketMessage, UserName = "Current User" });
+            NewTicketSubject = string.Empty;
+            NewTicketMessage = string.Empty;
+
+            // Vis bekræftelsesmeddelelse
+            ShowConfirmation = true;
+            // Skjul meddelelsen efter 5 sekunder
+            Task.Delay(5000).ContinueWith(t => InvokeAsync(() => ShowConfirmation = false));
+        }
+    }
+
+    private class UserTicket
+    {
+        public int Id { get; set; }
+        public string Subject { get; set; }
+        public string Message { get; set; }
+        public string UserName { get; set; }
+    }
 }
+
+<div class="container">
+    <header>
+        <h1 class="page-title">Ticket System</h1>
+    </header>
+
+    <main>
+        <section class="ticket-form">
+            <h2>Opret Ny Ticket</h2>
+            <form>
+                <div class="form-group">
+                    <label for="ticketSubject">Emne</label>
+                    <input id="ticketSubject" type="text" class="styled-input" @bind="NewTicketSubject" placeholder="Skriv emne" />
+                </div>
+                <div class="form-group">
+                    <label for="ticketMessage">Besked</label>
+                    <textarea id="ticketMessage" class="styled-textarea" @bind="NewTicketMessage" placeholder="Skriv din besked" rows="5"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" @onclick="SubmitTicket">Send Ticket</button>
+            </form>
+            @if (ShowConfirmation)
+            {
+                <div class="confirmation-message">
+                    <p>Din ticket er blevet sendt til vores medarbejdere. Du kan forvente et svar inden for 48 timer.</p>
+                </div>
+            }
+        </section>
+
+        <section class="tickets-list">
+            <h2>Mine Tickets</h2>
+            @if (UserTickets.Any())
+            {
+                @foreach (var ticket in UserTickets)
+                {
+                    <div class="ticket-item">
+                        <h3>@ticket.Subject</h3>
+                        <p><strong>Bruger:</strong> @ticket.UserName</p>
+                        <p>@ticket.Message</p>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="no-tickets">Ingen tickets til visning.</p>
+            }
+        </section>
+    </main>
+</div>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .page-title {
+        font-size: 3em;
+        font-weight: bold;
+        color: #222;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .ticket-form, .tickets-list {
+        background-color: #ffffff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .ticket-form h2, .tickets-list h2 {
+        font-size: 2em;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    .styled-input, .styled-textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1em;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
+    }
+
+    .styled-input:focus, .styled-textarea:focus {
+        border-color: #cba135;
+        outline: none;
+    }
+
+    .styled-textarea {
+        resize: vertical;
+    }
+
+    .btn-primary {
+        display: inline-block;
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-weight: bold;
+        background-color: #cba135;
+        color: white;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #b38b30;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .tickets-list {
+        margin-top: 20px;
+    }
+
+    .ticket-item {
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .ticket-item h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 1.5em;
+        color: #333;
+    }
+
+    .ticket-item p {
+        margin: 5px 0;
+        color: #666;
+    }
+
+    .no-tickets {
+        text-align: center;
+        color: #999;
+        font-style: italic;
+    }
+
+    .confirmation-message {
+        padding: 15px;
+        border-radius: 6px;
+        background-color: #eaf5e9;
+        color: #4caf50;
+        border: 1px solid #4caf50;
+        margin-top: 15px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+</style>
