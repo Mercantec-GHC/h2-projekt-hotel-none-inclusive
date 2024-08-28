@@ -28,7 +28,8 @@ namespace API.Controllers
                 {
                     Id = user.Id,
                     FirstName = user.FirstName,
-                    LastName = user.LastName
+                    LastName = user.LastName,
+
                 }).ToListAsync();
 
             return Ok(users);
@@ -50,7 +51,7 @@ namespace API.Controllers
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, UserEditDTO userEditDTO)
+        public async Task<IActionResult> PutUser(int id, UserDTO UserDTO)
         {
             // Find den eksisterende bruger i databasen
             var user = await _context.Users.FindAsync(id);
@@ -61,14 +62,14 @@ namespace API.Controllers
             }
 
             // Opdater kun de felter, der er inkluderet i UserDTO
-            user.FirstName = userEditDTO.FirstName ?? throw new ArgumentNullException(nameof(userEditDTO.FirstName));
-            user.LastName = userEditDTO.LastName ?? throw new ArgumentNullException(nameof(userEditDTO.LastName));
-            user.Email = userEditDTO.Email ?? throw new ArgumentNullException(nameof(userEditDTO.Email));
-            user.Address = userEditDTO.Address ?? throw new ArgumentNullException(nameof(userEditDTO.Address));
-            user.PhoneNumber = userEditDTO.PhoneNumber ?? throw new ArgumentNullException(nameof(userEditDTO.PhoneNumber));
-            user.City = userEditDTO.City ?? throw new ArgumentNullException(nameof(userEditDTO.City));
-            user.Country = userEditDTO.Country ?? throw new ArgumentNullException(nameof(userEditDTO.Country));
-            user.Zip = userEditDTO.Zip ?? throw new ArgumentNullException(nameof(userEditDTO.Zip));
+            user.FirstName = UserDTO.FirstName ?? throw new ArgumentNullException(nameof(UserDTO.FirstName));
+            user.LastName = UserDTO.LastName ?? throw new ArgumentNullException(nameof(UserDTO.LastName));
+            user.Email = UserDTO.Email ?? throw new ArgumentNullException(nameof(UserDTO.Email));
+            user.Address = UserDTO.Address ?? throw new ArgumentNullException(nameof(UserDTO.Address));
+            user.PhoneNumber = UserDTO.PhoneNumber ?? throw new ArgumentNullException(nameof(UserDTO.PhoneNumber));
+            user.City = UserDTO.City ?? throw new ArgumentNullException(nameof(UserDTO.City));
+            user.Country = UserDTO.Country ?? throw new ArgumentNullException(nameof(UserDTO.Country));
+            user.Zip = UserDTO.Zip ?? throw new ArgumentNullException(nameof(UserDTO.Zip));
 
 
             // Marker den opdaterede bruger som ændret
@@ -97,18 +98,18 @@ namespace API.Controllers
 
         // POST: api/Users
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(UserCreateDTO userCreateDTO)
+        public async Task<ActionResult<User>> PostUser(UserDTO UserDTO)
         {
             User user = new User()
             {
-                FirstName = userCreateDTO.FirstName,
-                LastName = userCreateDTO.LastName,
-                Email = userCreateDTO.Email,
-                Address = userCreateDTO.Address,
-                PhoneNumber = userCreateDTO.PhoneNumber,
-                City = userCreateDTO.City,
-                Country = userCreateDTO.Country,
-                Zip = userCreateDTO.Zip,
+                FirstName = UserDTO.FirstName,
+                LastName = UserDTO.LastName,
+                Email = UserDTO.Email,
+                Address = UserDTO.Address,
+                PhoneNumber = UserDTO.PhoneNumber,
+                City = UserDTO.City,
+                Country = UserDTO.Country,
+                Zip = UserDTO.Zip,
                 Role = "Customer"
             };
             _context.Users.Add(user);
