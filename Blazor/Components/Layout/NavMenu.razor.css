@@ -1,4 +1,4 @@
-/* Baggrundsfarve og tekstfarve */
+/* Background color and text color */
 .navbar-dark .navbar-nav .nav-link {
     color: #ffffff;
     font-weight: 500;
@@ -9,7 +9,7 @@
         color: #f8f9fa;
     }
 
-/* Logo størrelse og marginjustering */
+/* Logo size and margin adjustment */
 .navbar-brand img {
     height: 65px;
     transition: transform 0.3s ease;
@@ -19,7 +19,7 @@
         transform: scale(1.1);
     }
 
-/* Knappen "Sign in" */
+/* Button "Sign in" */
 .btn-outline-light {
     color: #ffffff;
     border-color: #ffffff;
@@ -31,12 +31,12 @@
         color: #000000d9;
     }
 
-/* Skygge på headeren */
+/* Shadow on the header */
 .navbar {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Toggler farve */
+/* Toggler color */
 .navbar-toggler {
     border-color: rgba(255, 255, 255, 0.1);
 }
@@ -56,10 +56,10 @@
 
 /* Responsive styling */
 
-/* Mobilvisning */
+/* Mobile view */
 @media (max-width: 767px) {
     .navbar-brand img {
-        height: 50px; 
+        height: 50px;
     }
 
     .navbar-nav {
@@ -68,23 +68,26 @@
 
         .navbar-nav .nav-item {
             margin: 0;
+            padding: 10px 0;
         }
 
     .btn-outline-light {
         margin-top: 10px;
+        width: 100%;
+        text-align: center;
     }
 }
 
-/* Tabletvisning */
+/* Tablet view */
 @media (min-width: 768px) and (max-width: 991px) {
     .navbar-brand img {
-        height: 55px; 
+        height: 55px;
     }
 }
 
-/* Desktopvisning */
+/* Desktop view */
 @media (min-width: 992px) {
     .navbar-brand img {
-        height: 65px; 
+        height: 65px;
     }
 }

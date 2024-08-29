@@ -3,12 +3,23 @@
         this.currentId = null;
         this.currentTab = null;
         this.tabContainerHeight = 70;
-        let self = this;
+
+        // Initialize event listeners
+        this.initEventListeners();
+    }
+
+    initEventListeners() {
+        // Event listeners for tab clicks (if needed for sticky navigation)
         document.querySelectorAll('.et-hero-tab').forEach(tab => {
-            tab.addEventListener('click', (event) => self.onTabClick(event, tab));
+            tab.addEventListener('click', (event) => this.onTabClick(event, tab));
         });
+
+        // Window scroll and resize event listeners for sticky navigation
         window.addEventListener('scroll', () => this.onScroll());
         window.addEventListener('resize', () => this.onResize());
+
+        // Optional: Ensure Bootstrap dropdowns are initialized
+        this.initBootstrapDropdowns();
     }
 
     onTabClick(event, element) {
@@ -40,11 +51,10 @@
     findCurrentTabSelector() {
         let newCurrentId;
         let newCurrentTab;
-        let self = this;
         document.querySelectorAll('.et-hero-tab').forEach(tab => {
             let id = tab.getAttribute('href');
-            let offsetTop = document.querySelector(id).offsetTop - self.tabContainerHeight;
-            let offsetBottom = document.querySelector(id).offsetTop + document.querySelector(id).offsetHeight - self.tabContainerHeight;
+            let offsetTop = document.querySelector(id).offsetTop - this.tabContainerHeight;
+            let offsetBottom = document.querySelector(id).offsetTop + document.querySelector(id).offsetHeight - this.tabContainerHeight;
             if (window.scrollY > offsetTop && window.scrollY < offsetBottom) {
                 newCurrentId = id;
                 newCurrentTab = tab;
@@ -64,9 +74,21 @@
             width = this.currentTab.offsetWidth + 'px';
             left = this.currentTab.offsetLeft + 'px';
         }
-        document.querySelector('.et-hero-tab-slider').style.width = width;
-        document.querySelector('.et-hero-tab-slider').style.left = left;
+        let slider = document.querySelector('.et-hero-tab-slider');
+        if (slider) {
+            slider.style.width = width;
+            slider.style.left = left;
+        }
+    }
+
+    initBootstrapDropdowns() {
+        // Bootstrap dropdowns may not need manual initialization as they're handled by Bootstrap's own JS
+        // But this ensures dropdown functionality is active if somehow not
+        document.querySelectorAll('.dropdown-toggle').forEach((element) => {
+            new bootstrap.Dropdown(element);
+        });
     }
 }
 
+// Ensure StickyNavigation does not interfere with Bootstrap dropdown
 document.addEventListener('DOMContentLoaded', () => new StickyNavigation());
