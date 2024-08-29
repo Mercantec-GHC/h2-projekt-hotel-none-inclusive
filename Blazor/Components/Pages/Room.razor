@@ -1,0 +1,171 @@
+﻿@page "/room/{Id:int}"
+@using System.Linq
+@inject NavigationManager Navigation
+
+<!-- Import Bootstrap CSS and Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private RoomDetails SelectedRoom { get; set; }
+    //(Dummy Data. Should fetch from database)
+    private List<RoomDetails> Rooms = new List<RoomDetails>
+    {
+        new RoomDetails { Id = 1, Type = "Single Room", Price = 500, ImageUrl = "images/single-room.jpg", Description = "Perfekt til én person med alle nødvendige faciliteter.", Amenities = new List<string> { "Gratis Wi-Fi", "Room service", "Fladskærms TV", "Skrivebord" } },
+        new RoomDetails { Id = 11, Type = "Double Room", Price = 800, ImageUrl = "images/double-room.png", Description = "Ideelt til par, med en stor dobbeltseng og moderne indretning.", Amenities = new List<string> { "Balkon", "Minibar", "Gratis morgenmad", "Udsigt til haven" } },
+        new RoomDetails { Id = 21, Type = "Suite", Price = 1500, ImageUrl = "images/suite-room.jpg", Description = "En luksuriøs suite for familien med ekstra plads og premium faciliteter.", Amenities = new List<string> { "Privat jacuzzi", "Køkken", "Udsigt til havet", "Adgang til eksklusiv lounge" } }
+    };
+
+    protected override void OnInitialized()
+    {
+        SelectedRoom = Rooms.FirstOrDefault(room => room.Id == Id);
+    }
+
+    private void NavigateToBooking()
+    {
+        Navigation.NavigateTo("/booking");
+    }
+
+    private class RoomDetails
+    {
+        public int Id { get; set; }
+        public string Type { get; set; }
+        public int Price { get; set; }
+        public string ImageUrl { get; set; }
+        public string Description { get; set; }
+        public List<string> Amenities { get; set; }
+    }
+}
+
+@if (SelectedRoom != null)
+{
+    <div class="room-container">
+        <div class="room-image-gallery">
+            <img src="@SelectedRoom.ImageUrl" alt="Billede af @SelectedRoom.Type" class="room-main-image" />
+        </div>
+        <div class="room-info">
+            <h1 class="room-title">@SelectedRoom.Type</h1>
+            <p class="room-price">@SelectedRoom.Price kr./nat</p>
+            <p class="room-description">@SelectedRoom.Description</p>
+            <h4 class="room-amenities-title">Faciliteter</h4>
+            <ul class="room-amenities-list">
+                @foreach (var amenity in SelectedRoom.Amenities)
+                {
+                    <li>@amenity</li>
+                }
+            </ul>
+            <button class="btn btn-primary" @onclick="NavigateToBooking">Book nu</button>
+        </div>
+    </div>
+}
+else
+{
+    <p>Værelset blev ikke fundet.</p>
+}
+
+<style>
+    .room-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 40px;
+        max-width: 900px;
+        margin: 30px auto;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .room-image-gallery {
+        width: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .room-main-image {
+        width: 100%;
+        height: auto;
+        max-height: 500px;
+        object-fit: cover;
+        border-radius: 12px;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+        .room-main-image:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+    .room-info {
+        text-align: center;
+    }
+
+    .room-title {
+        font-size: 2.8em;
+        color: #1a1a1a;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .room-price {
+        font-size: 1.8em;
+        color: #cba135;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .room-description {
+        font-size: 1.3em;
+        color: #555;
+        margin-bottom: 25px;
+        line-height: 1.6;
+    }
+
+    .room-amenities-title {
+        font-size: 1.5em;
+        color: #333;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .room-amenities-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0 auto 30px;
+        max-width: 600px;
+        font-size: 1.1em;
+        color: #333;
+        text-align: left;
+    }
+
+        .room-amenities-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+    .btn-primary {
+        background-color: #cba135;
+        color: white;
+        padding: 15px 40px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 1.2em;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+        .btn-primary:hover {
+            background-color: #b38b30;
+            transform: scale(1.05);
+        }
+</style>
