@@ -50,8 +50,6 @@ namespace API.Controllers
                 BookingDate = bookingDTO.BookingDate,
                 BookingStartDate = bookingDTO.BookingStartDate,
                 BookingEndDate = bookingDTO.BookingEndDate,
-                HotelName = bookingDTO.HotelName,
-                RoomNumber = bookingDTO.RoomNumber,
                 CheckInTime = bookingDTO.CheckInTime,
                 CheckOutTime = bookingDTO.CheckOutTime,
                 NumberOfNights = bookingDTO.NumberOfNights,

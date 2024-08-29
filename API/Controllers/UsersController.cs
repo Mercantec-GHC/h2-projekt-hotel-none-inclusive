@@ -25,7 +25,7 @@ namespace API.Controllers
         {
             var users = await _context.Users.Select(user => new UserDTO
                 {
-                    Id = user.Id,
+                    Id = user.UserId,
                     FirstName = user.FirstName,
                     LastName = user.LastName
 
@@ -81,7 +81,7 @@ namespace API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_context.Users.Any(u => u.Id == id))
+                if (!_context.Users.Any(u => u.UserId == id))
                 {
                     return NotFound();
                 }
@@ -114,7 +114,7 @@ namespace API.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
         }
 
         // DELETE: api/Users/5
@@ -135,7 +135,7 @@ namespace API.Controllers
 
         private bool UserExists(int id)
         {
-            return _context.Users.Any(e => e.Id == id);
+            return _context.Users.Any(e => e.UserId == id);
         }
     }
 }

@@ -4,3 +4,4 @@ obj/
 .vs/
 
 API/AppSettings.json
+/API/Views/BookingDTOes/Delete.cshtml

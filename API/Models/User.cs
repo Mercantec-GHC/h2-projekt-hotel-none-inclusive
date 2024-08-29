@@ -5,8 +5,8 @@ namespace API.Models
     [Table("users")]
     public class User
     {
-        [Column("id")]
-        public int? Id { get; set; }
+        [Column("user_id")]
+        public int? UserId { get; set; }
         [Column("first_name")]
         public string FirstName { get; set; } = null!;
         [Column("last_name")]
@@ -25,6 +25,8 @@ namespace API.Models
         public string Zip { get; set; } = null!;
         [Column("role")]
         public string? Role { get; set; }
+        [Column("bookings")]
+        public List<Booking> Bookings { get; set; } = new List<Booking>();
     }
 
     public class UserDTO

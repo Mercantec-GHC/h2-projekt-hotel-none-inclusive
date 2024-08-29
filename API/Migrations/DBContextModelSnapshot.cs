@@ -51,11 +51,6 @@ namespace API.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("check_out_time");
 
-                    b.Property<string>("HotelName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("hotel_name");
-
                     b.Property<int>("NumberOfNights")
                         .HasColumnType("integer")
                         .HasColumnName("number_of_nights");
@@ -73,24 +68,8 @@ namespace API.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("reservation_id");
 
-                    b.Property<int>("RoomNumber")
-                        .HasColumnType("integer")
-                        .HasColumnName("room_number");
-
-                    b.Property<string>("UserEmail")
-                        .HasColumnType("text")
-                        .HasColumnName("user_email");
-
                     b.Property<int?>("UserId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("text")
-                        .HasColumnName("user_name");
-
-                    b.Property<string>("UserPhoneNumber")
-                        .HasColumnType("text")
-                        .HasColumnName("user_phonenumber");
 
                     b.HasKey("Id");
 
@@ -107,6 +86,9 @@ namespace API.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("BookingId")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsOccupied")
                         .HasColumnType("boolean")
@@ -131,17 +113,19 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BookingId");
+
                     b.ToTable("rooms");
                 });
 
             modelBuilder.Entity("API.Models.User", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int?>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnName("user_id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("UserId"));
 
                     b.Property<string>("Address")
                         .HasColumnType("text")
@@ -184,18 +168,33 @@ namespace API.Migrations
                         .HasColumnType("text")
                         .HasColumnName("zip");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.ToTable("users");
                 });
 
             modelBuilder.Entity("API.Models.Booking", b =>
                 {
-                    b.HasOne("API.Models.User", "User")
-                        .WithMany()
+                    b.HasOne("API.Models.User", null)
+                        .WithMany("Bookings")
                         .HasForeignKey("UserId");
+                });
 
-                    b.Navigation("User");
+            modelBuilder.Entity("API.Models.Room", b =>
+                {
+                    b.HasOne("API.Models.Booking", null)
+                        .WithMany("Rooms")
+                        .HasForeignKey("BookingId");
+                });
+
+            modelBuilder.Entity("API.Models.Booking", b =>
+                {
+                    b.Navigation("Rooms");
+                });
+
+            modelBuilder.Entity("API.Models.User", b =>
+                {
+                    b.Navigation("Bookings");
                 });
 #pragma warning restore 612, 618
         }
