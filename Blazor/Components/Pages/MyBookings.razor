@@ -11,7 +11,7 @@
 
     protected override void OnInitialized()
     {
-        // Tilføj logik til at hente brugerens bookinger
+        // Tilføj logik til at hente brugerens bookinger //(Dummy Data. Should fetch from database)
         Bookings.Add(new Booking { Id = 1, RoomType = "Single Room", CheckInDate = DateTime.Now.AddDays(1), CheckOutDate = DateTime.Now.AddDays(3), Status = "Confirmed" });
         Bookings.Add(new Booking { Id = 2, RoomType = "Suite", CheckInDate = DateTime.Now.AddDays(5), CheckOutDate = DateTime.Now.AddDays(7), Status = "Pending" });
     }

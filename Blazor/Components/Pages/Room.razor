@@ -11,7 +11,7 @@
     public int Id { get; set; }
 
     private RoomDetails SelectedRoom { get; set; }
-
+    //(Dummy Data. Should fetch from database)
     private List<RoomDetails> Rooms = new List<RoomDetails>
     {
         new RoomDetails { Id = 1, Type = "Single Room", Price = 500, ImageUrl = "images/single-room.jpg", Description = "Perfekt til én person med alle nødvendige faciliteter.", Amenities = new List<string> { "Gratis Wi-Fi", "Room service", "Fladskærms TV", "Skrivebord" } },

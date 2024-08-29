@@ -4,28 +4,34 @@
         this.currentTab = null;
         this.tabContainerHeight = 70;
 
-        // Initialize event listeners
+        
         this.initEventListeners();
     }
 
     initEventListeners() {
-        // Event listeners for tab clicks (if needed for sticky navigation)
-        document.querySelectorAll('.et-hero-tab').forEach(tab => {
-            tab.addEventListener('click', (event) => this.onTabClick(event, tab));
-        });
+        
+        const tabs = document.querySelectorAll('.et-hero-tab');
+        if (tabs.length) {
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (event) => this.onTabClick(event, tab));
+            });
+        }
 
-        // Window scroll and resize event listeners for sticky navigation
-        window.addEventListener('scroll', () => this.onScroll());
-        window.addEventListener('resize', () => this.onResize());
+        
+        window.addEventListener('scroll', this.debounce(() => this.onScroll(), 50));
+        window.addEventListener('resize', this.debounce(() => this.onResize(), 50));
 
-        // Optional: Ensure Bootstrap dropdowns are initialized
+        
         this.initBootstrapDropdowns();
     }
 
     onTabClick(event, element) {
         event.preventDefault();
-        let scrollTop = document.querySelector(element.getAttribute('href')).offsetTop - this.tabContainerHeight + 1;
-        window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+        const targetElement = document.querySelector(element.getAttribute('href'));
+        if (targetElement) {
+            const scrollTop = targetElement.offsetTop - this.tabContainerHeight + 1;
+            window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+        }
     }
 
     onScroll() {
@@ -40,26 +46,37 @@
     }
 
     checkTabContainerPosition() {
-        let offset = document.querySelector('.et-hero-tabs').offsetTop + document.querySelector('.et-hero-tabs').offsetHeight - this.tabContainerHeight;
-        if (window.scrollY > offset) {
-            document.querySelector('.et-hero-tabs-container').classList.add('et-hero-tabs-container--top');
-        } else {
-            document.querySelector('.et-hero-tabs-container').classList.remove('et-hero-tabs-container--top');
+        const tabs = document.querySelector('.et-hero-tabs');
+        const tabsContainer = document.querySelector('.et-hero-tabs-container');
+        if (tabs && tabsContainer) {
+            const offset = tabs.offsetTop + tabs.offsetHeight - this.tabContainerHeight;
+            if (window.scrollY > offset) {
+                tabsContainer.classList.add('et-hero-tabs-container--top');
+            } else {
+                tabsContainer.classList.remove('et-hero-tabs-container--top');
+            }
         }
     }
 
     findCurrentTabSelector() {
         let newCurrentId;
         let newCurrentTab;
+
         document.querySelectorAll('.et-hero-tab').forEach(tab => {
-            let id = tab.getAttribute('href');
-            let offsetTop = document.querySelector(id).offsetTop - this.tabContainerHeight;
-            let offsetBottom = document.querySelector(id).offsetTop + document.querySelector(id).offsetHeight - this.tabContainerHeight;
-            if (window.scrollY > offsetTop && window.scrollY < offsetBottom) {
-                newCurrentId = id;
-                newCurrentTab = tab;
+            const id = tab.getAttribute('href');
+            const targetElement = document.querySelector(id);
+
+            if (targetElement) {
+                const offsetTop = targetElement.offsetTop - this.tabContainerHeight;
+                const offsetBottom = offsetTop + targetElement.offsetHeight;
+
+                if (window.scrollY > offsetTop && window.scrollY < offsetBottom) {
+                    newCurrentId = id;
+                    newCurrentTab = tab;
+                }
             }
         });
+
         if (this.currentId !== newCurrentId || this.currentId === null) {
             this.currentId = newCurrentId;
             this.currentTab = newCurrentTab;
@@ -68,25 +85,27 @@
     }
 
     setSliderCss() {
-        let width = 0;
-        let left = 0;
-        if (this.currentTab) {
-            width = this.currentTab.offsetWidth + 'px';
-            left = this.currentTab.offsetLeft + 'px';
-        }
-        let slider = document.querySelector('.et-hero-tab-slider');
-        if (slider) {
-            slider.style.width = width;
-            slider.style.left = left;
+        const slider = document.querySelector('.et-hero-tab-slider');
+        if (slider && this.currentTab) {
+            slider.style.width = `${this.currentTab.offsetWidth}px`;
+            slider.style.left = `${this.currentTab.offsetLeft}px`;
         }
     }
 
     initBootstrapDropdowns() {
-        // Bootstrap dropdowns may not need manual initialization as they're handled by Bootstrap's own JS
-        // But this ensures dropdown functionality is active if somehow not
-        document.querySelectorAll('.dropdown-toggle').forEach((element) => {
-            new bootstrap.Dropdown(element);
-        });
+        if (window.bootstrap) { 
+            document.querySelectorAll('.dropdown-toggle').forEach((element) => {
+                new bootstrap.Dropdown(element);
+            });
+        }
+    }
+
+    debounce(func, wait) {
+        let timeout;
+        return function (...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), wait);
+        };
     }
 }
 

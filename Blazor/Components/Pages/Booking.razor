@@ -10,7 +10,7 @@
 
     protected override void OnInitialized()
     {
-        // Generer 10 værelser af hver type
+        // Generer 10 værelser af hver type (Dummy Data. Should fetch from database)
         for (int i = 1; i <= 10; i++)
         {
             Rooms.Add(new Room { Id = i, Type = "Single Room", Price = 449, ImageUrl = "images/single-room.jpg", Description = "Perfekt til én person med alle nødvendige faciliteter." });
