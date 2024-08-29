@@ -1,6 +1,5 @@
 using Blazor.Components;
-using HotelBooking.Data;
-using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
