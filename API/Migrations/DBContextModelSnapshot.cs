@@ -68,10 +68,15 @@ namespace API.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("reservation_id");
 
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
 
                     b.HasIndex("UserId");
 
@@ -87,8 +92,9 @@ namespace API.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BookingId")
-                        .HasColumnType("integer");
+                    b.Property<int>("Floor")
+                        .HasColumnType("integer")
+                        .HasColumnName("floor");
 
                     b.Property<bool>("IsOccupied")
                         .HasColumnType("boolean")
@@ -107,13 +113,7 @@ namespace API.Migrations
                         .HasColumnType("text")
                         .HasColumnName("room_type");
 
-                    b.Property<int>("floor")
-                        .HasColumnType("integer")
-                        .HasColumnName("floor");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("BookingId");
 
                     b.ToTable("rooms");
                 });
@@ -175,21 +175,17 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Booking", b =>
                 {
+                    b.HasOne("API.Models.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("API.Models.User", null)
                         .WithMany("Bookings")
                         .HasForeignKey("UserId");
-                });
 
-            modelBuilder.Entity("API.Models.Room", b =>
-                {
-                    b.HasOne("API.Models.Booking", null)
-                        .WithMany("Rooms")
-                        .HasForeignKey("BookingId");
-                });
-
-            modelBuilder.Entity("API.Models.Booking", b =>
-                {
-                    b.Navigation("Rooms");
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("API.Models.User", b =>

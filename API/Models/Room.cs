@@ -16,7 +16,7 @@ namespace API.Models
         [Column("is_occupied")]
         public bool IsOccupied { get; set; }
         [Column("floor")]
-        public int floor { get; set; }
+        public int Floor { get; set; }
 
     }
 }

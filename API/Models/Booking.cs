@@ -14,8 +14,8 @@ namespace API.Models
         [Column("booking_end_date")]
         public DateTime BookingEndDate { get; set; }
 
-        [Column("rooms")]
-        public List<Room> Rooms { get; set; } = new List<Room>();
+        [Column("room")]
+        public Room Room { get; set; } = null!;
 
         [Column("check_in_time")]
         public DateTime CheckInTime { get; set; }

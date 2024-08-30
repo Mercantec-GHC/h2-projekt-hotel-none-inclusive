@@ -13,6 +13,23 @@ namespace API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "rooms",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    room_number = table.Column<int>(type: "integer", nullable: false),
+                    room_type = table.Column<string>(type: "text", nullable: false),
+                    price_per_night = table.Column<int>(type: "integer", nullable: false),
+                    is_occupied = table.Column<bool>(type: "boolean", nullable: false),
+                    floor = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_rooms", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "users",
                 columns: table => new
                 {
@@ -42,6 +59,7 @@ namespace API.Migrations
                     booking_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     booking_start_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     booking_end_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RoomId = table.Column<int>(type: "integer", nullable: false),
                     check_in_time = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     check_out_time = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     number_of_nights = table.Column<int>(type: "integer", nullable: false),
@@ -54,54 +72,37 @@ namespace API.Migrations
                 {
                     table.PrimaryKey("PK_bookings", x => x.id);
                     table.ForeignKey(
+                        name: "FK_bookings_rooms_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "rooms",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_bookings_users_UserId",
                         column: x => x.UserId,
                         principalTable: "users",
                         principalColumn: "user_id");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "rooms",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    room_number = table.Column<int>(type: "integer", nullable: false),
-                    room_type = table.Column<string>(type: "text", nullable: false),
-                    price_per_night = table.Column<int>(type: "integer", nullable: false),
-                    is_occupied = table.Column<bool>(type: "boolean", nullable: false),
-                    floor = table.Column<int>(type: "integer", nullable: false),
-                    BookingId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_rooms", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_rooms_bookings_BookingId",
-                        column: x => x.BookingId,
-                        principalTable: "bookings",
-                        principalColumn: "id");
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_bookings_RoomId",
+                table: "bookings",
+                column: "RoomId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_bookings_UserId",
                 table: "bookings",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_rooms_BookingId",
-                table: "rooms",
-                column: "BookingId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "rooms");
+                name: "bookings");
 
             migrationBuilder.DropTable(
-                name: "bookings");
+                name: "rooms");
 
             migrationBuilder.DropTable(
                 name: "users");
