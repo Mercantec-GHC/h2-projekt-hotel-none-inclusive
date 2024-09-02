@@ -1,85 +1,123 @@
-﻿@using API.Models;
-
-@page "/SignUp"
+﻿@page "/SignUp"
+@using API.Models
+@inject HttpClient Http
+@inject Service.DatabaseServices DatabaseServices
+@inject NavigationManager NavigationManager
 
 <PageTitle>SignUp</PageTitle>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm">
-        </div>
-        <div class="col-sm">
-            <div class="card" style="width: 30rem;">
-                <div class="card-body">
-                    <h3 class="text-center">Sign Up</h3>
-                    <EditForm Model="userModel" OnValidSubmit="Submit">
-                        <DataAnnotationsValidator />
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="inputEmail4">Email</label>
-                                <input type="email" class="form-control" id="inputEmail4" placeholder="MyEmail@google.com" @bind="userModel.Email">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputPassword4">Password</label>
-                                <input type="password" class="form-control" id="inputPassword4" placeholder="My Secret Password" @bind="userModel.Password">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputAddress">Address</label>
-                            <input type="text" class="form-control" id="inputAddress" placeholder="Rowling Street" @bind="userModel.Address">
-                        </div>
+<div class="body">
+    <div class="mask d-flex align-items-center gradient-custom-3">
+        <!-- Container til centrering af indhold -->
+        <div class="container">
+            <!-- Række til centreret indholds kolonne -->
+            <div class="row d-flex justify-content-center align-items-center">
+                <!-- Kolonne til formular, justerer størrelse baseret på skærmstørrelse -->
+                <div class="col-12 col-md-9 col-lg-7 col-xl-4">
+                    <!-- Kort til registreringsformular, afrundede hjørner for estetik -->
+                    <div class="card" style="border-radius: 15px; background-color: #b3b3b3;">
+                        <!-- Kortkrop med padding til formular -->
+                        <div class="card-body p-3">
+                            <!-- Overskrift til formular -->
+                            <h2 class="text-center mb-1">Register</h2>
+                            <form>
+                                <!-- Felt til fornavn -->
+                                <div class="form-outline mb-3">
+                                    <label class="form-label" for="formFirstName">First Name</label>
+                                    <input type="text" id="formFirstName" class="form-control form-control-sm" @bind="FirstName" required />
+                                </div>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="inputCity">City</label>
-                                <input type="text" class="form-control" id="inputCity" placeholder="The City I live in" @bind="userModel.City">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputCountry">Country</label>
-                                <input type="text" class="form-control" id="inputCountry" placeholder="The country I live in" @bind="userModel.Country">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputZip">Zip</label>
-                                <input type="text" class="form-control" id="inputZip" placeholder="The zip code I live in" @bind="userModel.Zip">
-                            </div>
+                                <!-- Felt til efternavn -->
+                                <div class="form-outline mb-3">
+                                    <label class="form-label" for="formLastName">Last Name</label>
+                                    <input type="text" id="formLastName" class="form-control form-control-sm" @bind="LastName" required />
+                                </div>
+
+                                <!-- Felt til e-mail -->
+                                <div class="form-outline mb-3">
+                                    <label class="form-label" for="formEmail">Email</label>
+                                    <input type="email" id="formEmail" class="form-control form-control-sm" @bind="Email" required />
+                                </div>
+
+                                <!-- Felt til adgangskode -->
+                                <div class="form-outline mb-3">
+                                    <label class="form-label" for="formPassword">Password</label>
+                                    <input type="password" id="formPassword" class="form-control form-control-sm" @bind="Password" required />
+                                </div>
+
+                                <!-- Felt til gentagelse af adgangskode -->
+                                <div class="form-outline mb-3">
+                                    <label class="form-label" for="formPasswordRepeat">Confirm Password</label>
+                                    <input type="password" id="formPasswordRepeat" class="form-control form-control-sm" @bind="PasswordRepeat" required />
+                                </div>
+
+                                <!-- Felt til telefonnummer -->
+                                <div class="form-outline mb-3">
+                                    <label class="form-label" for="formPhonenumber">Phone Number</label>
+                                    <input type="tel" id="formPhonenumber" class="form-control form-control-sm" @bind="Phonenumber" required />
+                                </div>
+
+                                <!-- Felt til adresse -->
+                                <div class="form-outline mb-3">
+                                    <label class="form-label" for="formAddress">Address</label>
+                                    <input type="text" id="formAddress" class="form-control form-control-sm" @bind="Address" required />
+                                </div>
+
+                                <!-- Felt til by -->
+                                <div class="form-outline mb-3">
+                                    <label class="form-label" for="formCity">City</label>
+                                    <input type="text" id="formCity" class="form-control form-control-sm" @bind="City" required />
+                                </div>
+
+                                <!-- Felt til postnummer -->
+                                <div class="form-outline mb-3">
+                                    <label class="form-label" for="formZip">Zip Code</label>
+                                    <input type="text" id="formZip" class="form-control form-control-sm" @bind="Zip" required />
+                                </div>
+
+                                <!-- Afkrydsningsfelt for accept af vilkår -->
+                                <div class="form-check d-flex justify-content-center mb-4">
+                                    <input class="form-check-input me-2" type="checkbox" value="" id="formAgreeCheckbox" required />
+                                    <label class="form-check-label" for="formAgreeCheckbox">
+                                        I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
+                                    </label>
+                                </div>
+                                <!-- Registrer knap -->
+                                <div class="d-flex justify-content-center">
+                                    <button type="button" class="btn btn-dark btn-sm" @onclick="RegisterUser">Register</button>
+                                </div>
+                                <!-- Link til eksisterende brugere for at logge ind -->
+                                <p class="text-center text-muted mt-4 mb-0">Already have an account? <a href="/login" class="fw-bold text-body"><u>Login here</u></a></p>
+                            </form>
                         </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-dark mt-3 justify-content-center">Sign up</button>
-                        </div>
-                    </EditForm>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm">
         </div>
     </div>
 </div>
 
 @code {
+    private string? FirstName { get; set; }
+    private string? LastName { get; set; }
+    private string? Email { get; set; }
+    private string? Password { get; set; }
+    private string? PasswordRepeat { get; set; }
+    private string? Phonenumber { get; set; }
+    private string? Address { get; set; }
+    private string? City { get; set; }
+    private string? Zip { get; set; }
 
-
-    private UserModel userModel = new UserModel();
-    //public API.Models.SignUp signUp = new API.Models.SignUp();
-
-    private void Submit()
+    private async Task RegisterUser()
     {
-        //signUp.SignUpRegistreUser(userModel.Email, userModel.Password, userModel.Address, userModel.Address, userModel.City, userModel.Country, userModel.Zip);
-        // Her kan du bruge userModel for at få adgang til de indtastede oplysninger
-        Console.WriteLine($"Email: {userModel.Email}");
-        Console.WriteLine($"Password: {userModel.Password}");
-        Console.WriteLine($"Address: {userModel.Address}");
-        Console.WriteLine($"City: {userModel.City}");
-        Console.WriteLine($"Country: {userModel.Country}");
-        Console.WriteLine($"Zip: {userModel.Zip}");
-    }
+        if (Password != PasswordRepeat)
+        {
+            // Handle password mismatch
+            // You might want to show a validation message here
+            return;
+        }
 
-    public class UserModel
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Address { get; set; }
-        public string City { get; set; }
-        public string Country { get; set; }
-        public string Zip { get; set; }
+        await DatabaseServices.AddUserToDatabaseAsync(FirstName, LastName, Email, Password, Address, Phonenumber, City, Zip);
+        NavigationManager.NavigateTo("/");
     }
 }

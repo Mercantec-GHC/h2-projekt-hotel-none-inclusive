@@ -1,11 +1,13 @@
 ﻿@page "/weather"
+@using API.Models
+@inject HttpClient httpClient
 
 <PageTitle>Weather</PageTitle>
 
-<h1>Weather</h1>
+<h1>@(userModel.FirstOrDefault(e => e.FirstName != null)?.FirstName ?? "No Name")</h1>
 
-<p>This component demonstrates showing data.</p>
-
+<p></p>
+@* 
 @if (forecasts == null)
 {
     <p><em>Loading...</em></p>
@@ -33,31 +35,52 @@ else
             }
         </tbody>
     </table>
-}
+} *@
 
 @code {
-    private WeatherForecast[]? forecasts;
+    public List<UserGetDTO> userModel = new List<UserGetDTO>();
 
     protected override async Task OnInitializedAsync()
     {
-        // Simulate asynchronous loading to demonstrate a loading indicator
-        await Task.Delay(500);
-
-        var startDate = DateOnly.FromDateTime(DateTime.Now);
-        var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
-        forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        try
         {
-            Date = startDate.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = summaries[Random.Shared.Next(summaries.Length)]
-        }).ToArray();
+            userModel = await httpClient.GetFromJsonAsync<List<UserGetDTO>>("https://localhost:7207/api/Users");
+        }
+        catch (Exception ex)
+        {
+            // Håndter eller log fejl her
+            Console.WriteLine($"Fejl ved hentning af brugerdata: {ex.Message}");
+        }
     }
 
-    private class WeatherForecast
-    {
-        public DateOnly Date { get; set; }
-        public int TemperatureC { get; set; }
-        public string? Summary { get; set; }
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-    }
+
+
+
+
+
+
+    // private WeatherForecast[]? forecasts;
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     // Simulate asynchronous loading to demonstrate a loading indicator
+    //     await Task.Delay(500);
+
+    //     var startDate = DateOnly.FromDateTime(DateTime.Now);
+    //     var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
+    //     forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
+    //     {
+    //         Date = startDate.AddDays(index),
+    //         TemperatureC = Random.Shared.Next(-20, 55),
+    //         Summary = summaries[Random.Shared.Next(summaries.Length)]
+    //     }).ToArray();
+    // }
+
+    // private class WeatherForecast
+    // {
+    //     public DateOnly Date { get; set; }
+    //     public int TemperatureC { get; set; }
+    //     public string? Summary { get; set; }
+    //     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    // }
 }

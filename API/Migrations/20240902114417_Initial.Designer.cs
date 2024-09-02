@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20240830073713_Initial")]
+    [Migration("20240902114417_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -29,47 +29,37 @@ namespace API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("BookingDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("booking_date");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("BookingEndDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("booking_end_date");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("BookingStartDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("booking_start_date");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("CheckInTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("check_in_time");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("CheckOutTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("check_out_time");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("NumberOfNights")
-                        .HasColumnType("integer")
-                        .HasColumnName("number_of_nights");
+                        .HasColumnType("integer");
 
                     b.Property<string>("PaymentStatus")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("payment_status");
+                        .HasColumnType("text");
 
                     b.Property<int>("PricePerNight")
-                        .HasColumnType("integer")
-                        .HasColumnName("price_per_night");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ReservationID")
-                        .HasColumnType("integer")
-                        .HasColumnName("reservation_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("RoomId")
                         .HasColumnType("integer");
@@ -83,97 +73,85 @@ namespace API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("bookings");
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("API.Models.Room", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Floor")
-                        .HasColumnType("integer")
-                        .HasColumnName("floor");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsOccupied")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_occupied");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("PricePerNight")
-                        .HasColumnType("integer")
-                        .HasColumnName("price_per_night");
+                        .HasColumnType("integer");
 
                     b.Property<int>("RoomNumber")
-                        .HasColumnType("integer")
-                        .HasColumnName("room_number");
+                        .HasColumnType("integer");
 
                     b.Property<string>("RoomType")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("room_type");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("rooms");
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("API.Models.User", b =>
                 {
                     b.Property<int?>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("user_id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("UserId"));
 
                     b.Property<string>("Address")
-                        .HasColumnType("text")
-                        .HasColumnName("address");
+                        .HasColumnType("text");
 
                     b.Property<string>("City")
-                        .HasColumnType("text")
-                        .HasColumnName("city");
+                        .HasColumnType("text");
 
                     b.Property<string>("Country")
-                        .HasColumnType("text")
-                        .HasColumnName("country");
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("email");
+                        .HasColumnType("text");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("first_name");
+                        .HasColumnType("text");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("last_name");
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("phonenumber");
+                        .HasColumnType("text");
 
                     b.Property<string>("Role")
-                        .HasColumnType("text")
-                        .HasColumnName("role");
+                        .HasColumnType("text");
 
                     b.Property<string>("Zip")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("zip");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId");
 
-                    b.ToTable("users");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("API.Models.Booking", b =>
