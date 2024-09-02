@@ -21,9 +21,9 @@ namespace API.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserGetDTO>>> GetUsers()
         {
-            var users = await _context.Users.Select(user => new UserDTO
+            var users = await _context.Users.Select(user => new UserGetDTO
                 {
                     Id = user.UserId,
                     FirstName = user.FirstName,
@@ -50,7 +50,7 @@ namespace API.Controllers
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, UserDTO UserDTO)
+        public async Task<IActionResult> PutUser(int id, UserPostAndPutDTO UserDTO)
         {
             // Find den eksisterende bruger i databasen
             var user = await _context.Users.FindAsync(id);
@@ -64,6 +64,7 @@ namespace API.Controllers
             user.FirstName = UserDTO.FirstName ?? throw new ArgumentNullException(nameof(UserDTO.FirstName));
             user.LastName = UserDTO.LastName ?? throw new ArgumentNullException(nameof(UserDTO.LastName));
             user.Email = UserDTO.Email ?? throw new ArgumentNullException(nameof(UserDTO.Email));
+            user.Password = UserDTO.Password ?? throw new ArgumentNullException(nameof(UserDTO.Password));
             user.Address = UserDTO.Address ?? throw new ArgumentNullException(nameof(UserDTO.Address));
             user.PhoneNumber = UserDTO.PhoneNumber ?? throw new ArgumentNullException(nameof(UserDTO.PhoneNumber));
             user.City = UserDTO.City ?? throw new ArgumentNullException(nameof(UserDTO.City));
@@ -97,25 +98,38 @@ namespace API.Controllers
 
         // POST: api/Users
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(UserDTO UserDTO)
+        public async Task<ActionResult<User>> PostUser(UserPostAndPutDTO UserDTO)
         {
-            User user = new User()
+            try
             {
-                FirstName = UserDTO.FirstName,
-                LastName = UserDTO.LastName,
-                Email = UserDTO.Email,
-                Address = UserDTO.Address,
-                PhoneNumber = UserDTO.PhoneNumber,
-                City = UserDTO.City,
-                Country = UserDTO.Country,
-                Zip = UserDTO.Zip,
-                Role = "Customer"
-            };
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+                User user = new User()
+                {
+                    FirstName = UserDTO.FirstName,
+                    LastName = UserDTO.LastName,
+                    Email = UserDTO.Email,
+                    Password = UserDTO.Password,
+                    Address = UserDTO.Address,
+                    PhoneNumber = UserDTO.PhoneNumber,
+                    City = UserDTO.City,
+                    Country = UserDTO.Country,
+                    Zip = UserDTO.Zip,
+                    Role = UserDTO.Role
+                };
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+                return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+            }
+            catch (Exception ex)
+            {
+                // Log exception
+                Console.WriteLine($"Exception: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
         }
+
+
+
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
