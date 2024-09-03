@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20240902114417_Initial")]
+    [Migration("20240903083636_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -135,6 +135,10 @@ namespace API.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PasswordRepeat")
                         .IsRequired()
                         .HasColumnType("text");
 

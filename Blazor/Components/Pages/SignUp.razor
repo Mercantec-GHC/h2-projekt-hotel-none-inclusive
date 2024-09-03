@@ -68,6 +68,12 @@
                                     <label class="form-label" for="formCity">City</label>
                                     <input type="text" id="formCity" class="form-control form-control-sm" @bind="City" required />
                                 </div>
+                                
+                                <!-- Felt til by -->
+                                <div class="form-outline mb-3">
+                                    <label class="form-label" for="formCountry">Country</label>
+                                    <input type="text" id="formCountry" class="form-control form-control-sm" @bind="Country" required />
+                                </div>
 
                                 <!-- Felt til postnummer -->
                                 <div class="form-outline mb-3">
@@ -106,6 +112,7 @@
     private string? Phonenumber { get; set; }
     private string? Address { get; set; }
     private string? City { get; set; }
+    private string? Country { get; set; }
     private string? Zip { get; set; }
 
     private async Task RegisterUser()
@@ -117,7 +124,7 @@
             return;
         }
 
-        await DatabaseServices.AddUserToDatabaseAsync(FirstName, LastName, Email, Password, Address, Phonenumber, City, Zip);
+        await DatabaseServices.AddUserToDatabaseAsync(FirstName, LastName, Email, Password, PasswordRepeat, Address, Phonenumber, City, Country, Zip);
         NavigationManager.NavigateTo("/");
     }
 }

@@ -108,6 +108,7 @@ namespace API.Controllers
                     LastName = UserDTO.LastName,
                     Email = UserDTO.Email,
                     Password = UserDTO.Password,
+                    PasswordRepeat = UserDTO.PasswordRepeat,
                     Address = UserDTO.Address,
                     PhoneNumber = UserDTO.PhoneNumber,
                     City = UserDTO.City,
