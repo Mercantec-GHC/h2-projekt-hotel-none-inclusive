@@ -1,5 +1,6 @@
 ﻿@page "/Login"
-@inject HttpClient Http
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@inject HttpClient Http;
 
 <PageTitle>Login</PageTitle>
 
@@ -11,7 +12,7 @@
             <div class="card" style="width: 20rem;">
                 <div class="card-body">
                     <h3 class="text-center">Login Page</h3>
-                    <form @bind-attributes="@((Model != null) ? new { disabled = true })">
+                    <form @bind:disable="Model != null">
                         <div class="form-group">
                             <label for="username">Username</label>
                             <input type="text" class="form-control" id="username" @bind="username" placeholder="Enter Username">
