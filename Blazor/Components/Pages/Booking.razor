@@ -1,0 +1,203 @@
+﻿@page "/booking"
+
+@* Liste over værelser *@
+@code {
+    private List<Room> Rooms = new List<Room>();
+
+    protected override void OnInitialized()
+    {
+        // Generer 10 værelser af hver type (Dummy Data. Should fetch from database)
+        for (int i = 1; i <= 10; i++)
+        {
+            Rooms.Add(new Room { Id = i, Type = "Single Room", Price = 449, ImageUrl = "images/single-room.jpg", Description = "Perfekt til én person med alle nødvendige faciliteter." });
+            Rooms.Add(new Room { Id = i + 10, Type = "Double Room", Price = 799, ImageUrl = "images/double-room.png", Description = "Ideelt til par, med en stor dobbeltseng og moderne indretning." });
+            Rooms.Add(new Room { Id = i + 20, Type = "Suite", Price = 1499, ImageUrl = "images/suite-room.jpg", Description = "En luksuriøs suite for familien med ekstra plads og premium faciliteter." });
+        }
+    }
+
+    private class Room
+    {
+        public int Id { get; set; }
+        public string Type { get; set; }
+        public int Price { get; set; }
+        public string ImageUrl { get; set; }
+        public string Description { get; set; }
+    }
+}
+
+<h3 class="section-header">Vores Værelser</h3>
+
+<!-- Filter sektion -->
+<div class="filter-section">
+    <h4>Filtrer værelser</h4>
+    <div class="filter-controls">
+        <label>
+            Værelsestype:
+            <select class="styled-select">
+                <option value="">Alle</option>
+                <option value="Single">Single</option>
+                <option value="Double">Double</option>
+                <option value="Suite">Suite</option>
+            </select>
+        </label>
+        <label>
+            Maksimal pris:
+            <input type="number" placeholder="Indtast maksimal pris" class="styled-input" />
+        </label>
+        <button class="btn btn-primary">Anvend Filter</button>
+    </div>
+</div>
+
+<!-- Liste af værelser -->
+<div class="rooms-list">
+    @foreach (var room in Rooms)
+    {
+        <div class="room-card">
+            <div class="room-image-wrapper">
+                <img src="@room.ImageUrl" alt="Billede af @room.Type" class="room-image" />
+                <div class="price-overlay">@room.Price kr./nat</div>
+            </div>
+            <div class="room-details">
+                <h5>@room.Type</h5>
+                <p>@room.Description</p>
+                <a href="/room/@room.Id" class="btn btn-primary">Se detaljer</a>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Merriweather', serif;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    .section-header {
+        font-size: 2.5em;
+        font-weight: bold;
+        text-align: center;
+        margin: 60px 0;
+        color: #1a1a1a;
+    }
+
+    .filter-section {
+        padding: 20px;
+        margin: 0 auto 40px;
+        max-width: 900px;
+        border: 1px solid #e0e0e0;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .filter-controls {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+        gap: 15px;
+        justify-content: space-between;
+    }
+
+        .filter-controls label {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+            color: #666;
+            flex: 1;
+        }
+
+        .filter-controls .styled-select,
+        .filter-controls .styled-input {
+            margin-top: 5px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .filter-controls .btn {
+            align-self: flex-end;
+        }
+
+    .rooms-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        padding: 0 20px;
+    }
+
+    .room-card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        width: 300px;
+        overflow: hidden;
+        padding: 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+    }
+
+    .room-image-wrapper {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .room-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .room-card:hover .room-image {
+        transform: scale(1.05);
+    }
+
+    .price-overlay {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 1em;
+    }
+
+    .room-details {
+        padding: 15px;
+        text-align: center;
+    }
+
+        .room-details h5 {
+            margin: 0;
+            font-size: 1.3em;
+            color: #1a1a1a;
+        }
+
+        .room-details p {
+            margin: 10px 0;
+            color: #555;
+        }
+
+    .btn-primary {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: bold;
+        transition: background-color 0.3s;
+        font-size: 0.9em;
+        border: none;
+        background-color: #cba135;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #b38b30;
+        }
+</style>

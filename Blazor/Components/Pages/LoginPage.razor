@@ -1,4 +1,6 @@
 ﻿@page "/Login"
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@inject HttpClient Http;
 
 <PageTitle>Login</PageTitle>
 
@@ -10,15 +12,15 @@
             <div class="card" style="width: 20rem;">
                 <div class="card-body">
                     <h3 class="text-center">Login Page</h3>
-                    <form>
+                    <form @bind:disable="Model != null">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Username</label>
-                            <input type="text" class="form-control" id="exampleInputUsername" aria-describedby="UsernameHelp" placeholder="Enter Username">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" @bind="username" placeholder="Enter Username">
                         </div>
 
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" @bind="password" placeholder="Password">
                         </div>
 
                         <div class="text-center">
@@ -33,7 +35,52 @@
     </div>
 </div>
 
-
 @code {
+    private string username { get; set; }
+    private string password { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        // Initialize form fields
+        username = "";
+        password = "";
+    }
+
+    private async Task HandleFormSubmit()
+    {
+        if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+        {
+            var loginData = new LoginRequest
+            {
+                Username = username,
+                Password = password
+            };
+
+            try
+            {
+                var response = await Http.PostAsJsonAsync("api/Users", loginData);
+                if (response.IsSuccessStatusCode)
+                {
+                    // Handle successful login
+                    Console.WriteLine("Login successful");
+                }
+                else
+                {
+                    // Handle failed login
+                    Console.WriteLine($"Login failed: {await response.Content.ReadAsStringAsync()}");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions
+                Console.WriteLine($"Error during login: {ex.Message}");
+            }
+        }
+    }
+
+    public class LoginRequest
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
 }

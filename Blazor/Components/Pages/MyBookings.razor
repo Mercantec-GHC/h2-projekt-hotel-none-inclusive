@@ -1,0 +1,186 @@
+﻿@page "/my-bookings"
+@using System.Linq
+@inject NavigationManager Navigation
+
+@code {
+    private List<Booking> Bookings = new List<Booking>();
+
+    protected override void OnInitialized()
+    {
+        // Tilføj logik til at hente brugerens bookinger //(Dummy Data. Should fetch from database)
+        Bookings.Add(new Booking { Id = 1, RoomType = "Single Room", CheckInDate = DateTime.Now.AddDays(1), CheckOutDate = DateTime.Now.AddDays(3), Status = "Confirmed" });
+        Bookings.Add(new Booking { Id = 2, RoomType = "Suite", CheckInDate = DateTime.Now.AddDays(5), CheckOutDate = DateTime.Now.AddDays(7), Status = "Pending" });
+    }
+
+    private void CancelBooking(int id)
+    {
+        var booking = Bookings.FirstOrDefault(b => b.Id == id);
+        if (booking != null)
+        {
+            booking.Status = "Cancelled";
+        }
+    }
+
+    private class Booking
+    {
+        public int Id { get; set; }
+        public string RoomType { get; set; }
+        public DateTime CheckInDate { get; set; }
+        public DateTime CheckOutDate { get; set; }
+        public string Status { get; set; }
+    }
+}
+
+<h3 class="page-title">Mine Bookinger</h3>
+
+<div class="bookings-container">
+    @if (Bookings.Any())
+    {
+        <div class="booking-list">
+            @foreach (var booking in Bookings)
+            {
+                <div class="booking-card">
+                    <div class="card-header">
+                        <h4>@booking.RoomType</h4>
+                        <span class="status @GetStatusClass(booking.Status)">@booking.Status</span>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Indtjekning:</strong> @booking.CheckInDate.ToString("dd MMM yyyy")</p>
+                        <p><strong>Udtjekning:</strong> @booking.CheckOutDate.ToString("dd MMM yyyy")</p>
+                    </div>
+                    <div class="card-footer">
+                        @if (booking.Status != "Cancelled")
+                        {
+                            <button class="btn btn-danger" @onclick="() => CancelBooking(booking.Id)">Annuller</button>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="no-bookings">Ingen bookinger fundet.</p>
+    }
+</div>
+
+@code {
+    private string GetStatusClass(string status)
+    {
+        return status switch
+        {
+            "Confirmed" => "status-confirmed",
+            "Pending" => "status-pending",
+            "Cancelled" => "status-cancelled",
+            _ => ""
+        };
+    }
+}
+
+<style>
+    .page-title {
+        font-size: 2.4em;
+        font-weight: 600;
+        text-align: center;
+        margin: 40px 0;
+        color: #333;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .bookings-container {
+        margin: 0 auto;
+        max-width: 1200px;
+        padding: 20px;
+        background: linear-gradient(to right, #f5f7f9, #ffffff);
+        border-radius: 12px;
+    }
+
+    .booking-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .booking-card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        padding: 20px;
+        position: relative;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+        .card-header h4 {
+            margin: 0;
+            font-size: 1.6em;
+            color: #333;
+            font-weight: 600;
+        }
+
+    .status {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 0.85em;
+        color: white;
+    }
+
+    .status-confirmed {
+        background-color: #28a745;
+    }
+
+    .status-pending {
+        background-color: #ffc107;
+    }
+
+    .status-cancelled {
+        background-color: #dc3545;
+    }
+
+    .card-body p {
+        margin: 8px 0;
+        color: #666;
+        font-size: 1.1em;
+        line-height: 1.4;
+    }
+
+    .card-footer {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 1em;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+    .no-bookings {
+        text-align: center;
+        font-size: 1.2em;
+        color: #777;
+    }
+</style>
