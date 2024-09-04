@@ -120,12 +120,12 @@
 
     private async Task RegisterUser()
     {
-        if (Password != PasswordRepeat)
-        {
-            // Handle password mismatch
-            // You might want to show a validation message here
-            return;
-        }
+        // if (Password != PasswordRepeat)
+        // {
+        //     // Handle password mismatch
+        //     // You might want to show a validation message here
+        //     return;
+        // }
 
         await DatabaseServices.AddUserToDatabaseAsync(FirstName, LastName, Email, Password, PasswordRepeat, Address, Phonenumber, City, Country, Zip);
         NavigationManager.NavigateTo("/");
