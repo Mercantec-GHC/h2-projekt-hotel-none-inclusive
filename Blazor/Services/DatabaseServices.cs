@@ -44,5 +44,29 @@ namespace Service
         {
             return await _httpClient.GetFromJsonAsync<List<UserGetDTO>>(_baseURL + "Users");
         }
+
+        // Gets user info for login.
+        public async Task<UserLoginDTO> GetUserToLoginAsync(string email, string password)
+        {
+            var response = await _httpClient.GetAsync($"{_baseURL}Users/{email}/{password}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Deserialize the response content to UserLoginDTO
+                var user = await response.Content.ReadFromJsonAsync<UserLoginDTO>();
+                return user;
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                // Handle login failure (e.g., user not found or incorrect password)
+                return null; // or throw a custom exception
+            }
+            else
+            {
+                // Handle other potential errors (e.g., server errors)
+                response.EnsureSuccessStatusCode();
+                return null; // This line won't be reached, but it's necessary to satisfy the compiler
+            }
+        }
     }
 }

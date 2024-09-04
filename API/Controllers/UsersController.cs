@@ -34,6 +34,19 @@ namespace API.Controllers
             return Ok(users);
         }
 
+        // Get User info to login
+        [HttpGet("{email}/{password}")]
+        public async Task<ActionResult<UserLoginDTO>> Login(string email, string password)
+        {
+            var user = await _context.Users.Where(e => e.Email == email).FirstOrDefaultAsync(p => p.Password == password);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
+
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)

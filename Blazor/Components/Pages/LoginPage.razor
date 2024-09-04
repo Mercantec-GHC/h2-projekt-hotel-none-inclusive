@@ -1,86 +1,48 @@
 ﻿@page "/Login"
-@using Microsoft.EntityFrameworkCore.Metadata.Internal
 @inject HttpClient Http;
+@inject Service.DatabaseServices DatabaseServices
+
 
 <PageTitle>Login</PageTitle>
 
 <div class="container">
-    <div class="row">
-        <div class="col-sm">
-        </div>
-        <div class="col-sm">
-            <div class="card" style="width: 20rem;">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Login
+                </div>
                 <div class="card-body">
-                    <h3 class="text-center">Login Page</h3>
-                    <form @bind:disable="Model != null">
+                    @*Felter til at indtaste brugernavn og adgangskode*@
+                    <form>
                         <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" @bind="username" placeholder="Enter Username">
+                            <label for="Email" class="label">Email</label>
+                            <input type="text" class="form-control" id="email" placeholder="Enter email" @bind="Email" required>
                         </div>
-
                         <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" @bind="password" placeholder="Password">
+                            <label for="password" class="label">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Enter Password" @bind="Password" required>
                         </div>
-
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-dark mt-3 justify-content-center">Sign In</button>
-                        </div>
+                        <button type="submit" class="btn btn-dark" @onclick="LoginUser" @onclick:preventDefault>Log ind</button>
                     </form>
                 </div>
             </div>
         </div>
-        <div class="col-sm">
-        </div>
     </div>
 </div>
 
+<p>@message</p>
+
 @code {
-    private string username { get; set; }
-    private string password { get; set; }
+    private string Email { get; set; }
+    private string Password { get; set; }
+    string message = "";
 
-    protected override async Task OnInitializedAsync()
+    private async Task LoginUser()
     {
-        // Initialize form fields
-        username = "";
-        password = "";
+        await DatabaseServices.GetUserToLoginAsync(Email, Password);
+        message = $"LOGGET IND";
     }
 
-    private async Task HandleFormSubmit()
-    {
-        if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
-        {
-            var loginData = new LoginRequest
-            {
-                Username = username,
-                Password = password
-            };
-
-            try
-            {
-                var response = await Http.PostAsJsonAsync("api/Users", loginData);
-                if (response.IsSuccessStatusCode)
-                {
-                    // Handle successful login
-                    Console.WriteLine("Login successful");
-                }
-                else
-                {
-                    // Handle failed login
-                    Console.WriteLine($"Login failed: {await response.Content.ReadAsStringAsync()}");
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions
-                Console.WriteLine($"Error during login: {ex.Message}");
-            }
-        }
-    }
-
-    public class LoginRequest
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
-    }
+    
 }
