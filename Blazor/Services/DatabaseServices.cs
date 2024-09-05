@@ -68,5 +68,12 @@ namespace Service
                 return null; // This line won't be reached, but it's necessary to satisfy the compiler
             }
         }
+
+        public async Task<List<GetRoomDTO>> GetRooms()
+        {
+            return await _httpClient.GetFromJsonAsync<List<GetRoomDTO>>(_baseURL + "Rooms");
+        }
+
+
     }
 }

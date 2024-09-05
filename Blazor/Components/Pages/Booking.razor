@@ -2,45 +2,8 @@
 @inject HttpClient httpClient
 @using API.Models
 @using System.Linq
+@inject Service.DatabaseServices DatabaseServices
 
-
-@* Liste over værelser *@
-@code {
-    //private List<Room> Rooms = new List<Room>();
-    public List<GetRoomDTO> Rooms = new List<GetRoomDTO>();
-
-    protected override async Task OnInitializedAsync()
-    {
-        // // Generer 10 værelser af hver type (Dummy Data. Should fetch from database)
-        // for (int i = 1; i <= 10; i++)
-        // {
-        //     Rooms.Add(new Room { Id = i, Type = "Single Room", Price = 449, ImageUrl = "images/single-room.jpg", Description = "Perfekt til én person med alle nødvendige faciliteter." });
-        //     Rooms.Add(new Room { Id = i + 10, Type = "Double Room", Price = 799, ImageUrl = "images/double-room.png", Description = "Ideelt til par, med en stor dobbeltseng og moderne indretning." });
-        //     Rooms.Add(new Room { Id = i + 20, Type = "Suite", Price = 1499, ImageUrl = "images/suite-room.jpg", Description = "En luksuriøs suite for familien med ekstra plads og premium faciliteter." });
-        // }
-        try
-        {
-            Rooms = await httpClient.GetFromJsonAsync<List<GetRoomDTO>>("https://localhost:7207/api/Rooms");
-            
-        }
-        catch (Exception ex)
-        {
-            // Håndter eller log fejl her
-            Console.WriteLine($"Fejl ved hentning af brugerdata: {ex.Message}");
-        }
-
-    }
-
-
-    // private class Room
-    // {
-    //     public int Id { get; set; }
-    //     public string Type { get; set; }
-    //     public int Price { get; set; }
-    //     public string ImageUrl { get; set; }
-    //     public string Description { get; set; }
-    // }
-}
 
 <h3 class="section-header">Vores Værelser</h3>
 
@@ -67,22 +30,44 @@
 
 <!-- Liste af værelser -->
 <div class="rooms-list">
-    @foreach (var room in Rooms)
+    @if (Rooms == null)
     {
-        <div class="room-card">
-            <div class="room-image-wrapper">
-                <img src="@room.ImageURL" alt="Billede af @room.RoomType" class="room-image" />
-                <div class="price-overlay">@room.Price kr./nat</div>
+        <p>Loading...</p>
+    }
+    else
+    {
+        @foreach (var room in Rooms)
+        {
+            <div class="room-card">
+                <div class="room-image-wrapper">
+                    <img src="@room.ImageURL" alt="Billede af @room.RoomType" class="room-image" />
+                    <div class="price-overlay">@room.Price kr./nat</div>
+                </div>
+                <div class="room-details">
+                    <h5>@room.RoomType</h5>
+                    <p>@room.Description</p>
+                    <a href="/room/@room.Id" class="btn btn-primary">Se detaljer</a>
+                </div>
             </div>
-            <div class="room-details">
-                <h5>@room.RoomType</h5>
-                <p>@room.Description</p>
-                <a href="/room/@room.Id" class="btn btn-primary">Se detaljer</a>
-            </div>
-        </div>
+        }
     }
 </div>
 
+@code {
+    public List<GetRoomDTO> Rooms;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Rooms = await DatabaseServices.GetRooms();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Fejl ved hentning af værelser: {ex.Message}");
+        }
+    }
+}
 <style>
     body {
         margin: 0;
