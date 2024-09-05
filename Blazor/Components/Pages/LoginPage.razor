@@ -9,42 +9,83 @@
         <div class="col-md-6 col-lg-5">
             <div class="card shadow-lg p-4">
                 <div class="card-header text-center">
-                    <h3>Login</h3>
+                    <h3 class="text-uppercase">Velkommen tilbage</h3>
+                    <p class="text-muted">Log ind for at få adgang til din konto</p>
                 </div>
                 <div class="card-body">
                     @*Felter til at indtaste brugernavn og adgangskode*@
                     <form>
                         <div class="form-group">
                             <label for="Email" class="label">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter email" @bind="Email" required>
+                            <input type="email" class="form-control" id="email" placeholder="Indtast email" @bind="Email" required>
                         </div>
                         <div class="form-group mt-3">
-                            <label for="password" class="label">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter Password" @bind="Password" required>
+                            <label for="password" class="label">Adgangskode</label>
+                            <input type="password" class="form-control" id="password" placeholder="Indtast adgangskode" @bind="Password" required>
                         </div>
                         <div class="text-center mt-4">
                             <button type="submit" class="btn btn-primary" @onclick="LoginUser" @onclick:preventDefault>Log ind</button>
                         </div>
                     </form>
                 </div>
+                <div class="card-footer text-center">
+                    <p class="text-muted">Har du glemt din adgangskode?</p>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<p>@message</p>
+@if (!string.IsNullOrEmpty(message))
+
+{
+    <div class="alert @alertClass mt-4 text-center" role="alert">
+        @message
+    </div>
+}
 
 @code {
     private string Email { get; set; }
+
     private string Password { get; set; }
+
     string message = "";
 
+    string alertClass = "";
+
+
+
     private async Task LoginUser()
+
     {
-        await DatabaseServices.GetUserToLoginAsync(Email, Password);
-        message = $"LOGGET IND";
+
+        var user = await DatabaseServices.GetUserToLoginAsync(Email, Password);
+
+
+
+        if (user != null)
+
+        {
+
+            message = "Du er nu logget ind. Velkommen!";
+
+            alertClass = "alert-success";
+
+        }
+
+        else
+
+        {
+
+            message = "Ugyldig email eller adgangskode. Prøv igen.";
+
+            alertClass = "alert-danger";
+
+        }
+
     }
 }
+
 
 <style>
     .custom-margin-top {
@@ -68,4 +109,20 @@
             background-color: #b38b30;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
+
+    .alert {
+        padding: 15px;
+        border-radius: 5px;
+        font-size: 1.1em;
+    }
+
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
 </style>
