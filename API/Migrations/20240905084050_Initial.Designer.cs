@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20240903083636_Initial")]
+    [Migration("20240905084050_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -84,8 +84,16 @@ namespace API.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("Floor")
                         .HasColumnType("integer");
+
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsOccupied")
                         .HasColumnType("boolean");

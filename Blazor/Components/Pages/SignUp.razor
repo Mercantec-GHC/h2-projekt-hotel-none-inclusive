@@ -68,8 +68,8 @@
                                     <label class="form-label" for="formCity">City</label>
                                     <input type="text" id="formCity" class="form-control form-control-sm" @bind="City" required />
                                 </div>
-                                
-                                <!-- Felt til by -->
+
+                                <!-- Felt til land -->
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="formCountry">Country</label>
                                     <input type="text" id="formCountry" class="form-control form-control-sm" @bind="Country" required />
@@ -85,7 +85,7 @@
                                 <div class="form-check d-flex justify-content-center mb-4">
                                     <input class="form-check-input me-2" type="checkbox" value="" id="formAgreeCheckbox" required />
                                     <label class="form-check-label" for="formAgreeCheckbox">
-                                        I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
+                                        I agree to the <a href="#!" class="text-body"><u>Terms of service</u></a>
                                     </label>
                                 </div>
                                 <!-- Registrer knap -->
@@ -114,20 +114,20 @@
     private string? City { get; set; }
     private string? Country { get; set; }
     private string? Zip { get; set; }
-    private string? Role { get; set; }
-
-
 
     private async Task RegisterUser()
     {
-        // if (Password != PasswordRepeat)
-        // {
-        //     // Handle password mismatch
-        //     // You might want to show a validation message here
-        //     return;
-        // }
+        // Validering af adgangskode
+        if (Password != PasswordRepeat)
+        {
+            // Handle password mismatch, f.eks. vis valideringsbesked
+            return;
+        }
 
+        // Gem brugeroplysninger i databasen
         await DatabaseServices.AddUserToDatabaseAsync(FirstName, LastName, Email, Password, PasswordRepeat, Address, Phonenumber, City, Country, Zip);
-        NavigationManager.NavigateTo("/");
+
+        // Naviger til login-siden efter vellykket registrering
+        NavigationManager.NavigateTo("/login");
     }
 }

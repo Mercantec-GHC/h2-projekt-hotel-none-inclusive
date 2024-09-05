@@ -25,6 +25,23 @@ namespace API.Controllers
             return View(await _context.Rooms.ToListAsync());
         }
 
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<GetRoomDTO>>> GetUsers()
+        {
+            var rooms = await _context.Rooms.Select(room => new GetRoomDTO
+            {
+                Id = room.Id,
+                Price = room.PricePerNight,
+                RoomType = room.RoomType,
+                Description = room.Description,
+                ImageURL = room.ImageURL
+
+            }).ToListAsync();
+
+            return Ok(rooms);
+        }
+
         // GET: Rooms/Details/5
         public async Task<IActionResult> Details(int? id)
         {

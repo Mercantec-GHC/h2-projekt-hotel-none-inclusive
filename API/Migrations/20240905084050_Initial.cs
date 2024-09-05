@@ -22,7 +22,9 @@ namespace API.Migrations
                     RoomType = table.Column<string>(type: "text", nullable: false),
                     PricePerNight = table.Column<int>(type: "integer", nullable: false),
                     IsOccupied = table.Column<bool>(type: "boolean", nullable: false),
-                    Floor = table.Column<int>(type: "integer", nullable: false)
+                    Floor = table.Column<int>(type: "integer", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    ImageURL = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

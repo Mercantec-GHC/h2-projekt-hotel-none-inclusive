@@ -2,28 +2,29 @@
 @inject HttpClient Http;
 @inject Service.DatabaseServices DatabaseServices
 
-
 <PageTitle>Login</PageTitle>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    Login
+<div class="container d-flex align-items-center justify-content-center custom-margin-top">
+    <div class="row justify-content-center w-100">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg p-4">
+                <div class="card-header text-center">
+                    <h3>Login</h3>
                 </div>
                 <div class="card-body">
                     @*Felter til at indtaste brugernavn og adgangskode*@
                     <form>
                         <div class="form-group">
                             <label for="Email" class="label">Email</label>
-                            <input type="text" class="form-control" id="email" placeholder="Enter email" @bind="Email" required>
+                            <input type="email" class="form-control" id="email" placeholder="Enter email" @bind="Email" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <label for="password" class="label">Password</label>
                             <input type="password" class="form-control" id="password" placeholder="Enter Password" @bind="Password" required>
                         </div>
-                        <button type="submit" class="btn btn-dark" @onclick="LoginUser" @onclick:preventDefault>Log ind</button>
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary" @onclick="LoginUser" @onclick:preventDefault>Log ind</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -43,6 +44,28 @@
         await DatabaseServices.GetUserToLoginAsync(Email, Password);
         message = $"LOGGET IND";
     }
-
-    
 }
+
+<style>
+    .custom-margin-top {
+        margin-top: 100px;
+    }
+
+    .btn-primary {
+        display: inline-block;
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-weight: bold;
+        background-color: #cba135;
+        color: white;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #b38b30;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+</style>

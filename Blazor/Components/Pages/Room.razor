@@ -1,6 +1,10 @@
 ﻿@page "/room/{Id:int}"
 @using System.Linq
 @inject NavigationManager Navigation
+@inject HttpClient httpClient
+@using API.Models
+
+
 
 @code {
     [Parameter]
@@ -8,17 +12,32 @@
 
     private RoomDetails SelectedRoom { get; set; }
     //(Dummy Data. Should fetch from database)
-    private List<RoomDetails> Rooms = new List<RoomDetails>
-    {
-        new RoomDetails { Id = 1, Type = "Single Room", Price = 500, ImageUrl = "images/single-room.jpg", Description = "Perfekt til én person med alle nødvendige faciliteter.", Amenities = new List<string> { "Gratis Wi-Fi", "Room service", "Fladskærms TV", "Skrivebord" } },
-        new RoomDetails { Id = 11, Type = "Double Room", Price = 800, ImageUrl = "images/double-room.png", Description = "Ideelt til par, med en stor dobbeltseng og moderne indretning.", Amenities = new List<string> { "Balkon", "Minibar", "Gratis morgenmad", "Udsigt til haven" } },
-        new RoomDetails { Id = 21, Type = "Suite", Price = 1500, ImageUrl = "images/suite-room.jpg", Description = "En luksuriøs suite for familien med ekstra plads og premium faciliteter.", Amenities = new List<string> { "Privat jacuzzi", "Køkken", "Udsigt til havet", "Adgang til eksklusiv lounge" } }
-    };
+    // private List<RoomDetails> Rooms = new List<RoomDetails>
+    // {
+    //     new RoomDetails { Id = 1, Type = "Single Room", Price = 500, ImageUrl = "images/single-room.jpg", Description = "Perfekt til én person med alle nødvendige faciliteter.", Amenities = new List<string> { "Gratis Wi-Fi", "Room service", "Fladskærms TV", "Skrivebord" } },
+    //     new RoomDetails { Id = 11, Type = "Double Room", Price = 800, ImageUrl = "images/double-room.png", Description = "Ideelt til par, med en stor dobbeltseng og moderne indretning.", Amenities = new List<string> { "Balkon", "Minibar", "Gratis morgenmad", "Udsigt til haven" } },
+    //     new RoomDetails { Id = 21, Type = "Suite", Price = 1500, ImageUrl = "images/suite-room.jpg", Description = "En luksuriøs suite for familien med ekstra plads og premium faciliteter.", Amenities = new List<string> { "Privat jacuzzi", "Køkken", "Udsigt til havet", "Adgang til eksklusiv lounge" } }
+    // };
 
-    protected override void OnInitialized()
+    public List<GetRoomDTO> rooms = new List<GetRoomDTO>();
+
+    protected override async Task OnInitializedAsync()
     {
-        SelectedRoom = Rooms.FirstOrDefault(room => room.Id == Id);
+        try
+        {
+            rooms = await httpClient.GetFromJsonAsync<List<GetRoomDTO>>("https://localhost:7207/api/Rooms");
+        }
+        catch (Exception ex)
+        {
+            // Håndter eller log fejl her
+            Console.WriteLine($"Fejl ved hentning af brugerdata: {ex.Message}");
+        }
     }
+
+    // protected override void OnInitialized()
+    // {
+    //     SelectedRoom = Rooms.FirstOrDefault(room => room.Id == Id);
+    // }
 
     private void NavigateToBooking()
     {
