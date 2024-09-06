@@ -4,7 +4,6 @@
 @using System.Linq
 @inject Service.DatabaseServices DatabaseServices
 
-
 <h3 class="section-header">Vores Værelser</h3>
 
 <!-- Filter sektion -->
@@ -13,30 +12,44 @@
     <div class="filter-controls">
         <label>
             Værelsestype:
-            <select class="styled-select">
+            <select class="styled-select" @bind="selectedRoomType">
                 <option value="">Alle</option>
-                <option value="Single">Single</option>
-                <option value="Double">Double</option>
-                <option value="Suite">Suite</option>
+                @foreach (var type in roomTypes)
+                {
+                    <option value="@type">@type</option>
+                }
             </select>
         </label>
         <label>
             Maksimal pris:
-            <input type="number" placeholder="Indtast maksimal pris" class="styled-input" />
+            <input type="number" placeholder="Indtast maksimal pris" class="styled-input" @bind="maxPrice" />
         </label>
-        <button class="btn btn-primary">Anvend Filter</button>
+        <button class="btn btn-primary" @onclick="ApplyFilters">Anvend Filter</button>
+    </div>
+
+    <!-- Valgte filtre sektion -->
+    <div class="selected-filters">
+        <h4>Valgte filtre:</h4>
+        <p>
+            Værelsestype: @(string.IsNullOrEmpty(selectedRoomType) ? "Alle" : selectedRoomType) <br/>
+            Maksimal pris: @(maxPrice.HasValue ? $"{maxPrice.Value} kr." : "Ingen begrænsning")
+        </p>
     </div>
 </div>
 
 <!-- Liste af værelser -->
 <div class="rooms-list">
-    @if (Rooms == null)
+    @if (filteredRooms == null)
     {
         <p>Loading...</p>
     }
+    else if (!filteredRooms.Any())
+    {
+        <p>Ingen værelser matcher dine kriterier.</p>
+    }
     else
     {
-        @foreach (var room in Rooms)
+        @foreach (var room in filteredRooms)
         {
             <div class="room-card">
                 <div class="room-image-wrapper">
@@ -54,20 +67,43 @@
 </div>
 
 @code {
-    public List<GetRoomDTO> Rooms;
+    private List<GetRoomDTO> Rooms;
+    private List<GetRoomDTO> filteredRooms;
+    private List<string> roomTypes = new List<string>();
+    private string selectedRoomType = "";
+    private decimal? maxPrice;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             Rooms = await DatabaseServices.GetRooms();
+            filteredRooms = Rooms;
+
+            // Extract unique room types
+            roomTypes = Rooms.Select(room => room.RoomType).Distinct().ToList();
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Fejl ved hentning af værelser: {ex.Message}");
         }
     }
+
+    private void ApplyFilters()
+    {
+        Console.WriteLine("Applying filters...");
+
+        filteredRooms = Rooms.Where(room =>
+            (string.IsNullOrEmpty(selectedRoomType) || room.RoomType == selectedRoomType) &&
+            (!maxPrice.HasValue || room.Price <= maxPrice.Value)
+        ).ToList();
+
+        Console.WriteLine($"Filtered rooms count: {filteredRooms.Count}");
+    }
 }
+
+
+
 <style>
     body {
         margin: 0;
