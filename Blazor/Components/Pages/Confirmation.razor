@@ -1,0 +1,113 @@
+﻿@page "/confirmation"
+@inject NavigationManager Navigation
+
+<div class="confirmation-container">
+    <div class="confirmation-content">
+        <h1 class="confirmation-title">Tak for din booking!</h1>
+        <p class="confirmation-message">Din booking er bekræftet. Vi ser frem til at byde dig velkommen.</p>
+
+        <div class="booking-summary">
+            <h2 class="summary-title">Booking Detaljer</h2>
+            <p><strong>Navn:</strong> @bookingDetails.FirstName @bookingDetails.LastName</p>
+            <p><strong>Email:</strong> @bookingDetails.Email</p>
+            <p><strong>Telefon:</strong> @bookingDetails.Phone</p>
+            <p><strong>Check-in Dato:</strong> @checkInDate.ToShortDateString()</p>
+            <p><strong>Check-out Dato:</strong> @checkOutDate.ToShortDateString()</p>
+        </div>
+
+        <button class="btn btn-primary" @onclick="GoToHome">Tilbage til forsiden</button>
+    </div>
+</div>
+
+@code {
+    private BookingModel bookingDetails = new BookingModel();
+    private DateTime checkInDate = DateTime.Now;
+    private DateTime checkOutDate = DateTime.Now.AddDays(1);
+
+    protected override void OnInitialized()
+    {
+        //Pt dummydata. Skal ændres til den henter det fra databasen, der lige er blevet lagt ind. 
+        bookingDetails.FirstName = "John";
+        bookingDetails.LastName = "Doe";
+        bookingDetails.Email = "john.doe@example.com";
+        bookingDetails.Phone = "12345678";
+        checkInDate = DateTime.Now;
+        checkOutDate = DateTime.Now.AddDays(3);
+    }
+
+    private void GoToHome()
+    {
+        Navigation.NavigateTo("/");
+    }
+
+    public class BookingModel
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+    }
+}
+
+<style>
+    .confirmation-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f4f4f9;
+        padding: 20px;
+    }
+
+    .confirmation-content {
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        text-align: center;
+    }
+
+    .confirmation-title {
+        font-size: 2.5em;
+        color: #4CAF50;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .confirmation-message {
+        font-size: 1.2em;
+        color: #555555;
+        margin-bottom: 30px;
+    }
+
+    .booking-summary {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .summary-title {
+        font-size: 1.5em;
+        color: #333333;
+        margin-bottom: 15px;
+        font-weight: 700;
+    }
+
+    .btn-primary {
+        background-color: #4CAF50;
+        color: white;
+        padding: 15px 0;
+        border-radius: 8px;
+        font-size: 1.2em;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .btn-primary:hover {
+        background-color: #43a047;
+        transform: scale(1.05);
+    }
+</style>

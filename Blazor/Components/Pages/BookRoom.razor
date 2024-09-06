@@ -1,0 +1,209 @@
+﻿@page "/bookroom/{Id:int}"
+@using System.Linq
+@inject NavigationManager Navigation
+@inject HttpClient httpClient
+@using API.Models
+@using System.ComponentModel.DataAnnotations
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private GetRoomDTO SelectedRoom { get; set; }
+    public List<GetRoomDTO> rooms = new List<GetRoomDTO>();
+
+    private DateTime checkInDate { get; set; } = DateTime.Now;
+    private DateTime checkOutDate { get; set; } = DateTime.Now.AddDays(1);
+
+    private BookingModel BookingDetails = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            rooms = await httpClient.GetFromJsonAsync<List<GetRoomDTO>>("https://localhost:7207/api/Rooms");
+            SelectedRoom = rooms.FirstOrDefault(room => room.Id == Id);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Fejl ved hentning af værelsesdata: {ex.Message}");
+        }
+    }
+
+    private void ConfirmBooking()
+    {
+        // Logik for at gemme og bekræfte booking (pt lokalt) Skal kobles op med database
+        Navigation.NavigateTo("/confirmation");
+    }
+
+    public class BookingModel
+    {
+        [Required(ErrorMessage = "Fornavn er påkrævet.")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Efternavn er påkrævet.")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Email er påkrævet.")]
+        [EmailAddress(ErrorMessage = "Ugyldig email-adresse.")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Telefonnummer er påkrævet.")]
+        [Phone(ErrorMessage = "Ugyldigt telefonnummer.")]
+        public string Phone { get; set; }
+    }
+}
+
+@if (SelectedRoom != null)
+{
+    <div class="booking-page">
+        <div class="booking-container">
+            <div class="booking-room-info">
+                <img src="@SelectedRoom.ImageURL" alt="Billede af @SelectedRoom.RoomType" class="booking-room-image" />
+                <h1 class="booking-room-title">@SelectedRoom.RoomType</h1>
+                <p class="booking-room-price">@SelectedRoom.Price kr./nat</p>
+                <p class="booking-room-description">@SelectedRoom.Description</p>
+            </div>
+
+            <div class="booking-form">
+                <h2>Book dette værelse</h2>
+                <EditForm Model="@BookingDetails" OnValidSubmit="ConfirmBooking">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <div class="form-group">
+                        <label for="firstName">Fornavn</label>
+                        <InputText id="firstName" class="form-control" @bind-Value="BookingDetails.FirstName" />
+                        <ValidationMessage For="@(() => BookingDetails.FirstName)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">Efternavn</label>
+                        <InputText id="lastName" class="form-control" @bind-Value="BookingDetails.LastName" />
+                        <ValidationMessage For="@(() => BookingDetails.LastName)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <InputText id="email" class="form-control" type="email" @bind-Value="BookingDetails.Email" />
+                        <ValidationMessage For="@(() => BookingDetails.Email)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Telefon</label>
+                        <InputText id="phone" class="form-control" type="tel" @bind-Value="BookingDetails.Phone" />
+                        <ValidationMessage For="@(() => BookingDetails.Phone)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="checkInDate">Check-in Dato</label>
+                        <InputDate id="checkInDate" class="form-control" TValue="DateTime" @bind-Value="checkInDate" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="checkOutDate">Check-out Dato</label>
+                        <InputDate id="checkOutDate" class="form-control" TValue="DateTime" @bind-Value="checkOutDate" />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Bekræft booking</button>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <p>Værelset blev ikke fundet.</p>
+}
+
+<style>
+    .booking-page {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f4f4f9;
+        padding: 20px;
+    }
+
+    .booking-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 40px;
+        max-width: 1400px;
+        width: 100%;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .booking-room-info {
+        flex: 1;
+        text-align: left;
+        margin-right: 20px;
+    }
+
+    .booking-room-image {
+        width: 100%;
+        height: auto;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 20px;
+    }
+
+    .booking-room-title {
+        font-size: 2.5em;
+        color: #333333;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .booking-room-price {
+        font-size: 1.8em;
+        color: #cba135;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .booking-room-description {
+        font-size: 1.2em;
+        color: #666666;
+        margin-bottom: 30px;
+    }
+
+    .booking-form {
+        flex: 1;
+        max-width: 600px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.1em;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+    }
+
+    .btn-primary {
+        background-color: #cba135;
+        color: white;
+        padding: 15px 0;
+        border-radius: 8px;
+        font-size: 1.2em;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .btn-primary:hover {
+        background-color: #b38b30;
+        transform: scale(1.05);
+    }
+</style>
