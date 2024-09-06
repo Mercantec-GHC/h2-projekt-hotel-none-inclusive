@@ -19,6 +19,11 @@ namespace API.Models
         
         // PaymentStatus (String = Unpaid/Paid)
         public string PaymentStatus { get; set; } = null!;
+        public int RoomId { get; set; }
+        // Foreign key to User
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public User User { get; set; } = null!;
 
     }
 
@@ -38,6 +43,27 @@ namespace API.Models
 
         // PaymentStatus (String = Unpaid/Paid)
         public string PaymentStatus { get; set; } = null!;
+        public int RoomId { get; set; }
+        public int UserId { get; set; }
+
+    }
+
+
+    public class BookingWAllData
+    {
+        public DateTime BookingDate { get; set; }
+        public DateTime BookingStartDate { get; set; }
+        public DateTime BookingEndDate { get; set; }
+        public DateTime CheckInTime { get; set; }
+        public DateTime CheckOutTime { get; set; }
+        public int NumberOfNights { get; set; }
+        public int PricePerNight { get; set; }
+
+
+
+        public UserGetDTO UserInfo { get; set; }
+        public GetRoomDTO RoomInfo { get; set; }
+
     }
 
 }
