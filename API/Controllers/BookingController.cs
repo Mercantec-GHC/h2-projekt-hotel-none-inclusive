@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
 using HotelBooking.Data;
+using API.Services;
 
 namespace API.Controllers
 {
@@ -14,10 +15,14 @@ namespace API.Controllers
     public class BookingController : ControllerBase
     {
         private readonly DBContext _context;
+        private readonly UserMapping _userMapping;
+        private readonly RoomMapping _roomMapping;
 
-        public BookingController(DBContext context)
+        public BookingController(DBContext context, UserMapping userMapping, RoomMapping roomMapping)
         {
             _context = context;
+            _userMapping = userMapping;
+            _roomMapping = roomMapping;
         }
 
         // GET: api/Booking
@@ -35,8 +40,8 @@ namespace API.Controllers
                 CheckOutTime = b.CheckOutTime,
                 NumberOfNights = b.NumberOfNights,
                 PricePerNight = b.PricePerNight,
-                UserInfo = MapUserToUserGetDTO(b.User),
-                RoomInfo = MapRoomToGetRoomDTO(b.Room)
+                UserInfo = _userMapping.MapUserToUserGetDTO(b.User),
+                RoomInfo = _roomMapping.MapRoomToGetRoomDTO(b.Room)
             }).ToList();
 
             return Ok(bookingWAllData);
@@ -137,31 +142,8 @@ namespace API.Controllers
             return _context.Bookings.Any(e => e.Id == id);
         }
 
-        private UserGetDTO MapUserToUserGetDTO(User user)
-        {
-            UserGetDTO userGetDTO = new UserGetDTO()
-            {
-                Id = user.UserId,
-                FirstName = user.FirstName,
-                LastName = user.LastName
-            };
+        
 
-
-            return userGetDTO;
-        }
-
-        private GetRoomDTO MapRoomToGetRoomDTO(Room room)
-        {
-            GetRoomDTO getRoomDTO = new GetRoomDTO()
-            {
-                Id = room.Id,
-                Price = room.PricePerNight,
-                RoomType = room.RoomType,
-                Description = room.Description,
-                ImageURL = room.ImageURL
-            };
-
-            return getRoomDTO;
-        }
+        
     }
 }

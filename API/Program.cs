@@ -1,5 +1,6 @@
 using HotelBooking.Data;
 using Microsoft.EntityFrameworkCore;
+using API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,8 @@ IConfiguration Configuration = builder.Configuration;
 string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<DBContext>(options => options.UseNpgsql(connectionString));
+builder.Services.AddScoped<UserMapping>();
+builder.Services.AddScoped<RoomMapping>();
 
 // Add CORS policy
 builder.Services.AddCors(options =>
