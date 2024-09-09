@@ -22,9 +22,24 @@ namespace API.Controllers
 
         // GET: api/Booking
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BookingDTO>>> GetBookings()
+        public async Task<ActionResult<IEnumerable<BookingWAllData>>> GetBookings()
         {
-            return Ok(await _context.Bookings.ToListAsync());
+            var bookings = await _context.Bookings.Include(b => b.User).Include(b => b.Room).ToListAsync();
+
+            var bookingWAllData = bookings.Select(b => new BookingWAllData
+            {
+                BookingDate = b.BookingDate,
+                BookingStartDate = b.BookingStartDate,
+                BookingEndDate = b.BookingEndDate,
+                CheckInTime = b.CheckInTime,
+                CheckOutTime = b.CheckOutTime,
+                NumberOfNights = b.NumberOfNights,
+                PricePerNight = b.PricePerNight,
+                UserInfo = MapUserToUserGetDTO(b.User),
+                RoomInfo = MapRoomToGetRoomDTO(b.Room)
+            }).ToList();
+
+            return Ok(bookingWAllData);
         }
 
         // GET: api/Booking/5
@@ -45,6 +60,12 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Booking>> PostBooking(BookingDTO bookingDTO)
         {
+            // Tjek om UserId refererer til en gyldig bruger
+            var user = await _context.Users.FindAsync(bookingDTO.UserId);
+            if (user == null)
+            {
+                return BadRequest($"User with ID {bookingDTO.UserId} does not exist.");
+            }
             Booking booking = new Booking()
             {
                 BookingDate = bookingDTO.BookingDate,
@@ -55,7 +76,9 @@ namespace API.Controllers
                 NumberOfNights = bookingDTO.NumberOfNights,
                 PricePerNight = bookingDTO.PricePerNight,
                 ReservationID = bookingDTO.ReservationID,
-                PaymentStatus = bookingDTO.PaymentStatus
+                PaymentStatus = bookingDTO.PaymentStatus,
+                RoomId = bookingDTO.RoomId,
+                UserId = bookingDTO.UserId
             };
             _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
@@ -112,6 +135,33 @@ namespace API.Controllers
         private bool BookingDTOExists(int id)
         {
             return _context.Bookings.Any(e => e.Id == id);
+        }
+
+        private UserGetDTO MapUserToUserGetDTO(User user)
+        {
+            UserGetDTO userGetDTO = new UserGetDTO()
+            {
+                Id = user.UserId,
+                FirstName = user.FirstName,
+                LastName = user.LastName
+            };
+
+
+            return userGetDTO;
+        }
+
+        private GetRoomDTO MapRoomToGetRoomDTO(Room room)
+        {
+            GetRoomDTO getRoomDTO = new GetRoomDTO()
+            {
+                Id = room.Id,
+                Price = room.PricePerNight,
+                RoomType = room.RoomType,
+                Description = room.Description,
+                ImageURL = room.ImageURL
+            };
+
+            return getRoomDTO;
         }
     }
 }
