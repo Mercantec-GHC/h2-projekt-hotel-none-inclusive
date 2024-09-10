@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
 using HotelBooking.Data;
+using API.Services;
 
 namespace API.Controllers
 {
@@ -15,10 +16,13 @@ namespace API.Controllers
     public class RoomsController : Controller
     {
         private readonly DBContext _context;
+        private readonly RoomMapping _roomMapping;
 
-        public RoomsController(DBContext context)
+        public RoomsController(DBContext context, RoomMapping roomMapping)
         {
             _context = context;
+            _roomMapping = roomMapping;
+            
         }
 
         [HttpGet]
@@ -53,7 +57,7 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            return Ok(room);
+            return Ok(_roomMapping.MapRoomToGetRoomDTO(room));
         }
 
         // GET: Rooms/Edit/5

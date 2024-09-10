@@ -76,7 +76,7 @@ namespace Service
 
         public async Task<GetRoomDTO> GetRoomById(int id)
         {
-            return await _httpClient.GetFromJsonAsync<GetRoomDTO>(_baseURL + $"Rooms/{id}") ?? new();
+            return await _httpClient.GetFromJsonAsync<GetRoomDTO>(_baseURL + $"Rooms/{id}");
         }
 
         public async Task<UserGetDTO> GetUserByEmail(string email)

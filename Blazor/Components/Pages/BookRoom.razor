@@ -5,6 +5,7 @@
 @inject Service.DatabaseServices DBServices
 @using API.Models
 @using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
 
 @code {
     [Parameter]
@@ -14,6 +15,8 @@
     private UserGetDTO SelectedUser;
 
     private CreateBookingDTO newBooking = new CreateBookingDTO();
+    private DateTime checkInDate { get; set; }
+    private DateTime checkOutDate { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -27,8 +30,6 @@
         }
     }
 
-
-
     private async Task GetUser()
     {
         SelectedUser = await DBServices.GetUserByEmail(email);
@@ -36,19 +37,23 @@
         newBooking.RoomId = SelectedRoom.Id;
         await DBServices.CreateBooking(newBooking);
     }
+
+    private async Task ConfirmBooking()
+    {
+        // Handle form submission, validation, and service call
+        try
+        {
+            await DBServices.CreateBooking(newBooking);
+            // Redirect or provide user feedback
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Booking failed: {ex.Message}");
+        }
+    }
 }
 
-
-<p>Email:</p>
-<input type="text" @bind="email" placeholder="Enter Email" />
-<p>Start date:</p>
-<input type="text" @bind="newBooking.BookingStartDate" placeholder="Enter start date" />
-<p>End date:</p>
-<input type="text" @bind="newBooking.BookingEndDate" placeholder="Enter end date" />
-
-<button @onclick="GetUser" type="submit">Submit</button>
-
-@* @if (SelectedRoom != null)
+@if (SelectedRoom != null)
 {
     <div class="booking-page">
         <div class="booking-container">
@@ -61,54 +66,35 @@
 
             <div class="booking-form">
                 <h2>Book dette værelse</h2>
-                <EditForm Model="@BookingDetails" OnValidSubmit="ConfirmBooking">
+                <EditForm Model="newBooking" OnValidSubmit="GetUser">
                     <DataAnnotationsValidator />
                     <ValidationSummary />
 
                     <div class="form-group">
-                        <label for="firstName">Fornavn</label>
-                        <InputText id="firstName" class="form-control" @bind-Value="BookingDetails.FirstName" />
-                        <ValidationMessage For="@(() => BookingDetails.FirstName)" />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="lastName">Efternavn</label>
-                        <InputText id="lastName" class="form-control" @bind-Value="BookingDetails.LastName" />
-                        <ValidationMessage For="@(() => BookingDetails.LastName)" />
-                    </div>
-
-                    <div class="form-group">
                         <label for="email">Email</label>
-                        <InputText id="email" class="form-control" type="email" @bind-Value="BookingDetails.Email" />
-                        <ValidationMessage For="@(() => BookingDetails.Email)" />
+                        <input type="text" @bind="email" placeholder="Enter Email" />
+                        <ValidationMessage For="@(() => email)" />
                     </div>
 
                     <div class="form-group">
-                        <label for="phone">Telefon</label>
-                        <InputText id="phone" class="form-control" type="tel" @bind-Value="BookingDetails.Phone" />
-                        <ValidationMessage For="@(() => BookingDetails.Phone)" />
+                        <label for="BookingStartDate">Start Dato</label>
+                        <InputDate id="checkInDate" class="form-control" TValue="DateTime" @bind-Value="newBooking.BookingStartDate" />
                     </div>
 
                     <div class="form-group">
-                        <label for="checkInDate">Check-in Dato</label>
-                        <InputDate id="checkInDate" class="form-control" TValue="DateTime" @bind-Value="checkInDate" />
+                        <label for="BookingEndDate">End Dato</label>
+                        <InputDate id="checkOutDate" class="form-control" TValue="DateTime" @bind-Value="newBooking.BookingEndDate" />
                     </div>
 
-                    <div class="form-group">
-                        <label for="checkOutDate">Check-out Dato</label>
-                        <InputDate id="checkOutDate" class="form-control" TValue="DateTime" @bind-Value="checkOutDate" />
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Bekræft booking</button>
+                    <button type="submit">Submit</button>
                 </EditForm>
             </div>
         </div>
     </div>
-} *@
-@* else
+} else
 {
     <p>Værelset blev ikke fundet.</p>
-} *@
+}
 
 <style>
     .booking-page {
