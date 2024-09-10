@@ -74,6 +74,19 @@ namespace Service
             return await _httpClient.GetFromJsonAsync<List<GetRoomDTO>>(_baseURL + "Rooms");
         }
 
+        public async Task<GetRoomDTO> GetRoomById(int id)
+        {
+            return await _httpClient.GetFromJsonAsync<GetRoomDTO>(_baseURL + $"Rooms/{id}") ?? new();
+        }
 
+        public async Task<UserGetDTO> GetUserByEmail(string email)
+        {
+            return await _httpClient.GetFromJsonAsync<UserGetDTO>(_baseURL + $"Users/email/{email}");
+        }
+
+        public async Task CreateBooking(CreateBookingDTO booking)
+        {
+            await _httpClient.PostAsJsonAsync<CreateBookingDTO>(_baseURL + "Booking", booking);
+        }
     }
 }

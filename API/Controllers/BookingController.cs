@@ -17,12 +17,14 @@ namespace API.Controllers
         private readonly DBContext _context;
         private readonly UserMapping _userMapping;
         private readonly RoomMapping _roomMapping;
+        private readonly BookingMapping _bookingMapping;
 
-        public BookingController(DBContext context, UserMapping userMapping, RoomMapping roomMapping)
+        public BookingController(DBContext context, UserMapping userMapping, RoomMapping roomMapping, BookingMapping bookingMapping)
         {
             _context = context;
             _userMapping = userMapping;
             _roomMapping = roomMapping;
+            _bookingMapping = bookingMapping;
         }
 
         // GET: api/Booking
@@ -39,7 +41,6 @@ namespace API.Controllers
                 CheckInTime = b.CheckInTime,
                 CheckOutTime = b.CheckOutTime,
                 NumberOfNights = b.NumberOfNights,
-                PricePerNight = b.PricePerNight,
                 UserInfo = _userMapping.MapUserToUserGetDTO(b.User),
                 RoomInfo = _roomMapping.MapRoomToGetRoomDTO(b.Room)
             }).ToList();
@@ -60,35 +61,22 @@ namespace API.Controllers
 
             return Ok(bookingDTO);
         }
+       
 
         // POST: api/Booking
         [HttpPost]
-        public async Task<ActionResult<Booking>> PostBooking(BookingDTO bookingDTO)
+        public async Task<ActionResult<Booking>> PostBooking(CreateBookingDTO createBookingDTO)
         {
             // Tjek om UserId refererer til en gyldig bruger
-            var user = await _context.Users.FindAsync(bookingDTO.UserId);
+            var user = await _context.Users.FindAsync(createBookingDTO.UserId);
             if (user == null)
             {
-                return BadRequest($"User with ID {bookingDTO.UserId} does not exist.");
+                return BadRequest($"User with ID {createBookingDTO.UserId} does not exist.");
             }
-            Booking booking = new Booking()
-            {
-                BookingDate = bookingDTO.BookingDate,
-                BookingStartDate = bookingDTO.BookingStartDate,
-                BookingEndDate = bookingDTO.BookingEndDate,
-                CheckInTime = bookingDTO.CheckInTime,
-                CheckOutTime = bookingDTO.CheckOutTime,
-                NumberOfNights = bookingDTO.NumberOfNights,
-                PricePerNight = bookingDTO.PricePerNight,
-                ReservationID = bookingDTO.ReservationID,
-                PaymentStatus = bookingDTO.PaymentStatus,
-                RoomId = bookingDTO.RoomId,
-                UserId = bookingDTO.UserId
-            };
-            _context.Bookings.Add(booking);
+            _context.Bookings.Add(_bookingMapping.MapCreateBookingDTOToBooking(createBookingDTO));
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetBooking), new { id = bookingDTO.Id }, bookingDTO);
+            return CreatedAtAction(nameof(GetBooking), new { id = createBookingDTO.Id }, createBookingDTO);
         }
 
         // PUT: api/Booking/5

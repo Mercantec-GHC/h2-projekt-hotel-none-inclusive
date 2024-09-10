@@ -11,6 +11,7 @@ string connectionString = Configuration.GetConnectionString("DefaultConnection")
 builder.Services.AddDbContext<DBContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddScoped<UserMapping>();
 builder.Services.AddScoped<RoomMapping>();
+builder.Services.AddScoped<BookingMapping>();
 
 // Add CORS policy
 builder.Services.AddCors(options =>

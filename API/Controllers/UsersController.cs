@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HotelBooking.Data;
 using API.Models;
+using API.Services;
 
 namespace API.Controllers
 {
@@ -13,10 +14,12 @@ namespace API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly DBContext _context;
+        private readonly UserMapping _userMapping;
 
-        public UsersController(DBContext context)
+        public UsersController(DBContext context, UserMapping userMapping)
         {
             _context = context;
+            _userMapping = userMapping;
         }
 
         // GET: api/Users
@@ -48,7 +51,7 @@ namespace API.Controllers
         }
 
         // GET: api/Users/5
-        [HttpGet("{id}")]
+        [HttpGet("id/{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -59,6 +62,19 @@ namespace API.Controllers
             }
 
             return user;
+        }
+
+        [HttpGet("email/{email}")]
+        public async Task<ActionResult<UserGetDTO>> GetAUserByEmail(string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return _userMapping.MapUserToUserGetDTO(user);
         }
 
         // PUT: api/Users/5

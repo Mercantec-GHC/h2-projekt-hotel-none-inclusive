@@ -21,13 +21,6 @@ namespace API.Controllers
             _context = context;
         }
 
-        // GET: Rooms
-        [HttpGet("/Index")]
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Rooms.ToListAsync());
-        }
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetRoomDTO>>> GetRooms()
         {
@@ -47,28 +40,20 @@ namespace API.Controllers
 
         // GET: Rooms/Details/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Details(int? id)
+        public async Task<ActionResult<GetRoomDTO>> Details(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var room = await _context.Rooms
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var room = await _context.Rooms.FindAsync(id);
             if (room == null)
             {
                 return NotFound();
             }
 
-            return View(room);
-        }
-
-        // GET: Rooms/Create
-        [HttpGet("Create")]
-        public IActionResult Create()
-        {
-            return View();
+            return Ok(room);
         }
 
         // GET: Rooms/Edit/5
@@ -85,7 +70,7 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-            return View(room);
+            return Ok(room);
         }
         // POST: api/Rooms
         [HttpPost]
@@ -136,7 +121,7 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            return View(room);
+            return Ok(room);
         }
 
         //private bool RoomExists(int id)

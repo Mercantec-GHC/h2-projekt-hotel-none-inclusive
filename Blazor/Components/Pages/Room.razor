@@ -2,6 +2,7 @@
 @using System.Linq
 @inject NavigationManager Navigation
 @inject HttpClient httpClient
+@inject Service.DatabaseServices DBServices
 @using API.Models
 
 
@@ -16,8 +17,7 @@
     {
         try
         {
-            rooms = await httpClient.GetFromJsonAsync<List<GetRoomDTO>>("https://localhost:7207/api/Rooms");
-            SelectedRoom = rooms.FirstOrDefault(room => room.Id == Id);
+            SelectedRoom = await DBServices.GetRoomById(Id);
 
         }
         catch (Exception ex)

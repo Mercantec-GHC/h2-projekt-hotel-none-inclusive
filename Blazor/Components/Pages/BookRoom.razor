@@ -2,26 +2,24 @@
 @using System.Linq
 @inject NavigationManager Navigation
 @inject HttpClient httpClient
+@inject Service.DatabaseServices DBServices
 @using API.Models
 @using System.ComponentModel.DataAnnotations
 
 @code {
     [Parameter]
     public int Id { get; set; }
-    private GetRoomDTO SelectedRoom { get; set; }
-    public List<GetRoomDTO> rooms = new List<GetRoomDTO>();
+    public string email;
+    private GetRoomDTO SelectedRoom;
+    private UserGetDTO SelectedUser;
 
-    private DateTime checkInDate { get; set; } = DateTime.Now;
-    private DateTime checkOutDate { get; set; } = DateTime.Now.AddDays(1);
-
-    private BookingModel BookingDetails = new();
+    private CreateBookingDTO newBooking = new CreateBookingDTO();
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            rooms = await httpClient.GetFromJsonAsync<List<GetRoomDTO>>("https://localhost:7207/api/Rooms");
-            SelectedRoom = rooms.FirstOrDefault(room => room.Id == Id);
+            SelectedRoom = await DBServices.GetRoomById(Id);
         }
         catch (Exception ex)
         {
@@ -29,31 +27,28 @@
         }
     }
 
-    private void ConfirmBooking()
+
+
+    private async Task GetUser()
     {
-        // Logik for at gemme og bekræfte booking (pt lokalt) Skal kobles op med database
-        Navigation.NavigateTo("/confirmation");
-    }
-
-    public class BookingModel
-    {
-        [Required(ErrorMessage = "Fornavn er påkrævet.")]
-        public string FirstName { get; set; }
-
-        [Required(ErrorMessage = "Efternavn er påkrævet.")]
-        public string LastName { get; set; }
-
-        [Required(ErrorMessage = "Email er påkrævet.")]
-        [EmailAddress(ErrorMessage = "Ugyldig email-adresse.")]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "Telefonnummer er påkrævet.")]
-        [Phone(ErrorMessage = "Ugyldigt telefonnummer.")]
-        public string Phone { get; set; }
+        SelectedUser = await DBServices.GetUserByEmail(email);
+        newBooking.UserId = SelectedUser.Id;
+        newBooking.RoomId = SelectedRoom.Id;
+        await DBServices.CreateBooking(newBooking);
     }
 }
 
-@if (SelectedRoom != null)
+
+<p>Email:</p>
+<input type="text" @bind="email" placeholder="Enter Email" />
+<p>Start date:</p>
+<input type="text" @bind="newBooking.BookingStartDate" placeholder="Enter start date" />
+<p>End date:</p>
+<input type="text" @bind="newBooking.BookingEndDate" placeholder="Enter end date" />
+
+<button @onclick="GetUser" type="submit">Submit</button>
+
+@* @if (SelectedRoom != null)
 {
     <div class="booking-page">
         <div class="booking-container">
@@ -109,11 +104,11 @@
             </div>
         </div>
     </div>
-}
-else
+} *@
+@* else
 {
     <p>Værelset blev ikke fundet.</p>
-}
+} *@
 
 <style>
     .booking-page {

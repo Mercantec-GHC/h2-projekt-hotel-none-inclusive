@@ -10,7 +10,8 @@ namespace API.Services
             {
                 Id = user.UserId,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                Email = user.Email
             };
 
 

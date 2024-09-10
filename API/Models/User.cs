@@ -4,7 +4,7 @@ namespace API.Models
 {
     public class User
     {
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string Email { get; set; } = null!;
@@ -21,7 +21,7 @@ namespace API.Models
 
     public class UserPostAndPutDTO
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string Email { get; set; } = null!;
@@ -37,15 +37,16 @@ namespace API.Models
     
     public class UserGetDTO
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+        public string Email { get; set; }
         
     }
 
     public class UserLoginDTO
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string Email { get; set; } = null!;
         public string Password { get; set; } = null!;
         public string? FirstName { get; set; }
