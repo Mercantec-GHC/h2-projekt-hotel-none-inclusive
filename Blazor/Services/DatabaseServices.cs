@@ -20,21 +20,9 @@ namespace Service
         }
 
         // Adds a user to the database.
-        public async Task AddUserToDatabaseAsync(string firstName, string lastName, string email, string password, string passwordrepeat, string address, string phonenumber, string city, string country, string zip)
+        public async Task AddUserToDatabaseAsync(UserPostAndPutDTO user)
         {
-            var user = new UserPostAndPutDTO
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                Email = email,
-                Password = password,
-                PasswordRepeat = passwordrepeat,
-                Address = address,
-                PhoneNumber = phonenumber,
-                City = city,
-                Country = country,
-                Zip = zip
-            };
+            
 
             await _httpClient.PostAsJsonAsync<UserPostAndPutDTO>(_baseURL + "Users", user);
         }
