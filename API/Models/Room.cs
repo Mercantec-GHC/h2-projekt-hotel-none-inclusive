@@ -2,8 +2,10 @@
 
 namespace API.Models
 {
+    // Represents a Room entity in the system
     public class Room
     {
+        // Unique identifier for the room
         public int Id { get; set; }
         public int RoomNumber { get; set; }
         public string RoomType { get; set; } = null!;
@@ -16,6 +18,7 @@ namespace API.Models
 
     }
 
+    // DTO for retrieving room information
     public class GetRoomDTO
     {
         public int Id { get; set; }
@@ -26,6 +29,7 @@ namespace API.Models
 
     }
 
+    // DTO for creating a new room
     public class CreateRoomDTO
     {
         public int Id { get; set; }
