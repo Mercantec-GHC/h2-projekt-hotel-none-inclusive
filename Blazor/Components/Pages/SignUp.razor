@@ -24,61 +24,61 @@
                                 <!-- Felt til fornavn -->
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="formFirstName">First Name</label>
-                                    <input type="text" id="formFirstName" class="form-control form-control-sm" @bind="FirstName" required />
+                                    <input type="text" id="formFirstName" class="form-control form-control-sm" @bind="newUser.FirstName" required />
                                 </div>
 
                                 <!-- Felt til efternavn -->
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="formLastName">Last Name</label>
-                                    <input type="text" id="formLastName" class="form-control form-control-sm" @bind="LastName" required />
+                                    <input type="text" id="formLastName" class="form-control form-control-sm" @bind="newUser.LastName" required />
                                 </div>
 
                                 <!-- Felt til e-mail -->
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="formEmail">Email</label>
-                                    <input type="email" id="formEmail" class="form-control form-control-sm" @bind="Email" required />
+                                    <input type="email" id="formEmail" class="form-control form-control-sm" @bind="newUser.Email" required />
                                 </div>
 
                                 <!-- Felt til adgangskode -->
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="formPassword">Password</label>
-                                    <input type="password" id="formPassword" class="form-control form-control-sm" @bind="Password" required />
+                                    <input type="password" id="formPassword" class="form-control form-control-sm" @bind="newUser.Password" required />
                                 </div>
 
                                 <!-- Felt til gentagelse af adgangskode -->
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="formPasswordRepeat">Confirm Password</label>
-                                    <input type="password" id="formPasswordRepeat" class="form-control form-control-sm" @bind="PasswordRepeat" required />
+                                    <input type="password" id="formPasswordRepeat" class="form-control form-control-sm" @bind="newUser.PasswordRepeat" required />
                                 </div>
 
                                 <!-- Felt til telefonnummer -->
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="formPhonenumber">Phone Number</label>
-                                    <input type="tel" id="formPhonenumber" class="form-control form-control-sm" @bind="Phonenumber" required />
+                                    <input type="tel" id="formPhonenumber" class="form-control form-control-sm" @bind="newUser.PhoneNumber" required />
                                 </div>
 
                                 <!-- Felt til adresse -->
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="formAddress">Address</label>
-                                    <input type="text" id="formAddress" class="form-control form-control-sm" @bind="Address" required />
+                                    <input type="text" id="formAddress" class="form-control form-control-sm" @bind="newUser.Address" required />
                                 </div>
 
                                 <!-- Felt til by -->
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="formCity">City</label>
-                                    <input type="text" id="formCity" class="form-control form-control-sm" @bind="City" required />
+                                    <input type="text" id="formCity" class="form-control form-control-sm" @bind="newUser.City" required />
                                 </div>
 
                                 <!-- Felt til land -->
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="formCountry">Country</label>
-                                    <input type="text" id="formCountry" class="form-control form-control-sm" @bind="Country" required />
+                                    <input type="text" id="formCountry" class="form-control form-control-sm" @bind="newUser.Country" required />
                                 </div>
 
                                 <!-- Felt til postnummer -->
                                 <div class="form-outline mb-3">
                                     <label class="form-label" for="formZip">Zip Code</label>
-                                    <input type="text" id="formZip" class="form-control form-control-sm" @bind="Zip" required />
+                                    <input type="text" id="formZip" class="form-control form-control-sm" @bind="newUser.Zip" required />
                                 </div>
 
                                 <!-- Afkrydsningsfelt for accept af vilkår -->
@@ -115,6 +115,9 @@
     private string? Country { get; set; }
     private string? Zip { get; set; }
 
+    private UserPostAndPutDTO newUser = new UserPostAndPutDTO();
+
+
     private async Task RegisterUser()
     {
         // Validering af adgangskode
@@ -123,9 +126,9 @@
             // Handle password mismatch, f.eks. vis valideringsbesked
             return;
         }
-
+        newUser.Role = "Guest";
         // Gem brugeroplysninger i databasen
-        await DatabaseServices.AddUserToDatabaseAsync(FirstName, LastName, Email, Password, PasswordRepeat, Address, Phonenumber, City, Country, Zip);
+        await DatabaseServices.AddUserToDatabaseAsync(newUser);
 
         // Naviger til login-siden efter vellykket registrering
         NavigationManager.NavigateTo("/login");
