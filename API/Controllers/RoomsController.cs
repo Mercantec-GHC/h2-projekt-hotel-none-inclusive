@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
 using HotelBooking.Data;
@@ -11,23 +10,29 @@ using API.Services;
 
 namespace API.Controllers
 {
+    // Marks the controller as an API controller and defines the route for requests
     [ApiController]
     [Route("api/[Controller]")]
     public class RoomsController : Controller
     {
+        // Fields for the database context and room mapping service
         private readonly DBContext _context;
         private readonly RoomMapping _roomMapping;
 
+        // Constructor to inject the database context and mapping service
         public RoomsController(DBContext context, RoomMapping roomMapping)
         {
             _context = context;
             _roomMapping = roomMapping;
-            
         }
 
+        #region GetRooms
+        // GET: api/Rooms
+        // Retrieves a list of rooms with selected fields
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetRoomDTO>>> GetRooms()
         {
+            // Retrieves all rooms from the database and maps them to GetRoomDTO
             var rooms = await _context.Rooms.Select(room => new GetRoomDTO
             {
                 Id = room.Id,
@@ -37,61 +42,78 @@ namespace API.Controllers
                 ImageURL = room.ImageURL
             }).ToListAsync();
 
+            // Returns the list of rooms
             return Ok(rooms);
         }
+        #endregion
 
-
-
-        // GET: Rooms/Details/5
+        #region Details
+        // GET: api/Rooms/Details/5
+        // Retrieves the details of a specific room based on its ID
         [HttpGet("{id}")]
         public async Task<ActionResult<GetRoomDTO>> Details(int id)
         {
+            // Checks if the provided ID is null
             if (id == null)
             {
                 return NotFound();
             }
 
+            // Finds the room in the database by its ID
             var room = await _context.Rooms.FindAsync(id);
             if (room == null)
             {
                 return NotFound();
             }
 
+            // Maps the room entity to GetRoomDTO and returns it
             return Ok(_roomMapping.MapRoomToGetRoomDTO(room));
         }
+        #endregion
 
-        // GET: Rooms/Edit/5
+        #region Edit
+        // PUT: api/Rooms/Edit/5
+        // Updates the details of a specific room
         [HttpPut("Edit")]
         public async Task<IActionResult> Edit(int? id)
         {
+            // Checks if the room ID is null
             if (id == null)
             {
                 return NotFound();
             }
 
+            // Finds the room in the database by its ID
             var room = await _context.Rooms.FindAsync(id);
             if (room == null)
             {
                 return NotFound();
             }
+
+            // Returns the found room for editing
             return Ok(room);
         }
+        #endregion
+
+        #region PostRoom
         // POST: api/Rooms
+        // Creates a new room entry in the database
         [HttpPost]
         public async Task<ActionResult<Room>> PostRoom(CreateRoomDTO createRoomDTO)
         {
+            // Checks if the provided room data is null
             if (createRoomDTO == null)
             {
                 return BadRequest("Room data is null.");
             }
 
-            // Validate the input data
+            // Validates the input data against the model
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            // Map CreateRoomDTO to Room entity
+            // Maps CreateRoomDTO to the Room entity
             var room = new Room
             {
                 RoomType = createRoomDTO.RoomType,
@@ -100,24 +122,28 @@ namespace API.Controllers
                 ImageURL = createRoomDTO.ImageURL
             };
 
-            // Add the new room to the database
+            // Adds the new room to the database and saves changes
             _context.Rooms.Add(room);
             await _context.SaveChangesAsync();
 
-            // Return a response with the newly created room
+            // Returns a response with the newly created room's details
             return CreatedAtAction(nameof(GetRooms), new { id = room.Id }, room);
         }
+        #endregion
 
-
-        // GET: Rooms/Delete/5
+        #region Delete
+        // DELETE: api/Rooms/Delete/5
+        // Deletes a specific room from the database
         [HttpDelete]
         public async Task<IActionResult> Delete(int? id)
         {
+            // Checks if the room ID is null
             if (id == null)
             {
                 return NotFound();
             }
 
+            // Finds the room in the database by its ID
             var room = await _context.Rooms
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (room == null)
@@ -125,12 +151,10 @@ namespace API.Controllers
                 return NotFound();
             }
 
+            // Returns the room that is going to be deleted
             return Ok(room);
         }
+        #endregion
 
-        //private bool RoomExists(int id)
-        //{
-        //    return _context.Rooms.Any(e => e.Id == id);
-        //}
     }
 }

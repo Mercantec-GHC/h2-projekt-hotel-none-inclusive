@@ -2,8 +2,10 @@
 
 namespace API.Models
 {
+    // Represents a User entity in the system
     public class User
     {
+        // Unique identifier for the user
         public int UserId { get; set; }
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
@@ -16,9 +18,11 @@ namespace API.Models
         public string? Country { get; set; }
         public string Zip { get; set; } = null!;
         public string? Role { get; set; }
+        // List of bookings made by the user
         public List<Booking> Bookings { get; set; } = new List<Booking>();
     }
 
+    // DTO for creating or updating a user (used in POST and PUT operations)
     public class UserPostAndPutDTO
     {
         public int Id { get; set; }
@@ -34,7 +38,8 @@ namespace API.Models
         public string Zip { get; set; } = null!;
         public string? Role { get; set; }
     }
-    
+
+    // DTO for retrieving user details (used in GET operations)
     public class UserGetDTO
     {
         public int Id { get; set; }
@@ -44,6 +49,7 @@ namespace API.Models
         
     }
 
+    // DTO for user login (used during authentication)
     public class UserLoginDTO
     {
         public int Id { get; set; }
