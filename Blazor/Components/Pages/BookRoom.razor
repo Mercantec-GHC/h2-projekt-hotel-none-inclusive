@@ -10,13 +10,21 @@
 @code {
     [Parameter]
     public int Id { get; set; }
-    public string email;
+
+    [Required(ErrorMessage = "Email is required")]
+    [EmailAddress(ErrorMessage = "Invalid email address")]
+    public string email { get; set; }
+
     private GetRoomDTO SelectedRoom;
     private UserGetDTO SelectedUser;
+    private CreateBookingDTO newBooking = new CreateBookingDTO
+        {
+            BookingStartDate = DateTime.Now,
+            BookingEndDate = DateTime.Now.AddDays(1)
+        };
 
-    private CreateBookingDTO newBooking = new CreateBookingDTO();
-    private DateTime checkInDate { get; set; }
-    private DateTime checkOutDate { get; set; }
+    private bool showModal = false;
+    private decimal totalPrice;
 
     protected override async Task OnInitializedAsync()
     {
@@ -26,30 +34,45 @@
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Fejl ved hentning af værelsesdata: {ex.Message}");
+            Console.WriteLine($"Error fetching room data: {ex.Message}");
         }
     }
 
     private async Task GetUser()
     {
-        SelectedUser = await DBServices.GetUserByEmail(email);
-        newBooking.UserId = SelectedUser.Id;
-        newBooking.RoomId = SelectedRoom.Id;
-        await DBServices.CreateBooking(newBooking);
-    }
-
-    private async Task ConfirmBooking()
-    {
-        // Handle form submission, validation, and service call
         try
         {
-            await DBServices.CreateBooking(newBooking);
-            // Redirect or provide user feedback
+            SelectedUser = await DBServices.GetUserByEmail(email);
+            if (SelectedUser != null)
+            {
+                newBooking.UserId = SelectedUser.Id;
+                newBooking.RoomId = SelectedRoom.Id;
+
+                // Calculate total price
+                int numberOfNights = (newBooking.BookingEndDate - newBooking.BookingStartDate).Days;
+                totalPrice = SelectedRoom.Price * numberOfNights;
+
+                // Opret booking
+                await DBServices.CreateBooking(newBooking);
+
+                // Vis modal med bookingoplysninger
+                showModal = true;
+            }
+            else
+            {
+                Console.WriteLine("User not found.");
+            }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Booking failed: {ex.Message}");
+            Console.WriteLine($"Error during booking: {ex.Message}");
         }
+    }
+
+    private void CloseModal()
+    {
+        showModal = false;
+        Navigation.NavigateTo("/");
     }
 }
 
@@ -58,42 +81,60 @@
     <div class="booking-page">
         <div class="booking-container">
             <div class="booking-room-info">
-                <img src="@SelectedRoom.ImageURL" alt="Billede af @SelectedRoom.RoomType" class="booking-room-image" />
+                <img src="@SelectedRoom.ImageURL" alt="Image of @SelectedRoom.RoomType" class="booking-room-image" />
                 <h1 class="booking-room-title">@SelectedRoom.RoomType</h1>
-                <p class="booking-room-price">@SelectedRoom.Price kr./nat</p>
+                <p class="booking-room-price">@SelectedRoom.Price kr./night</p>
                 <p class="booking-room-description">@SelectedRoom.Description</p>
             </div>
 
             <div class="booking-form">
-                <h2>Book dette værelse</h2>
-                <EditForm Model="newBooking" OnValidSubmit="GetUser">
+                <h2>Book this room</h2>
+                <EditForm Model="this" OnValidSubmit="GetUser">
                     <DataAnnotationsValidator />
                     <ValidationSummary />
 
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="text" @bind="email" placeholder="Enter Email" />
+                        <input type="text" @bind="email" placeholder="Enter your email" class="form-control" />
                         <ValidationMessage For="@(() => email)" />
                     </div>
 
                     <div class="form-group">
-                        <label for="BookingStartDate">Start Dato</label>
+                        <label for="BookingStartDate">Check-in Date</label>
                         <InputDate id="checkInDate" class="form-control" TValue="DateTime" @bind-Value="newBooking.BookingStartDate" />
+                        <ValidationMessage For="@(() => newBooking.BookingStartDate)" />
                     </div>
 
                     <div class="form-group">
-                        <label for="BookingEndDate">End Dato</label>
+                        <label for="BookingEndDate">Check-out Date</label>
                         <InputDate id="checkOutDate" class="form-control" TValue="DateTime" @bind-Value="newBooking.BookingEndDate" />
+                        <ValidationMessage For="@(() => newBooking.BookingEndDate)" />
                     </div>
 
-                    <button type="submit">Submit</button>
+                    <button type="submit" class="btn-primary">Confirm Booking</button>
                 </EditForm>
             </div>
         </div>
     </div>
-} else
+
+    @if (showModal)
+    {
+        <div class="modal">
+            <div class="modal-content">
+                <span class="close" @onclick="CloseModal">&times;</span>
+                <h2>Booking Confirmation</h2>
+                <p><strong>Room:</strong> @SelectedRoom.RoomType</p>
+                <p><strong>Check-in:</strong> @newBooking.BookingStartDate.ToShortDateString()</p>
+                <p><strong>Check-out:</strong> @newBooking.BookingEndDate.ToShortDateString()</p>
+                <p><strong>Total Price:</strong> @totalPrice.ToString("0.00") kr.</p>
+                <button @onclick="CloseModal" class="btn-primary">Close</button>
+            </div>
+        </div>
+    }
+}
+else
 {
-    <p>Værelset blev ikke fundet.</p>
+    <p>Room not found.</p>
 }
 
 <style>
@@ -183,8 +224,49 @@
         width: 100%;
     }
 
-    .btn-primary:hover {
-        background-color: #b38b30;
-        transform: scale(1.05);
+        .btn-primary:hover {
+            background-color: #b38b30;
+            transform: scale(1.05);
+        }
+
+    .modal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 500px;
+        width: 100%;
+        position: relative;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 1.5em;
+        cursor: pointer;
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.querySelector('.modal');
+        if (modal) {
+            document.querySelector('.close').addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+        }
+    });
+</script>
