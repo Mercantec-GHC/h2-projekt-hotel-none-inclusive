@@ -8,24 +8,31 @@
 @using Microsoft.AspNetCore.Components.Forms
 
 @code {
+    // The room ID is passed as a parameter from the URL
     [Parameter]
     public int Id { get; set; }
 
+    // Email field with validation annotations
     [Required(ErrorMessage = "Email is required")]
     [EmailAddress(ErrorMessage = "Invalid email address")]
     public string email { get; set; }
 
+    // Room and user data models
     private GetRoomDTO SelectedRoom;
     private UserGetDTO SelectedUser;
+
+    // Model for creating a new booking with default start and end dates
     private CreateBookingDTO newBooking = new CreateBookingDTO
         {
             BookingStartDate = DateTime.Now,
             BookingEndDate = DateTime.Now.AddDays(1)
         };
 
+    // Modal state and total price variable
     private bool showModal = false;
     private decimal totalPrice;
 
+    // On initialization, fetch room details based on the ID from the URL
     protected override async Task OnInitializedAsync()
     {
         try
@@ -38,24 +45,27 @@
         }
     }
 
+    // Method to get user details by email and create a booking
     private async Task GetUser()
     {
         try
         {
+            // Fetch user data based on the entered email
             SelectedUser = await DBServices.GetUserByEmail(email);
             if (SelectedUser != null)
             {
+                // Assign user and room IDs to the new booking
                 newBooking.UserId = SelectedUser.Id;
                 newBooking.RoomId = SelectedRoom.Id;
 
-                // Calculate total price
+                // Calculate total price based on the number of nights booked
                 int numberOfNights = (newBooking.BookingEndDate - newBooking.BookingStartDate).Days;
                 totalPrice = SelectedRoom.Price * numberOfNights;
 
-                // Opret booking
+                // Create booking
                 await DBServices.CreateBooking(newBooking);
 
-                // Vis modal med bookingoplysninger
+                // Show confirmation modal
                 showModal = true;
             }
             else
@@ -69,6 +79,7 @@
         }
     }
 
+    // Close modal and navigate back to the homepage
     private void CloseModal()
     {
         showModal = false;
@@ -78,8 +89,10 @@
 
 @if (SelectedRoom != null)
 {
+    <!-- Main booking page content when the selected room is available -->
     <div class="booking-page">
         <div class="booking-container">
+            <!-- Room information section -->
             <div class="booking-room-info">
                 <img src="@SelectedRoom.ImageURL" alt="Image of @SelectedRoom.RoomType" class="booking-room-image" />
                 <h1 class="booking-room-title">@SelectedRoom.RoomType</h1>
@@ -87,30 +100,35 @@
                 <p class="booking-room-description">@SelectedRoom.Description</p>
             </div>
 
+            <!-- Booking form section -->
             <div class="booking-form">
                 <h2>Book this room</h2>
                 <EditForm Model="this" OnValidSubmit="GetUser">
                     <DataAnnotationsValidator />
                     <ValidationSummary />
 
+                    <!-- Email input field -->
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="text" @bind="email" placeholder="Enter your email" class="form-control" />
                         <ValidationMessage For="@(() => email)" />
                     </div>
 
+                    <!-- Check-in date input -->
                     <div class="form-group">
                         <label for="BookingStartDate">Check-in Date</label>
                         <InputDate id="checkInDate" class="form-control" TValue="DateTime" @bind-Value="newBooking.BookingStartDate" />
                         <ValidationMessage For="@(() => newBooking.BookingStartDate)" />
                     </div>
 
+                    <!-- Check-out date input -->
                     <div class="form-group">
                         <label for="BookingEndDate">Check-out Date</label>
                         <InputDate id="checkOutDate" class="form-control" TValue="DateTime" @bind-Value="newBooking.BookingEndDate" />
                         <ValidationMessage For="@(() => newBooking.BookingEndDate)" />
                     </div>
 
+                    <!-- Booking confirmation button -->
                     <button type="submit" class="btn-primary">Confirm Booking</button>
                 </EditForm>
             </div>
@@ -119,6 +137,7 @@
 
     @if (showModal)
     {
+        <!-- Booking confirmation modal -->
         <div class="modal">
             <div class="modal-content">
                 <span class="close" @onclick="CloseModal">&times;</span>
@@ -134,10 +153,12 @@
 }
 else
 {
+    <!-- Message displayed when the room is not found -->
     <p>Room not found.</p>
 }
 
 <style>
+    /* Styles for the main booking page layout */
     .booking-page {
         display: flex;
         justify-content: center;
@@ -159,6 +180,7 @@ else
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
     }
 
+    /* Room information styles */
     .booking-room-info {
         flex: 1;
         text-align: left;
@@ -194,6 +216,7 @@ else
         margin-bottom: 30px;
     }
 
+    /* Booking form styles */
     .booking-form {
         flex: 1;
         max-width: 600px;
@@ -211,6 +234,7 @@ else
         border: 1px solid #ddd;
     }
 
+    /* Primary button styles */
     .btn-primary {
         background-color: #cba135;
         color: white;
@@ -229,6 +253,7 @@ else
             transform: scale(1.05);
         }
 
+    /* Modal styles */
     .modal {
         display: flex;
         justify-content: center;
@@ -261,6 +286,7 @@ else
 </style>
 
 <script>
+    // JavaScript to handle modal close button interaction
     document.addEventListener('DOMContentLoaded', () => {
         const modal = document.querySelector('.modal');
         if (modal) {

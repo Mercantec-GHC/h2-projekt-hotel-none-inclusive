@@ -1,33 +1,39 @@
 ﻿@page "/Login"
-@inject HttpClient Http;
+@inject HttpClient Http
 @inject Service.DatabaseServices DatabaseServices
 
 <PageTitle>Login</PageTitle>
 
+<!-- Main container for the login page, centering content with flex utilities -->
 <div class="container d-flex align-items-center justify-content-center custom-margin-top">
     <div class="row justify-content-center w-100">
         <div class="col-md-6 col-lg-5">
+            <!-- Card component for the login form -->
             <div class="card shadow-lg p-4">
                 <div class="card-header text-center">
                     <h3 class="text-uppercase">Velkommen tilbage</h3>
                     <p class="text-muted">Log ind for at få adgang til din konto</p>
                 </div>
                 <div class="card-body">
-                    @*Felter til at indtaste brugernavn og adgangskode*@
+                    @* Fields for entering email and password *@
                     <form>
+                        <!-- Email input field with binding to the Email property -->
                         <div class="form-group">
                             <label for="Email" class="label">Email</label>
                             <input type="email" class="form-control" id="email" placeholder="Indtast email" @bind="Email" required>
                         </div>
+                        <!-- Password input field with binding to the Password property -->
                         <div class="form-group mt-3">
                             <label for="password" class="label">Adgangskode</label>
                             <input type="password" class="form-control" id="password" placeholder="Indtast adgangskode" @bind="Password" required>
                         </div>
+                        <!-- Submit button with event handler for logging in -->
                         <div class="text-center mt-4">
                             <button type="submit" class="btn btn-primary" @onclick="LoginUser" @onclick:preventDefault>Log ind</button>
                         </div>
                     </form>
                 </div>
+                <!-- Footer with a message about forgotten passwords -->
                 <div class="card-footer text-center">
                     <p class="text-muted">Har du glemt din adgangskode?</p>
                 </div>
@@ -36,8 +42,8 @@
     </div>
 </div>
 
+<!-- Alert message displayed after a login attempt -->
 @if (!string.IsNullOrEmpty(message))
-
 {
     <div class="alert @alertClass mt-4 text-center" role="alert">
         @message
@@ -45,53 +51,42 @@
 }
 
 @code {
+    // Properties to bind to the input fields
     private string Email { get; set; }
-
     private string Password { get; set; }
 
+    // Message and alert class for login feedback
     string message = "";
-
     string alertClass = "";
 
-
-
+    // Method to handle user login
     private async Task LoginUser()
-
     {
-
+        // Attempt to get the user using the entered email and password
         var user = await DatabaseServices.GetUserToLoginAsync(Email, Password);
 
-
-
         if (user != null)
-
         {
-
+            // Successful login
             message = "Du er nu logget ind. Velkommen!";
-
             alertClass = "alert-success";
-
         }
-
         else
-
         {
-
+            // Failed login
             message = "Ugyldig email eller adgangskode. Prøv igen.";
-
             alertClass = "alert-danger";
-
         }
-
     }
 }
 
-
 <style>
+    /* Custom margin for the top of the page */
     .custom-margin-top {
         margin-top: 100px;
     }
 
+    /* Primary button styles */
     .btn-primary {
         display: inline-block;
         padding: 12px 20px;
@@ -110,6 +105,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
 
+    /* Alert styles for feedback messages */
     .alert {
         padding: 15px;
         border-radius: 5px;

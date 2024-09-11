@@ -3,15 +3,18 @@
 @inject NavigationManager Navigation
 
 @code {
+    // List to store bookings; this would ideally be fetched from a database
     private List<Booking> Bookings = new List<Booking>();
 
+    // Lifecycle method that initializes bookings with dummy data
     protected override void OnInitialized()
     {
-        // Tilføj logik til at hente brugerens bookinger //(Dummy Data. Should fetch from database)
+        // Adding dummy data for demonstration purposes
         Bookings.Add(new Booking { Id = 1, RoomType = "Single Room", CheckInDate = DateTime.Now.AddDays(1), CheckOutDate = DateTime.Now.AddDays(3), Status = "Confirmed" });
         Bookings.Add(new Booking { Id = 2, RoomType = "Suite", CheckInDate = DateTime.Now.AddDays(5), CheckOutDate = DateTime.Now.AddDays(7), Status = "Pending" });
     }
 
+    // Method to cancel a booking by updating its status
     private void CancelBooking(int id)
     {
         var booking = Bookings.FirstOrDefault(b => b.Id == id);
@@ -21,6 +24,7 @@
         }
     }
 
+    // Nested class representing a booking entity
     private class Booking
     {
         public int Id { get; set; }
@@ -31,14 +35,17 @@
     }
 }
 
+<!-- Page title -->
 <h3 class="page-title">Mine Bookinger</h3>
 
+<!-- Container for displaying the bookings -->
 <div class="bookings-container">
     @if (Bookings.Any())
     {
         <div class="booking-list">
             @foreach (var booking in Bookings)
             {
+                <!-- Card component to display each booking -->
                 <div class="booking-card">
                     <div class="card-header">
                         <h4>@booking.RoomType</h4>
@@ -49,6 +56,7 @@
                         <p><strong>Udtjekning:</strong> @booking.CheckOutDate.ToString("dd MMM yyyy")</p>
                     </div>
                     <div class="card-footer">
+                        <!-- Cancel button, only shown if booking is not already cancelled -->
                         @if (booking.Status != "Cancelled")
                         {
                             <button class="btn btn-danger" @onclick="() => CancelBooking(booking.Id)">Annuller</button>
@@ -60,11 +68,13 @@
     }
     else
     {
+        <!-- Message shown if no bookings are found -->
         <p class="no-bookings">Ingen bookinger fundet.</p>
     }
 </div>
 
 @code {
+    // Method to get CSS class based on booking status
     private string GetStatusClass(string status)
     {
         return status switch
@@ -78,6 +88,7 @@
 }
 
 <style>
+    /* Page title styles */
     .page-title {
         font-size: 2.4em;
         font-weight: 600;
@@ -88,6 +99,7 @@
         letter-spacing: 1px;
     }
 
+    /* Container styling for bookings */
     .bookings-container {
         margin: 0 auto;
         max-width: 1200px;
@@ -96,12 +108,14 @@
         border-radius: 12px;
     }
 
+    /* Flex container for booking cards */
     .booking-list {
         display: flex;
         flex-direction: column;
         gap: 20px;
     }
 
+    /* Styles for individual booking cards */
     .booking-card {
         background-color: #ffffff;
         border-radius: 12px;
@@ -112,6 +126,7 @@
         position: relative;
     }
 
+    /* Header section of the booking card */
     .card-header {
         display: flex;
         justify-content: space-between;
@@ -128,6 +143,7 @@
             font-weight: 600;
         }
 
+    /* Status label styles */
     .status {
         padding: 4px 12px;
         border-radius: 20px;
@@ -137,6 +153,7 @@
         color: white;
     }
 
+    /* Status-specific styles */
     .status-confirmed {
         background-color: #28a745;
     }
@@ -149,6 +166,7 @@
         background-color: #dc3545;
     }
 
+    /* Body content of the booking card */
     .card-body p {
         margin: 8px 0;
         color: #666;
@@ -156,11 +174,13 @@
         line-height: 1.4;
     }
 
+    /* Footer section with cancel button */
     .card-footer {
         display: flex;
         justify-content: flex-end;
     }
 
+    /* Cancel button styles */
     .btn-danger {
         background-color: #dc3545;
         color: white;
@@ -178,6 +198,7 @@
             transform: scale(1.05);
         }
 
+    /* No bookings message style */
     .no-bookings {
         text-align: center;
         font-size: 1.2em;

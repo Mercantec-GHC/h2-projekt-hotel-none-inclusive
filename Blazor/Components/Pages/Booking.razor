@@ -4,58 +4,68 @@
 @using System.Linq
 @inject Service.DatabaseServices DatabaseServices
 
+<!-- Page title for the rooms section -->
 <h3 class="section-header">Vores Værelser</h3>
 
-<!-- Filter sektion -->
+<!-- Filter section for rooms -->
 <div class="filter-section">
     <h4>Filtrer værelser</h4>
     <div class="filter-controls">
+        <!-- Dropdown to select room type -->
         <label>
             Værelsestype:
             <select class="styled-select" @bind="selectedRoomType">
                 <option value="">Alle</option>
+                <!-- Populate room types dynamically -->
                 @foreach (var type in roomTypes)
                 {
                     <option value="@type">@type</option>
                 }
             </select>
         </label>
+        <!-- Input for maximum price filter -->
         <label>
             Maksimal pris:
             <input type="number" placeholder="Indtast maksimal pris" class="styled-input" @bind="maxPrice" />
         </label>
+        <!-- Button to apply selected filters -->
         <button class="btn btn-primary" @onclick="ApplyFilters">Anvend Filter</button>
     </div>
 
-    <!-- Valgte filtre sektion -->
+    <!-- Display selected filters -->
     <div class="selected-filters">
         <h4>Valgte filtre:</h4>
         <p>
-            Værelsestype: @(string.IsNullOrEmpty(selectedRoomType) ? "Alle" : selectedRoomType) <br/>
+            Værelsestype: @(string.IsNullOrEmpty(selectedRoomType) ? "Alle" : selectedRoomType) <br />
             Maksimal pris: @(maxPrice.HasValue ? $"{maxPrice.Value} kr." : "Ingen begrænsning")
         </p>
     </div>
 </div>
 
-<!-- Liste af værelser -->
+<!-- Rooms list section -->
 <div class="rooms-list">
     @if (filteredRooms == null)
     {
+        <!-- Show loading text while rooms are being fetched -->
         <p>Loading...</p>
     }
     else if (!filteredRooms.Any())
     {
+        <!-- Display message when no rooms match the filter criteria -->
         <p>Ingen værelser matcher dine kriterier.</p>
     }
     else
     {
+        <!-- Loop through each filtered room and display details -->
         @foreach (var room in filteredRooms)
         {
             <div class="room-card">
+                <!-- Room image with price overlay -->
                 <div class="room-image-wrapper">
                     <img src="@room.ImageURL" alt="Billede af @room.RoomType" class="room-image" />
                     <div class="price-overlay">@room.Price kr./nat</div>
                 </div>
+                <!-- Room details section with description and link to details page -->
                 <div class="room-details">
                     <h5>@room.RoomType</h5>
                     <p>@room.Description</p>
@@ -67,44 +77,54 @@
 </div>
 
 @code {
+    // List to store all rooms fetched from the API
     private List<GetRoomDTO> Rooms;
+    // List to store rooms after applying filters
     private List<GetRoomDTO> filteredRooms;
+    // List of unique room types for the filter dropdown
     private List<string> roomTypes = new List<string>();
+    // Variables to hold selected filter values
     private string selectedRoomType = "";
     private decimal? maxPrice;
 
+    // Method to fetch rooms data when the page is initialized
     protected override async Task OnInitializedAsync()
     {
         try
         {
+            // Fetch rooms from the database service
             Rooms = await DatabaseServices.GetRooms();
+            // Set filtered rooms to initially display all rooms
             filteredRooms = Rooms;
 
-            // Extract unique room types
+            // Extract unique room types for filtering
             roomTypes = Rooms.Select(room => room.RoomType).Distinct().ToList();
         }
         catch (Exception ex)
         {
+            // Log any errors that occur during data fetch
             Console.WriteLine($"Fejl ved hentning af værelser: {ex.Message}");
         }
     }
 
+    // Method to apply filters based on selected room type and max price
     private void ApplyFilters()
     {
         Console.WriteLine("Applying filters...");
 
+        // Filter rooms based on selected criteria
         filteredRooms = Rooms.Where(room =>
             (string.IsNullOrEmpty(selectedRoomType) || room.RoomType == selectedRoomType) &&
             (!maxPrice.HasValue || room.Price <= maxPrice.Value)
         ).ToList();
 
+        // Log the count of rooms after filtering
         Console.WriteLine($"Filtered rooms count: {filteredRooms.Count}");
     }
 }
 
-
-
 <style>
+    /* General body styling */
     body {
         margin: 0;
         font-family: 'Merriweather', serif;
@@ -112,6 +132,7 @@
         color: #333;
     }
 
+    /* Styling for the section header */
     .section-header {
         font-size: 2.5em;
         font-weight: bold;
@@ -120,6 +141,7 @@
         color: #1a1a1a;
     }
 
+    /* Styling for the filter section */
     .filter-section {
         padding: 20px;
         margin: 0 auto 40px;
@@ -130,6 +152,7 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
+    /* Styling for filter controls layout */
     .filter-controls {
         display: flex;
         flex-wrap: wrap;
@@ -158,6 +181,7 @@
             align-self: flex-end;
         }
 
+    /* Styling for the list of rooms */
     .rooms-list {
         display: flex;
         flex-wrap: wrap;
@@ -166,6 +190,7 @@
         padding: 0 20px;
     }
 
+    /* Styling for each room card */
     .room-card {
         background-color: #ffffff;
         border-radius: 10px;
@@ -182,6 +207,7 @@
         overflow: hidden;
     }
 
+    /* Styling for room images */
     .room-image {
         width: 100%;
         height: 200px;
@@ -193,6 +219,7 @@
         transform: scale(1.05);
     }
 
+    /* Overlay styling for room price */
     .price-overlay {
         position: absolute;
         bottom: 10px;
@@ -204,6 +231,7 @@
         font-size: 1em;
     }
 
+    /* Styling for room details section */
     .room-details {
         padding: 15px;
         text-align: center;
@@ -220,6 +248,7 @@
             color: #555;
         }
 
+    /* Styling for primary button */
     .btn-primary {
         display: inline-block;
         margin-top: 10px;

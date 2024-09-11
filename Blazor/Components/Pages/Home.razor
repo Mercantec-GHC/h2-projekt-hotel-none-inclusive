@@ -8,12 +8,14 @@
         <div class="hero-content">
             <h1>Velkommen til None Inclusive</h1>
             <p>Oplev uovertruffen komfort og elegance i hjertet af byen.</p>
+            <!-- Button that triggers navigation to the booking page -->
             <button class="booking-button" @onclick="NavigateToBooking">Book din oplevelse</button>
         </div>
     </div>
 </section>
 
 @code {
+    // Method to navigate to the booking page when the booking button is clicked
     private void NavigateToBooking()
     {
         Navigation.NavigateTo("Booking");
@@ -24,16 +26,19 @@
 <section class="facilities-section py-5 bg-light">
     <div class="container">
         <div class="row text-center">
+            <!-- Facility 1: Swimming Pool -->
             <div class="col-lg-4 mb-4">
                 <i class="bi bi-water fa-4x text-gold mb-3"></i>
                 <h3 class="h4 mb-2">Swimmingpool</h3>
                 <p>Slap af i vores opvarmede pool med betagende udsigt over vandet.</p>
             </div>
+            <!-- Facility 2: Restaurant -->
             <div class="col-lg-4 mb-4">
                 <i class="bi bi-cup-straw fa-4x text-gold mb-3"></i>
                 <h3 class="h4 mb-2">Restaurant</h3>
                 <p>Forkæl dig med gourmetretter tilberedt af vores prisvindende kokke.</p>
             </div>
+            <!-- Facility 3: Spa & Wellness -->
             <div class="col-lg-4 mb-4">
                 <i class="bi bi-luggage fa-4x text-gold mb-3"></i>
                 <h3 class="h4 mb-2">Spa & Wellness</h3>
@@ -43,14 +48,15 @@
     </div>
 </section>
 
-
 <!-- Reviews Section -->
 <section class="reviews-section">
     <h2>Hvad siger vores gæster?</h2>
+    <!-- Guest review 1 -->
     <div class="review">
         <p>"Et uforglemmeligt ophold! Værelserne var fantastiske, og personalet var exceptionelt. Jeg vender helt sikkert tilbage!"</p>
         <span>- Mette, Danmark</span>
     </div>
+    <!-- Guest review 2 -->
     <div class="review">
         <p>"Perfekt beliggenhed og udsøgt mad! En oplevelse, der virkelig er værd at anbefale."</p>
         <span>- John, USA</span>
@@ -73,13 +79,6 @@
     </div>
 </footer>
 
-@code {
-    private void BookNow()
-    {
-        // Tilføj din booking logik her eller naviger til booking siden
-        // Eksempel: NavigationManager.NavigateTo("/booking");
-    }
-}
 
 <style>
     /* Global Styling */
