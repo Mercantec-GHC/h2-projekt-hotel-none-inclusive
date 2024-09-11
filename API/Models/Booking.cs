@@ -2,19 +2,18 @@
 
 namespace API.Models
 {
+    // This class represents a booking entity in the database.
     public class Booking
     {
+        // Unique identifier for the booking.
         public int Id { get; set; }
         public DateTime BookingDate { get; set; }
         public DateTime BookingStartDate { get; set; }
         public DateTime BookingEndDate { get; set; }
-
         public Room Room { get; set; } = null!;
-
         public DateTime CheckInTime { get; set; }
         public DateTime CheckOutTime { get; set; }
         public int NumberOfNights { get; set; }
-        
         // PaymentStatus (String = Unpaid/Paid)
         public string PaymentStatus { get; set; } = null!;
         public int RoomId { get; set; }
@@ -25,6 +24,7 @@ namespace API.Models
 
     }
 
+    // DTO (Data Transfer Object) for transferring booking information.
     public class BookingDTO
     {
         public int Id { get; set; }
@@ -36,7 +36,9 @@ namespace API.Models
         public int NumberOfNights { get; set; }
         // PaymentStatus (String = Unpaid/Paid)
         public string PaymentStatus { get; set; } = null!;
+        // Foreign key referencing the Room entity.
         public int RoomId { get; set; }
+        // Foreign key referencing the User entity.
         public int UserId { get; set; }
 
     }
@@ -48,12 +50,13 @@ namespace API.Models
         public DateTime BookingStartDate { get; set; }
         public DateTime BookingEndDate { get; set; }
         public int NumberOfNights { get; set; }
-
+        // Foreign key referencing the Room entity.
         public int RoomId { get; set; }
+        // Foreign key referencing the User entity.
         public int UserId { get; set; }
     }
 
-
+    // DTO for transferring booking information with additional room and user data.
     public class BookingWAllData
     {
         public DateTime BookingDate { get; set; }
@@ -62,11 +65,10 @@ namespace API.Models
         public DateTime CheckInTime { get; set; }
         public DateTime CheckOutTime { get; set; }
         public int NumberOfNights { get; set; }
-
-
+        // Information about the user who made the booking.
         public UserGetDTO UserInfo { get; set; }
+        // Information about the room that was booked.
         public GetRoomDTO RoomInfo { get; set; }
-
     }
 
 }
