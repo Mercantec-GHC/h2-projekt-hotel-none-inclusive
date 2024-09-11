@@ -6,97 +6,61 @@
 
 <PageTitle>SignUp</PageTitle>
 
-<div class="body">
-    <div class="mask d-flex align-items-center gradient-custom-3">
-        <!-- Container til centrering af indhold -->
-        <div class="container">
-            <!-- Række til centreret indholds kolonne -->
-            <div class="row d-flex justify-content-center align-items-center">
-                <!-- Kolonne til formular, justerer størrelse baseret på skærmstørrelse -->
-                <div class="col-12 col-md-9 col-lg-7 col-xl-4">
-                    <!-- Kort til registreringsformular, afrundede hjørner for estetik -->
-                    <div class="card" style="border-radius: 15px; background-color: #b3b3b3;">
-                        <!-- Kortkrop med padding til formular -->
-                        <div class="card-body p-3">
-                            <!-- Overskrift til formular -->
-                            <h2 class="text-center mb-1">Register</h2>
-                            <form>
-                                <!-- Felt til fornavn -->
-                                <div class="form-outline mb-3">
-                                    <label class="form-label" for="formFirstName">First Name</label>
-                                    <input type="text" id="formFirstName" class="form-control form-control-sm" @bind="newUser.FirstName" required />
-                                </div>
-
-                                <!-- Felt til efternavn -->
-                                <div class="form-outline mb-3">
-                                    <label class="form-label" for="formLastName">Last Name</label>
-                                    <input type="text" id="formLastName" class="form-control form-control-sm" @bind="newUser.LastName" required />
-                                </div>
-
-                                <!-- Felt til e-mail -->
-                                <div class="form-outline mb-3">
-                                    <label class="form-label" for="formEmail">Email</label>
-                                    <input type="email" id="formEmail" class="form-control form-control-sm" @bind="newUser.Email" required />
-                                </div>
-
-                                <!-- Felt til adgangskode -->
-                                <div class="form-outline mb-3">
-                                    <label class="form-label" for="formPassword">Password</label>
-                                    <input type="password" id="formPassword" class="form-control form-control-sm" @bind="newUser.Password" required />
-                                </div>
-
-                                <!-- Felt til gentagelse af adgangskode -->
-                                <div class="form-outline mb-3">
-                                    <label class="form-label" for="formPasswordRepeat">Confirm Password</label>
-                                    <input type="password" id="formPasswordRepeat" class="form-control form-control-sm" @bind="newUser.PasswordRepeat" required />
-                                </div>
-
-                                <!-- Felt til telefonnummer -->
-                                <div class="form-outline mb-3">
-                                    <label class="form-label" for="formPhonenumber">Phone Number</label>
-                                    <input type="tel" id="formPhonenumber" class="form-control form-control-sm" @bind="newUser.PhoneNumber" required />
-                                </div>
-
-                                <!-- Felt til adresse -->
-                                <div class="form-outline mb-3">
-                                    <label class="form-label" for="formAddress">Address</label>
-                                    <input type="text" id="formAddress" class="form-control form-control-sm" @bind="newUser.Address" required />
-                                </div>
-
-                                <!-- Felt til by -->
-                                <div class="form-outline mb-3">
-                                    <label class="form-label" for="formCity">City</label>
-                                    <input type="text" id="formCity" class="form-control form-control-sm" @bind="newUser.City" required />
-                                </div>
-
-                                <!-- Felt til land -->
-                                <div class="form-outline mb-3">
-                                    <label class="form-label" for="formCountry">Country</label>
-                                    <input type="text" id="formCountry" class="form-control form-control-sm" @bind="newUser.Country" required />
-                                </div>
-
-                                <!-- Felt til postnummer -->
-                                <div class="form-outline mb-3">
-                                    <label class="form-label" for="formZip">Zip Code</label>
-                                    <input type="text" id="formZip" class="form-control form-control-sm" @bind="newUser.Zip" required />
-                                </div>
-
-                                <!-- Afkrydsningsfelt for accept af vilkår -->
-                                <div class="form-check d-flex justify-content-center mb-4">
-                                    <input class="form-check-input me-2" type="checkbox" value="" id="formAgreeCheckbox" required />
-                                    <label class="form-check-label" for="formAgreeCheckbox">
-                                        I agree to the <a href="#!" class="text-body"><u>Terms of service</u></a>
+<div class="container d-flex align-items-center justify-content-center custom-margin-top">
+    <div class="row justify-content-center w-100">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg p-4 rounded-lg">
+                <div class="card-header text-center">
+                    <h3 class="text-uppercase">Opret konto</h3>
+                    <p class="text-muted">Udfyld formularen for at oprette en ny konto</p>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-12 col-md-6 mb-3">
+                                <input type="text" class="form-control" id="FirstName" placeholder="Fornavn" @bind="newUser.FirstName" required>
+                            </div>
+                            <div class="col-12 col-md-6 mb-3">
+                                <input type="text" class="form-control" id="LastName" placeholder="Efternavn" @bind="newUser.LastName" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <input type="email" class="form-control" id="Email" placeholder="Email" @bind="newUser.Email" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <input type="password" class="form-control" id="Password" placeholder="Adgangskode" @bind="newUser.Password" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <input type="password" class="form-control" id="PasswordRepeat" placeholder="Bekræft adgangskode" @bind="newUser.PasswordRepeat" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <input type="tel" class="form-control" id="PhoneNumber" placeholder="Telefonnummer" @bind="newUser.PhoneNumber" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <input type="text" class="form-control" id="Address" placeholder="Adresse" @bind="newUser.Address" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <input type="text" class="form-control" id="City" placeholder="By" @bind="newUser.City" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <input type="text" class="form-control" id="Country" placeholder="Land" @bind="newUser.Country" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <input type="text" class="form-control" id="Zip" placeholder="Postnummer" @bind="newUser.Zip" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="AgreeCheckbox" required />
+                                    <label class="form-check-label" for="AgreeCheckbox">
+                                        Jeg accepterer <a href="#!" class="text-body"><u>vilkårene</u></a>
                                     </label>
                                 </div>
-                                <!-- Registrer knap -->
-                                <div class="d-flex justify-content-center">
-                                    <button type="button" class="btn btn-dark btn-sm" @onclick="RegisterUser">Register</button>
-                                </div>
-                                <!-- Link til eksisterende brugere for at logge ind -->
-                                <p class="text-center text-muted mt-4 mb-0">Already have an account? <a href="/login" class="fw-bold text-body"><u>Login here</u></a></p>
-                            </form>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="button" class="btn btn-primary" @onclick="RegisterUser">Registrer</button>
+                            </div>
                         </div>
-                    </div>
+                        <p class="text-center text-muted mt-4 mb-0">Har du allerede en konto? <a href="/login" class="fw-bold text-body"><u>Log ind her</u></a></p>
+                    </form>
                 </div>
             </div>
         </div>
@@ -104,33 +68,58 @@
 </div>
 
 @code {
-    private string? FirstName { get; set; }
-    private string? LastName { get; set; }
-    private string? Email { get; set; }
-    private string? Password { get; set; }
-    private string? PasswordRepeat { get; set; }
-    private string? Phonenumber { get; set; }
-    private string? Address { get; set; }
-    private string? City { get; set; }
-    private string? Country { get; set; }
-    private string? Zip { get; set; }
-
     private UserPostAndPutDTO newUser = new UserPostAndPutDTO();
-
 
     private async Task RegisterUser()
     {
-        // Validering af adgangskode
-        if (Password != PasswordRepeat)
+        if (newUser.Password != newUser.PasswordRepeat)
         {
-            // Handle password mismatch, f.eks. vis valideringsbesked
+            // Håndter password mismatch, f.eks. vis en valideringsbesked
             return;
         }
         newUser.Role = "Guest";
-        // Gem brugeroplysninger i databasen
         await DatabaseServices.AddUserToDatabaseAsync(newUser);
-
-        // Naviger til login-siden efter vellykket registrering
         NavigationManager.NavigateTo("/login");
     }
 }
+
+<style>
+    .custom-margin-top {
+        margin-top: 50px;
+    }
+
+    .btn-primary {
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-weight: bold;
+        background-color: #cba135;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #b38b30;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+    .form-control {
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+
+    .form-check-input {
+        margin-right: 10px;
+    }
+
+    .form-check-label {
+        font-weight: normal;
+    }
+
+    .card {
+        background-color: #ffffff;
+        border: none;
+    }
+</style>
