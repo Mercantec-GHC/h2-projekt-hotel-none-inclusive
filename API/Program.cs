@@ -8,8 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 IConfiguration Configuration = builder.Configuration;
 string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
+// Add database context and mapping services
 builder.Services.AddDbContext<DBContext>(options => options.UseNpgsql(connectionString));
-builder.Services.AddScoped<UserMapping>();
+builder.Services.AddScoped<UserMapping>(); 
 builder.Services.AddScoped<RoomMapping>();
 builder.Services.AddScoped<BookingMapping>();
 

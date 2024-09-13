@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
 using HotelBooking.Data;
@@ -26,14 +22,14 @@ namespace API.Controllers
             _roomMapping = roomMapping;
         }
 
-        #region GetRooms
+    
         // GET: api/Rooms
         // Retrieves a list of rooms with selected fields
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetRoomDTO>>> GetRooms()
         {
             // Retrieves all rooms from the database and maps them to GetRoomDTO
-            var rooms = await _context.Rooms.Select(room => new GetRoomDTO
+            var rooms = await _context.Rooms.Select(room => new GetRoomDTO // Selects specific fields from the room entity
             {
                 Id = room.Id,
                 Price = room.PricePerNight,
@@ -45,9 +41,9 @@ namespace API.Controllers
             // Returns the list of rooms
             return Ok(rooms);
         }
-        #endregion
+     
 
-        #region Details
+       
         // GET: api/Rooms/Details/5
         // Retrieves the details of a specific room based on its ID
         [HttpGet("{id}")]
@@ -69,9 +65,9 @@ namespace API.Controllers
             // Maps the room entity to GetRoomDTO and returns it
             return Ok(_roomMapping.MapRoomToGetRoomDTO(room));
         }
-        #endregion
+      
 
-        #region Edit
+      
         // PUT: api/Rooms/Edit/5
         // Updates the details of a specific room
         [HttpPut("Edit")]
@@ -93,9 +89,9 @@ namespace API.Controllers
             // Returns the found room for editing
             return Ok(room);
         }
-        #endregion
+        
 
-        #region PostRoom
+     
         // POST: api/Rooms
         // Creates a new room entry in the database
         [HttpPost]
@@ -129,9 +125,9 @@ namespace API.Controllers
             // Returns a response with the newly created room's details
             return CreatedAtAction(nameof(GetRooms), new { id = room.Id }, room);
         }
-        #endregion
+        
 
-        #region Delete
+        
         // DELETE: api/Rooms/Delete/5
         // Deletes a specific room from the database
         [HttpDelete]
@@ -154,7 +150,6 @@ namespace API.Controllers
             // Returns the room that is going to be deleted
             return Ok(room);
         }
-        #endregion
-
+      
     }
 }

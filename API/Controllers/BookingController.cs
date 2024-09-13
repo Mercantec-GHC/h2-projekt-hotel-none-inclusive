@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
 using HotelBooking.Data;
 using API.Services;
+
+//Forklar meningen med at implementere mapping services i API'en (UserMapping, RoomMapping, BookingMapping)
+//Hvordan mapper de i mellem DTO'er og modeller?
+// Ville det være et problem at fjerne DTO og mapping services og i stedet returnere modeller direkte fra API'en?
 
 namespace API.Controllers
 {
@@ -48,7 +48,7 @@ namespace API.Controllers
                 CheckInTime = b.CheckInTime,
                 CheckOutTime = b.CheckOutTime,
                 NumberOfNights = b.NumberOfNights,
-                UserInfo = _userMapping.MapUserToUserGetDTO(b.User),
+                UserInfo = _userMapping.MapUserToUserGetDTO(b.User), // Maps the user data to a DTO
                 RoomInfo = _roomMapping.MapRoomToGetRoomDTO(b.Room)
             }).ToList();
 
@@ -125,11 +125,6 @@ namespace API.Controllers
                 if (!BookingDTOExists(id))
                 {
                     return NotFound();
-                }
-                else
-                {
-                    // If another concurrency issue occurs, rethrow the exception
-                    throw;
                 }
             }
 

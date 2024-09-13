@@ -19,7 +19,7 @@ namespace API.Controllers
         private readonly UserMapping _userMapping;
 
         // Constructor to inject DBContext and UserMapping services
-        public UsersController(DBContext context, UserMapping userMapping)
+        public UsersController(DBContext context, UserMapping userMapping) 
         {
             _context = context;
             _userMapping = userMapping;
