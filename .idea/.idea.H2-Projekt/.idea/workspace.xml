@@ -16,14 +16,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="" />
+    <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="DpaMonitoringSettings">
-    <option name="autoShow" value="false" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -48,19 +47,20 @@
     &quot;.NET Launch Settings Profile.API: http.executor&quot;: &quot;Run&quot;,
     &quot;.NET Launch Settings Profile.API: https.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;MikkelV1&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;rider.external.source.directories&quot;: [
-      &quot;/Users/mikkelkonyher/Library/Application Support/JetBrains/Rider2024.1/resharper-host/DecompilerCache&quot;,
-      &quot;/Users/mikkelkonyher/Library/Application Support/JetBrains/Rider2024.1/resharper-host/SourcesCache&quot;,
-      &quot;/Users/mikkelkonyher/Library/Application Support/Symbols/src&quot;
+      &quot;/Users/mhk/Library/Application Support/JetBrains/Rider2024.1/resharper-host/DecompilerCache&quot;,
+      &quot;/Users/mhk/Library/Application Support/JetBrains/Rider2024.1/resharper-host/SourcesCache&quot;,
+      &quot;/Users/mhk/Library/Application Support/Symbols/src&quot;
     ]
   }
 }</component>
@@ -234,6 +234,8 @@
       <workItem from="1726211181243" duration="28000" />
       <workItem from="1726211225391" duration="2838000" />
       <workItem from="1726215958961" duration="3583000" />
+      <workItem from="1726242650850" duration="194000" />
+      <workItem from="1726242878659" duration="193000" />
     </task>
     <servers />
   </component>
