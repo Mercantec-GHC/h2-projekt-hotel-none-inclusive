@@ -145,7 +145,7 @@
                 <p><strong>Room:</strong> @SelectedRoom.RoomType</p>
                 <p><strong>Check-in:</strong> @newBooking.BookingStartDate.ToShortDateString()</p>
                 <p><strong>Check-out:</strong> @newBooking.BookingEndDate.ToShortDateString()</p>
-                <p><strong>Total Price:</strong> @totalPrice.ToString("0.00") kr.</p>
+                <p><strong>Total Price:</strong> @totalPrice.ToString("#,##0.00") kr.</p>
                 <button @onclick="CloseModal" class="btn-primary">Close</button>
             </div>
         </div>
