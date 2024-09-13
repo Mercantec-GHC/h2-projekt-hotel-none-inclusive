@@ -7,7 +7,7 @@ using API.Services;
 //Forklar meningen med at implementere mapping services i API'en (UserMapping, RoomMapping, BookingMapping)
 //Hvordan mapper de i mellem DTO'er og modeller?
 // Ville det være et problem at fjerne DTO og mapping services og i stedet returnere modeller direkte fra API'en?
-
+// Vinder jeg noget i en simpel applikation, som denne ved at bruge DTO'er og mapping services? eller er det overkill og et unødvendigt ekstra lag af kompleksitet?
 namespace API.Controllers
 {
     // Defines an API controller to handle booking operations
