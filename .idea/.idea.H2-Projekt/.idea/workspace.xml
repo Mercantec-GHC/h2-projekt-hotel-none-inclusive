@@ -16,11 +16,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="" />
+    <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Migrations/20240905084050_Initial.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Migrations/20240905084050_Initial.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Migrations/20240906075905_AddRoomForeignKey.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Migrations/20240906075905_AddRoomForeignKey.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Migrations/20240910071149_EditBooking.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Migrations/20240910071149_EditBooking.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Migrations/DBContextModelSnapshot.cs" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DpaMonitoringSettings">
+    <option name="autoShow" value="false" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -235,6 +247,8 @@
       <workItem from="1726242650850" duration="194000" />
       <workItem from="1726242878659" duration="193000" />
       <workItem from="1726243153390" duration="61000" />
+      <workItem from="1726298833107" duration="222000" />
+      <workItem from="1726299072706" duration="747000" />
     </task>
     <servers />
   </component>

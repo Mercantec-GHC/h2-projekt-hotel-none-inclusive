@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -63,14 +63,12 @@ namespace API.Migrations
                     BookingDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     BookingStartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     BookingEndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    RoomId = table.Column<int>(type: "integer", nullable: false),
                     CheckInTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CheckOutTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     NumberOfNights = table.Column<int>(type: "integer", nullable: false),
-                    PricePerNight = table.Column<int>(type: "integer", nullable: false),
-                    ReservationID = table.Column<int>(type: "integer", nullable: false),
                     PaymentStatus = table.Column<string>(type: "text", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: true)
+                    RoomId = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,7 +83,8 @@ namespace API.Migrations
                         name: "FK_Bookings_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "UserId");
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
