@@ -164,7 +164,7 @@ namespace API.Controllers
             return Ok(room);
         }
       
-        //Check Room availability on specific dates (EGEN NOTE: HUSK AT BRUG SENRE I POST BOOKING)
+        //Check Room Availability, count days and calculate total price (EGEN NOTE: BRUG I POST BOOKING)
         [HttpGet("CheckRoomAvailability")]
         public async Task<ActionResult<string>> CheckRoomAvailability(int roomId, DateTime startDate, DateTime endDate)
         {
@@ -177,15 +177,37 @@ namespace API.Controllers
                                 (b.BookingStartDate <= endDate && b.BookingEndDate >= endDate) ||
                                 (b.BookingStartDate >= startDate && b.BookingEndDate <= endDate)));
 
-            if (isAvailable)
-            {
-                return Ok("The room is available");
-            }
-            else
+            if (!isAvailable)
             {
                 return NotFound("The room is not available");
             }
+
+            // Retrieve the room details to get the price per night
+            var room = await _context.Rooms.FindAsync(roomId);
+            if (room == null)
+            {
+                return NotFound("Room not found");
+            }
+
+            decimal totalPrice = 0;
+            for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
+            {
+                decimal pricePerNight = room.PricePerNight;
+                // Apply 20% increase for weekends
+                if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    pricePerNight *= 1.20m;
+                }
+                // Apply 15% increase for July
+                if (date.Month == 7)
+                {
+                    pricePerNight *= 1.15m;
+                }
+                
+                totalPrice += pricePerNight;
+            }
+
+            return Ok($"The room is available. Total price is {totalPrice}");
         }
-        
     }
 }
