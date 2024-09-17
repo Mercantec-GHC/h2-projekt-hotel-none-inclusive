@@ -111,6 +111,13 @@ namespace API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            
+            // Check if the room number is already in use
+            
+            if (await _context.Rooms.AnyAsync(r => r.RoomNumber == createRoomDTO.RoomNumber))
+            {
+                return BadRequest("Room number is already in use.");
+            }
 
             // Maps CreateRoomDTO to the Room entity
             var room = new Room
@@ -147,7 +154,7 @@ namespace API.Controllers
 
             // Finds the room in the database by its ID
             var room = await _context.Rooms
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(r => r.Id == id);
             if (room == null)
             {
                 return NotFound();
@@ -157,5 +164,28 @@ namespace API.Controllers
             return Ok(room);
         }
       
+        //Check Room availability on specific dates (EGEN NOTE: HUSK AT BRUG SENRE I POST BOOKING)
+        [HttpGet("CheckRoomAvailability")]
+        public async Task<ActionResult<string>> CheckRoomAvailability(int roomId, DateTime startDate, DateTime endDate)
+        {
+            startDate = DateTime.SpecifyKind(startDate, DateTimeKind.Utc); 
+            endDate = DateTime.SpecifyKind(endDate, DateTimeKind.Utc);
+
+            bool isAvailable = !await _context.Bookings
+                .AnyAsync(b => b.RoomId == roomId &&
+                               ((b.BookingStartDate <= startDate && b.BookingEndDate >= startDate) ||
+                                (b.BookingStartDate <= endDate && b.BookingEndDate >= endDate) ||
+                                (b.BookingStartDate >= startDate && b.BookingEndDate <= endDate)));
+
+            if (isAvailable)
+            {
+                return Ok("The room is available");
+            }
+            else
+            {
+                return NotFound("The room is not available");
+            }
+        }
+        
     }
 }
