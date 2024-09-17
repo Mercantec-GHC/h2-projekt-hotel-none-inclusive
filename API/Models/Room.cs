@@ -29,6 +29,12 @@ namespace API.Models
         public string RoomType { get; set; } = null!;
         public string Description { get; set; }
         public string ImageURL { get; set; }
+        
+        public int RoomNumber { get; set; }
+        
+        public bool IsOccupied { get; set; }
+        
+        public int Floor { get; set; }
 
     }
 

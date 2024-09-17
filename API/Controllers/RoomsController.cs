@@ -35,7 +35,10 @@ namespace API.Controllers
                 Price = room.PricePerNight,
                 RoomType = room.RoomType,
                 Description = room.Description,
-                ImageURL = room.ImageURL
+                ImageURL = room.ImageURL,
+                RoomNumber = room.RoomNumber,
+                IsOccupied = room.IsOccupied,
+                Floor = room.Floor
             }).ToListAsync();
 
             // Returns the list of rooms
@@ -115,7 +118,10 @@ namespace API.Controllers
                 RoomType = createRoomDTO.RoomType,
                 PricePerNight = createRoomDTO.PricePerNight,
                 Description = createRoomDTO.Description,
-                ImageURL = createRoomDTO.ImageURL
+                ImageURL = createRoomDTO.ImageURL,
+                RoomNumber = createRoomDTO.RoomNumber,
+                IsOccupied = false,
+                Floor = createRoomDTO.Floor
             };
 
             // Adds the new room to the database and saves changes
