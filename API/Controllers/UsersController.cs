@@ -35,7 +35,15 @@ namespace API.Controllers
             {
                 Id = user.UserId,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                Email = user.Email,
+                Address = user.Address,
+                PhoneNumber = user.PhoneNumber,
+                City = user.City,
+                Country = user.Country,
+                Zip = user.Zip,
+               
+                
             }).ToListAsync();
 
             return Ok(users); // Returns the list of users

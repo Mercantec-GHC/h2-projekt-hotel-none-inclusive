@@ -18,7 +18,7 @@ namespace API.Models
         // Foreign key to User
         public int UserId { get; set; }
         [ForeignKey("UserId")]
-        public User User { get; set; } = null!;
+        public User User { get; set; } = null!; // Kan evt fjernes.
 
     }
 

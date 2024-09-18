@@ -141,7 +141,7 @@ namespace API.Controllers
         
         // DELETE: api/Rooms/Delete/5
         // Deletes a specific room from the database
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
             // Checks if the room ID is null
@@ -151,15 +151,17 @@ namespace API.Controllers
             }
 
             // Finds the room in the database by its ID
-            var room = await _context.Rooms
-                .FirstOrDefaultAsync(r => r.Id == id);
+            var room = await _context.Rooms.FindAsync(id);
             if (room == null)
             {
                 return NotFound();
             }
+            
+            _context.Rooms.Remove(room);
+            await _context.SaveChangesAsync();
 
-            // Returns the room that is going to be deleted
-            return Ok(room);
+            // Returns 204 No Content on successful deletion
+            return NoContent();
         }
       
         //Check Room Availability and calculate total price (EGEN NOTE: BRUG I POST BOOKING)

@@ -11,7 +11,12 @@ namespace API.Services
                 Id = user.UserId,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Email = user.Email
+                Email = user.Email,
+                Address = user.Address,
+                PhoneNumber = user.PhoneNumber,
+                City = user.City,
+                Country = user.Country,
+                Zip = user.Zip,
             };
 
 
