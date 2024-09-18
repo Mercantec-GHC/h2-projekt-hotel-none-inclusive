@@ -18,7 +18,13 @@
   <component name="ChangeListManager">
     <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Controllers/BookingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/BookingController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/Controllers/RoomsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/RoomsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Migrations/DBContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Migrations/DBContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Models/Booking.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Models/Booking.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Models/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Models/Room.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Services/BookingMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Services/BookingMapping.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Services/RoomMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Services/RoomMapping.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,7 +254,8 @@
       <workItem from="1726491520781" duration="67000" />
       <workItem from="1726555737898" duration="735000" />
       <workItem from="1726562085458" duration="5972000" />
-      <workItem from="1726573318524" duration="1704000" />
+      <workItem from="1726573318524" duration="1812000" />
+      <workItem from="1726641047331" duration="5380000" />
     </task>
     <servers />
   </component>

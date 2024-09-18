@@ -14,7 +14,6 @@ namespace API.Services
                 Description = room.Description,
                 ImageURL = room.ImageURL,
                 RoomNumber = room.RoomNumber,
-                IsOccupied = room.IsOccupied,
                 Floor = room.Floor
             };
 

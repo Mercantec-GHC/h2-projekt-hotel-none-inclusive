@@ -37,7 +37,6 @@ namespace API.Controllers
                 Description = room.Description,
                 ImageURL = room.ImageURL,
                 RoomNumber = room.RoomNumber,
-                IsOccupied = room.IsOccupied,
                 Floor = room.Floor
             }).ToListAsync();
 
@@ -127,7 +126,6 @@ namespace API.Controllers
                 Description = createRoomDTO.Description,
                 ImageURL = createRoomDTO.ImageURL,
                 RoomNumber = createRoomDTO.RoomNumber,
-                IsOccupied = false,
                 Floor = createRoomDTO.Floor
             };
 
@@ -164,18 +162,18 @@ namespace API.Controllers
             return Ok(room);
         }
       
-        //Check Room Availability, count days and calculate total price (EGEN NOTE: BRUG I POST BOOKING)
+        //Check Room Availability and calculate total price (EGEN NOTE: BRUG I POST BOOKING)
         [HttpGet("CheckRoomAvailability")]
         public async Task<ActionResult<string>> CheckRoomAvailability(int roomId, DateTime startDate, DateTime endDate)
         {
             startDate = DateTime.SpecifyKind(startDate, DateTimeKind.Utc); 
             endDate = DateTime.SpecifyKind(endDate, DateTimeKind.Utc);
 
-            bool isAvailable = !await _context.Bookings
+            bool isAvailable = !await _context.Bookings //If no bookings overlap with the specified date range, isAvailable will be true
                 .AnyAsync(b => b.RoomId == roomId &&
-                               ((b.BookingStartDate <= startDate && b.BookingEndDate >= startDate) ||
-                                (b.BookingStartDate <= endDate && b.BookingEndDate >= endDate) ||
-                                (b.BookingStartDate >= startDate && b.BookingEndDate <= endDate)));
+                               ((b.BookingStartDate < startDate && b.BookingEndDate > startDate) ||
+                                (b.BookingStartDate < endDate && b.BookingEndDate > endDate) ||
+                                (b.BookingStartDate >= startDate && b.BookingEndDate < endDate)));
 
             if (!isAvailable)
             {
@@ -190,7 +188,7 @@ namespace API.Controllers
             }
 
             decimal totalPrice = 0;
-            for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
+            for (DateTime date = startDate; date < endDate; date = date.AddDays(1))
             {
                 decimal pricePerNight = room.PricePerNight;
                 // Apply 20% increase for weekends

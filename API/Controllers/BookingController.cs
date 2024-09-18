@@ -45,9 +45,6 @@ namespace API.Controllers
                 BookingDate = b.BookingDate,
                 BookingStartDate = b.BookingStartDate,
                 BookingEndDate = b.BookingEndDate,
-                CheckInTime = b.CheckInTime,
-                CheckOutTime = b.CheckOutTime,
-                NumberOfNights = b.NumberOfNights,
                 UserInfo = _userMapping.MapUserToUserGetDTO(b.User), // Maps the user data to a DTO
                 RoomInfo = _roomMapping.MapRoomToGetRoomDTO(b.Room)
             }).ToList();
