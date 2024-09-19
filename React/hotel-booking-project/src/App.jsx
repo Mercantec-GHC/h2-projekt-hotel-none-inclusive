@@ -5,6 +5,8 @@ import Footer from "./components/Footer/Footer.jsx";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import LoginPage from "./pages/Login & Signup/LoginPage.jsx"
 import SignupPage from "./pages/Login & Signup/SignupPage.jsx";
+import React from 'react';
+import Rooms from "./pages/Rooms/Rooms.jsx";
 
 
 function App() {
@@ -19,6 +21,7 @@ function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/signup" element={<SignupPage />} />
+                        <Route path="/rooms" element={<Rooms />} />
                     </Routes>
                 </div>
 

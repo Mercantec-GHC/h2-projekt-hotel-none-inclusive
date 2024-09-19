@@ -24,7 +24,7 @@ function Navbar() {
                 />
             </div>
             <div className="nav-links">
-                <NavbarLink icon={ <IoBedSharp /> } text="Værelser"/>
+                <NavbarLink icon={ <IoBedSharp /> } text="Værelser" link="/rooms" />
                 <NavbarLink icon={ <IoBookmarksSharp /> } text="Mine Bookings"/>
                 <NavbarLink icon={ <IoTicketSharp /> } text="Tickets"/>
 
