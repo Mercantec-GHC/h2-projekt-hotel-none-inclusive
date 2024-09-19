@@ -30,7 +30,7 @@ namespace API.Controllers
             _bookingMapping = bookingMapping;
         }
 
-        #region GetBookings
+        
         // GET: api/Booking
         // Retrieves all bookings, including user and room data
         [HttpGet]
@@ -52,9 +52,9 @@ namespace API.Controllers
             // Returns the full booking data
             return Ok(bookingWAllData);
         }
-        #endregion
+        
 
-        #region GetBookingWithId
+        
         // GET: api/Booking/5
         // Retrieves a specific booking by its id
         [HttpGet("{id}")]
@@ -72,9 +72,9 @@ namespace API.Controllers
             // Returns the booking data
             return Ok(bookingDTO);
         }
-        #endregion
+        
 
-        #region PostBooking
+        
         // POST: api/Booking
         // Creates a new booking
         [HttpPost]
@@ -94,9 +94,9 @@ namespace API.Controllers
             // Returns a response indicating that the booking was created successfully
             return CreatedAtAction(nameof(GetBooking), new { id = createBookingDTO.Id }, createBookingDTO);
         }
-        #endregion
+        
 
-        #region EditBooking
+        
         // PUT: api/Booking/5
         // Updates an existing booking
         [HttpPut("{id}")]
@@ -148,9 +148,9 @@ namespace API.Controllers
         {
             return _context.Bookings.Any(e => e.Id == id);
         }
-        #endregion
+        
 
-        #region DeleteBooking
+        
         // DELETE: api/Booking/5
         // Deletes a booking by id
         [HttpDelete("{id}")]
@@ -172,15 +172,15 @@ namespace API.Controllers
             // Return 204 No Content on successful deletion
             return NoContent();
         }
-        #endregion
+        
 
-        #region BookingDTOExists
+        
         // Checks if a booking exists by id
         private bool BookingDTOExists(int id)
         {
             // Returns true if a booking with the given id exists in the database
             return _context.Bookings.Any(e => e.Id == id);
         }
-        #endregion
+        
     }
 }

@@ -25,7 +25,7 @@ namespace API.Controllers
             _userMapping = userMapping;
         }
 
-        #region GetUsers
+        
         // GET: api/Users
         // Retrieves all users from the database and maps them to UserGetDTO
         [HttpGet]
@@ -48,9 +48,9 @@ namespace API.Controllers
 
             return Ok(users); // Returns the list of users
         }
-        #endregion
+        
 
-        #region Login
+        
         // POST: /login
         // Authenticates a user by email and password for login
         [HttpPost("/login")]
@@ -66,9 +66,9 @@ namespace API.Controllers
             }
             return Ok(user); // Returns the authenticated user
         }
-        #endregion
+        
 
-        #region GetUserWithID
+        
         // GET: api/Users/id/{id}
         // Retrieves a user by their ID
         [HttpGet("id/{id}")]
@@ -84,9 +84,9 @@ namespace API.Controllers
 
             return user; // Returns the found user
         }
-        #endregion
+        
 
-        #region GetAUserByEmail
+        
         // GET: api/Users/email/{email}
         // Retrieves a user by their email address
         [HttpGet("email/{email}")]
@@ -104,9 +104,9 @@ namespace API.Controllers
             // Map the user to UserGetDTO and return
             return _userMapping.MapUserToUserGetDTO(user);
         }
-        #endregion
+        
 
-        #region PutUser
+        
         // PUT: api/Users/{id}
         // Updates an existing user by their ID using data from UserPostAndPutDTO
         [HttpPut("{id}")]
@@ -155,9 +155,9 @@ namespace API.Controllers
 
             return NoContent(); // Return NoContent on successful update
         }
-        #endregion
+        
 
-        #region PostUser
+        
         // POST: api/Users
         // Creates a new user from the UserPostAndPutDTO
         [HttpPost]
@@ -195,9 +195,9 @@ namespace API.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-        #endregion
+        
 
-        #region DeleteUser
+        
         // DELETE: api/Users/{id}
         // Deletes a user by their ID
         [HttpDelete("{id}")]
@@ -218,14 +218,14 @@ namespace API.Controllers
 
             return NoContent(); // Return NoContent on successful deletion
         }
-        #endregion
+        
 
-        #region UserExists
+        
         // Helper method to check if a user exists by their ID
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.UserId == id);
         }
-        #endregion
+        
     }
 }

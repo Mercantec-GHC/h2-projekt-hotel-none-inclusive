@@ -18,8 +18,6 @@ namespace API.Services
                 Country = user.Country,
                 Zip = user.Zip,
             };
-
-
             return userGetDTO;
         }
     }

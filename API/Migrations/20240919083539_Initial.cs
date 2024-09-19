@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +21,6 @@ namespace API.Migrations
                     RoomNumber = table.Column<int>(type: "integer", nullable: false),
                     RoomType = table.Column<string>(type: "text", nullable: false),
                     PricePerNight = table.Column<int>(type: "integer", nullable: false),
-                    IsOccupied = table.Column<bool>(type: "boolean", nullable: false),
                     Floor = table.Column<int>(type: "integer", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     ImageURL = table.Column<string>(type: "text", nullable: false)
@@ -63,9 +62,6 @@ namespace API.Migrations
                     BookingDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     BookingStartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     BookingEndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CheckInTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CheckOutTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    NumberOfNights = table.Column<int>(type: "integer", nullable: false),
                     PaymentStatus = table.Column<string>(type: "text", nullable: false),
                     RoomId = table.Column<int>(type: "integer", nullable: false),
                     UserId = table.Column<int>(type: "integer", nullable: false)

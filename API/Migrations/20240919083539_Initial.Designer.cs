@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20240914074412_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240919083539_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,15 +41,6 @@ namespace API.Migrations
 
                     b.Property<DateTime>("BookingStartDate")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("CheckInTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("CheckOutTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("NumberOfNights")
-                        .HasColumnType("integer");
 
                     b.Property<string>("PaymentStatus")
                         .IsRequired()
@@ -88,9 +79,6 @@ namespace API.Migrations
                     b.Property<string>("ImageURL")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<bool>("IsOccupied")
-                        .HasColumnType("boolean");
 
                     b.Property<int>("PricePerNight")
                         .HasColumnType("integer");
