@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import MultiActionAreaCard from './Card'; // Adjust the path if necessary
+import MultiActionAreaCard from './Card';
+import './Rooms.css';
 
 function Rooms() {
     const [rooms, setRooms] = useState([]);
@@ -13,7 +14,7 @@ function Rooms() {
 
     return (
         <div>
-            <h1>Rooms Page</h1>
+
             <div className="rooms-container">
                 {rooms.map(room => (
                     <MultiActionAreaCard

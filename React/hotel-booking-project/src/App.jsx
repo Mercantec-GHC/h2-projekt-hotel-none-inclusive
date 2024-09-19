@@ -5,7 +5,6 @@ import Footer from "./components/Footer/Footer.jsx";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import LoginPage from "./pages/Login & Signup/LoginPage.jsx"
 import SignupPage from "./pages/Login & Signup/SignupPage.jsx";
-import React from 'react';
 import Rooms from "./pages/Rooms/Rooms.jsx";
 
 
