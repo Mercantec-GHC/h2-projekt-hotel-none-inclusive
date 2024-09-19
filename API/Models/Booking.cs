@@ -57,7 +57,7 @@ namespace API.Models
     }
 
     // DTO for transferring booking information with additional room and user data.
-    public class BookingWAllData
+    public class BookingWithAllData
     {
         public DateTime BookingDate { get; set; }
         public DateTime BookingStartDate { get; set; }

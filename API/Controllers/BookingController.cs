@@ -34,13 +34,13 @@ namespace API.Controllers
         // GET: api/Booking
         // Retrieves all bookings, including user and room data
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BookingWAllData>>> GetBookings()
+        public async Task<ActionResult<IEnumerable<BookingWithAllData>>> GetBookings()
         {
             // Fetches bookings from the database, including related user and room data
             var bookings = await _context.Bookings.Include(b => b.User).Include(b => b.Room).ToListAsync();
 
             // Maps the bookings to a model that includes all relevant data
-            var bookingWAllData = bookings.Select(b => new BookingWAllData
+            var bookingWithAllData = bookings.Select(b => new BookingWithAllData 
             {
                 BookingDate = b.BookingDate,
                 BookingStartDate = b.BookingStartDate,
@@ -53,7 +53,7 @@ namespace API.Controllers
             }).ToList();
 
             // Returns the full booking data
-            return Ok(bookingWAllData);
+            return Ok(bookingWithAllData);
         }
         #endregion
 
@@ -91,7 +91,7 @@ namespace API.Controllers
             }
 
             // Adds the new booking to the database after mapping the DTO to the Booking entity
-            _context.Bookings.Add(_bookingMapping.MapCreateBookingDTOToBooking(createBookingDTO));
+            _context.Bookings.Add(_bookingMapping.MapCreateBookingDTOToBooking(createBookingDTO)); 
             await _context.SaveChangesAsync();
 
             // Returns a response indicating that the booking was created successfully

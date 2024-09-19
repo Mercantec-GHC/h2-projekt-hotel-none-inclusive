@@ -127,7 +127,7 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
 
             // Returns a response with the newly created room's details
-            return CreatedAtAction(nameof(GetRooms), new { id = room.Id }, room);
+            return CreatedAtAction(nameof(GetRooms), new { id = room.Id }, room); //Forstår ikke helt "CreatedAtAction".
         }
         #endregion
 
