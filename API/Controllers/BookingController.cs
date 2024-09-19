@@ -102,31 +102,51 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> EditBooking(int id, BookingDTO bookingDTO)
         {
-            // If the id in the route does not match the id in the bookingDTO, return a bad request
             if (id != bookingDTO.Id)
             {
                 return BadRequest();
             }
 
-            // Mark the bookingDTO entity as modified
-            _context.Entry(bookingDTO).State = EntityState.Modified;
+            // Retrieve the existing booking entity
+            var existingBooking = await _context.Bookings.FindAsync(id);
+            if (existingBooking == null)
+            {
+                return NotFound();
+            }
+
+            // Update the properties of the existing booking entity
+            existingBooking.BookingDate = bookingDTO.BookingDate;
+            existingBooking.BookingStartDate = bookingDTO.BookingStartDate;
+            existingBooking.BookingEndDate = bookingDTO.BookingEndDate;
+            existingBooking.RoomId = bookingDTO.RoomId;
+            existingBooking.UserId = bookingDTO.UserId;
+            existingBooking.PaymentStatus = bookingDTO.PaymentStatus;
+          
+
+            _context.Entry(existingBooking).State = EntityState.Modified;
 
             try
             {
-                // Save changes to the database
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                // If the booking doesn't exist, return 404
-                if (!BookingDTOExists(id))
+                if (!BookingExists(id))
                 {
                     return NotFound();
                 }
+                else
+                {
+                    throw;
+                }
             }
 
-            // Return 204 No Content on successful update
             return NoContent();
+        }
+
+        private bool BookingExists(int id)
+        {
+            return _context.Bookings.Any(e => e.Id == id);
         }
         #endregion
 
