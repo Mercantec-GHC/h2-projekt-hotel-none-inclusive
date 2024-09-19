@@ -173,9 +173,9 @@ namespace API.Controllers
 
             bool isAvailable = !await _context.Bookings //If no bookings overlap with the specified date range, isAvailable will be true
                 .AnyAsync(b => b.RoomId == roomId &&
-                               ((b.BookingStartDate < startDate && b.BookingEndDate > startDate) ||
-                                (b.BookingStartDate < endDate && b.BookingEndDate > endDate) ||
-                                (b.BookingStartDate >= startDate && b.BookingEndDate < endDate)));
+                               ((b.BookingStartDate < startDate && b.BookingEndDate > startDate) || //Checks if a booking starts before the specified start date and ends after the start date.
+                                (b.BookingStartDate < endDate && b.BookingEndDate > endDate) || //Checks if a booking starts before the specified end date and ends after the end date.
+                                (b.BookingStartDate >= startDate && b.BookingEndDate < endDate)));//Checks if a booking starts and ends within the specified date range.
 
             if (!isAvailable)
             {
@@ -190,7 +190,7 @@ namespace API.Controllers
             }
 
             decimal totalPrice = 0;
-            for (DateTime date = startDate; date < endDate; date = date.AddDays(1))
+            for (DateTime date = startDate; date < endDate; date = date.AddDays(1)) //Iterates through each day in the date range
             {
                 decimal pricePerNight = room.PricePerNight;
                 // Apply 20% increase for weekends
