@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
 using HotelBooking.Data;
@@ -26,28 +22,30 @@ namespace API.Controllers
             _roomMapping = roomMapping;
         }
 
-        #region GetRooms
+    
         // GET: api/Rooms
         // Retrieves a list of rooms with selected fields
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetRoomDTO>>> GetRooms()
         {
             // Retrieves all rooms from the database and maps them to GetRoomDTO
-            var rooms = await _context.Rooms.Select(room => new GetRoomDTO
+            var rooms = await _context.Rooms.Select(room => new GetRoomDTO // Selects specific fields from the room entity
             {
                 Id = room.Id,
                 Price = room.PricePerNight,
                 RoomType = room.RoomType,
                 Description = room.Description,
-                ImageURL = room.ImageURL
+                ImageURL = room.ImageURL,
+                RoomNumber = room.RoomNumber,
+                Floor = room.Floor
             }).ToListAsync();
 
             // Returns the list of rooms
             return Ok(rooms);
         }
-        #endregion
+     
 
-        #region Details
+       
         // GET: api/Rooms/Details/5
         // Retrieves the details of a specific room based on its ID
         [HttpGet("{id}")]
@@ -69,9 +67,9 @@ namespace API.Controllers
             // Maps the room entity to GetRoomDTO and returns it
             return Ok(_roomMapping.MapRoomToGetRoomDTO(room));
         }
-        #endregion
+      
 
-        #region Edit
+      
         // PUT: api/Rooms/Edit/5
         // Updates the details of a specific room
         [HttpPut("Edit")]
@@ -93,9 +91,9 @@ namespace API.Controllers
             // Returns the found room for editing
             return Ok(room);
         }
-        #endregion
+        
 
-        #region PostRoom
+     
         // POST: api/Rooms
         // Creates a new room entry in the database
         [HttpPost]
@@ -112,6 +110,13 @@ namespace API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            
+            // Check if the room number is already in use
+            
+            if (await _context.Rooms.AnyAsync(r => r.RoomNumber == createRoomDTO.RoomNumber))
+            {
+                return BadRequest("Room number is already in use.");
+            }
 
             // Maps CreateRoomDTO to the Room entity
             var room = new Room
@@ -119,7 +124,9 @@ namespace API.Controllers
                 RoomType = createRoomDTO.RoomType,
                 PricePerNight = createRoomDTO.PricePerNight,
                 Description = createRoomDTO.Description,
-                ImageURL = createRoomDTO.ImageURL
+                ImageURL = createRoomDTO.ImageURL,
+                RoomNumber = createRoomDTO.RoomNumber,
+                Floor = createRoomDTO.Floor
             };
 
             // Adds the new room to the database and saves changes
@@ -129,12 +136,12 @@ namespace API.Controllers
             // Returns a response with the newly created room's details
             return CreatedAtAction(nameof(GetRooms), new { id = room.Id }, room);
         }
-        #endregion
+        
 
-        #region Delete
+        
         // DELETE: api/Rooms/Delete/5
         // Deletes a specific room from the database
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
             // Checks if the room ID is null
@@ -144,17 +151,63 @@ namespace API.Controllers
             }
 
             // Finds the room in the database by its ID
-            var room = await _context.Rooms
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var room = await _context.Rooms.FindAsync(id);
             if (room == null)
             {
                 return NotFound();
             }
+            
+            _context.Rooms.Remove(room);
+            await _context.SaveChangesAsync();
 
-            // Returns the room that is going to be deleted
-            return Ok(room);
+            // Returns 204 No Content on successful deletion
+            return NoContent();
         }
-        #endregion
+      
+        //Check Room Availability and calculate total price (EGEN NOTE: BRUG I POST BOOKING)
+        [HttpGet("CheckRoomAvailability")]
+        public async Task<ActionResult<string>> CheckRoomAvailability(int roomId, DateTime startDate, DateTime endDate)
+        {
+            startDate = DateTime.SpecifyKind(startDate, DateTimeKind.Utc); 
+            endDate = DateTime.SpecifyKind(endDate, DateTimeKind.Utc);
 
+            bool isAvailable = !await _context.Bookings //If no bookings overlap with the specified date range, isAvailable will be true
+                .AnyAsync(b => b.RoomId == roomId &&
+                               ((b.BookingStartDate < startDate && b.BookingEndDate > startDate) ||
+                                (b.BookingStartDate < endDate && b.BookingEndDate > endDate) ||
+                                (b.BookingStartDate >= startDate && b.BookingEndDate < endDate)));
+
+            if (!isAvailable)
+            {
+                return NotFound("The room is not available");
+            }
+
+            // Retrieve the room details to get the price per night
+            var room = await _context.Rooms.FindAsync(roomId);
+            if (room == null)
+            {
+                return NotFound("Room not found");
+            }
+
+            decimal totalPrice = 0;
+            for (DateTime date = startDate; date < endDate; date = date.AddDays(1))
+            {
+                decimal pricePerNight = room.PricePerNight;
+                // Apply 20% increase for weekends
+                if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    pricePerNight *= 1.20m;
+                }
+                // Apply 15% increase for July
+                if (date.Month == 7)
+                {
+                    pricePerNight *= 1.15m;
+                }
+                
+                totalPrice += pricePerNight;
+            }
+
+            return Ok($"The room is available. Total price is {totalPrice}");
+        }
     }
 }

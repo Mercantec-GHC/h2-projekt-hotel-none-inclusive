@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
 using HotelBooking.Data;
 using API.Services;
 
+//Forklar meningen med at implementere mapping services i API'en (UserMapping, RoomMapping, BookingMapping)
+//Hvordan mapper de i mellem DTO'er og modeller?
+// Ville det være et problem at fjerne DTO og mapping services og i stedet returnere modeller direkte fra API'en?
+// Vinder jeg noget i en simpel applikation, som denne ved at bruge DTO'er og mapping services? eller er det overkill og et unødvendigt ekstra lag af kompleksitet?
 namespace API.Controllers
 {
     // Defines an API controller to handle booking operations
@@ -45,10 +45,7 @@ namespace API.Controllers
                 BookingDate = b.BookingDate,
                 BookingStartDate = b.BookingStartDate,
                 BookingEndDate = b.BookingEndDate,
-                CheckInTime = b.CheckInTime,
-                CheckOutTime = b.CheckOutTime,
-                NumberOfNights = b.NumberOfNights,
-                UserInfo = _userMapping.MapUserToUserGetDTO(b.User),
+                UserInfo = _userMapping.MapUserToUserGetDTO(b.User), // Maps the user data to a DTO
                 RoomInfo = _roomMapping.MapRoomToGetRoomDTO(b.Room)
             }).ToList();
 
@@ -105,36 +102,51 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> EditBooking(int id, BookingDTO bookingDTO)
         {
-            // If the id in the route does not match the id in the bookingDTO, return a bad request
             if (id != bookingDTO.Id)
             {
                 return BadRequest();
             }
 
-            // Mark the bookingDTO entity as modified
-            _context.Entry(bookingDTO).State = EntityState.Modified;
+            // Retrieve the existing booking entity
+            var existingBooking = await _context.Bookings.FindAsync(id);
+            if (existingBooking == null)
+            {
+                return NotFound();
+            }
+
+            // Update the properties of the existing booking entity
+            existingBooking.BookingDate = bookingDTO.BookingDate;
+            existingBooking.BookingStartDate = bookingDTO.BookingStartDate;
+            existingBooking.BookingEndDate = bookingDTO.BookingEndDate;
+            existingBooking.RoomId = bookingDTO.RoomId;
+            existingBooking.UserId = bookingDTO.UserId;
+            existingBooking.PaymentStatus = bookingDTO.PaymentStatus;
+          
+
+            _context.Entry(existingBooking).State = EntityState.Modified;
 
             try
             {
-                // Save changes to the database
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                // If the booking doesn't exist, return 404
-                if (!BookingDTOExists(id))
+                if (!BookingExists(id))
                 {
                     return NotFound();
                 }
                 else
                 {
-                    // If another concurrency issue occurs, rethrow the exception
                     throw;
                 }
             }
 
-            // Return 204 No Content on successful update
             return NoContent();
+        }
+
+        private bool BookingExists(int id)
+        {
+            return _context.Bookings.Any(e => e.Id == id);
         }
         #endregion
 

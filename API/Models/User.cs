@@ -18,8 +18,8 @@ namespace API.Models
         public string? Country { get; set; }
         public string Zip { get; set; } = null!;
         public string? Role { get; set; }
-        // List of bookings made by the user
-        public List<Booking> Bookings { get; set; } = new List<Booking>();
+        
+        public List<Booking> Bookings { get; set; } = new List<Booking>(); // Navigation property
     }
 
     // DTO for creating or updating a user (used in POST and PUT operations)
@@ -46,11 +46,16 @@ namespace API.Models
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string Email { get; set; }
+        public string? Address { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? City { get; set; }
+        public string? Country { get; set; }
+        public string Zip { get; set; } = null!;
         
     }
 
     // DTO for user login (used during authentication)
-    public class UserLoginDTO
+    public class UserLoginDTO 
     {
         public int Id { get; set; }
         public string Email { get; set; } = null!;

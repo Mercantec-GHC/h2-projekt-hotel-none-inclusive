@@ -12,7 +12,9 @@ namespace API.Services
                 Price = room.PricePerNight,
                 RoomType = room.RoomType,
                 Description = room.Description,
-                ImageURL = room.ImageURL
+                ImageURL = room.ImageURL,
+                RoomNumber = room.RoomNumber,
+                Floor = room.Floor
             };
 
             return getRoomDTO;

@@ -11,14 +11,11 @@ namespace API.Services
             {
                 Id = booking.Id,
                 BookingDate = DateTime.UtcNow,
-                BookingStartDate = DateTime.SpecifyKind(booking.BookingStartDate,DateTimeKind.Utc),
-                BookingEndDate = DateTime.SpecifyKind(booking.BookingEndDate, DateTimeKind.Utc),
+                BookingStartDate = DateTime.SpecifyKind(booking.BookingStartDate.Date,DateTimeKind.Utc),
+                BookingEndDate = DateTime.SpecifyKind(booking.BookingEndDate.Date, DateTimeKind.Utc),
                 RoomId = booking.RoomId,
                 UserId = booking.UserId,
                 PaymentStatus = "",
-                CheckInTime = DateTime.UtcNow,
-                CheckOutTime = DateTime.UtcNow,
-                NumberOfNights = (booking.BookingEndDate - booking.BookingStartDate).Days
             };
         }
     }

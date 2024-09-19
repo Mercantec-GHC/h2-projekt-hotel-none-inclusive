@@ -19,7 +19,7 @@ namespace API.Controllers
         private readonly UserMapping _userMapping;
 
         // Constructor to inject DBContext and UserMapping services
-        public UsersController(DBContext context, UserMapping userMapping)
+        public UsersController(DBContext context, UserMapping userMapping) 
         {
             _context = context;
             _userMapping = userMapping;
@@ -35,7 +35,15 @@ namespace API.Controllers
             {
                 Id = user.UserId,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                Email = user.Email,
+                Address = user.Address,
+                PhoneNumber = user.PhoneNumber,
+                City = user.City,
+                Country = user.Country,
+                Zip = user.Zip,
+               
+                
             }).ToListAsync();
 
             return Ok(users); // Returns the list of users

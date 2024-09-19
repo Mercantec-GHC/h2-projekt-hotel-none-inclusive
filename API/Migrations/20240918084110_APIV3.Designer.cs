@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20240906075905_AddRoomForeignKey")]
-    partial class AddRoomForeignKey
+    [Migration("20240918084110_APIV3")]
+    partial class APIV3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,29 +42,14 @@ namespace API.Migrations
                     b.Property<DateTime>("BookingStartDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("CheckInTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("CheckOutTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("NumberOfNights")
-                        .HasColumnType("integer");
-
                     b.Property<string>("PaymentStatus")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("PricePerNight")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ReservationID")
-                        .HasColumnType("integer");
-
                     b.Property<int>("RoomId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -95,9 +80,6 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsOccupied")
-                        .HasColumnType("boolean");
-
                     b.Property<int>("PricePerNight")
                         .HasColumnType("integer");
 
@@ -115,11 +97,11 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.User", b =>
                 {
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("UserId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("Address")
                         .HasColumnType("text");
@@ -174,11 +156,15 @@ namespace API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API.Models.User", null)
+                    b.HasOne("API.Models.User", "User")
                         .WithMany("Bookings")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Room");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("API.Models.User", b =>
