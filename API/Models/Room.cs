@@ -43,9 +43,15 @@ namespace API.Models
         public int Floor { get; set; }
         public string Description { get; set; }
         public string ImageURL { get; set; }
-
-
     }
-
-
+    
+    public class UpdateRoomDTO
+    {
+        public string RoomType { get; set; }
+        public int PricePerNight { get; set; }
+        public string Description { get; set; }
+        public string ImageURL { get; set; }
+        public int RoomNumber { get; set; }
+        public int Floor { get; set; }
+    }
 }

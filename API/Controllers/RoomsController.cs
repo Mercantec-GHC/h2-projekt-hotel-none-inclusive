@@ -72,13 +72,13 @@ namespace API.Controllers
       
         // PUT: api/Rooms/Edit/5
         // Updates the details of a specific room
-        [HttpPut("Edit")]
-        public async Task<IActionResult> Edit(int? id)
+        [HttpPut("Edit/{id}")]
+        public async Task<IActionResult> Edit(int id, UpdateRoomDTO updateRoomDTO)
         {
             // Checks if the room ID is null
-            if (id == null)
+            if (id == 0)
             {
-                return NotFound();
+                return BadRequest("Invalid room ID.");
             }
 
             // Finds the room in the database by its ID
@@ -88,8 +88,36 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            // Returns the found room for editing
-            return Ok(room);
+            // Updates the room details
+            room.RoomType = updateRoomDTO.RoomType;
+            room.PricePerNight = updateRoomDTO.PricePerNight;
+            room.Description = updateRoomDTO.Description;
+            room.ImageURL = updateRoomDTO.ImageURL;
+            room.RoomNumber = updateRoomDTO.RoomNumber;
+            room.Floor = updateRoomDTO.Floor;
+
+            // Marks the room entity as modified
+            _context.Entry(room).State = EntityState.Modified;
+
+            // Saves the changes to the database
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Rooms.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            // Returns 204 No Content on successful update
+            return NoContent();
         }
         
 
