@@ -34,7 +34,7 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, roomNum
             </CardActionArea>
             <CardActions>
                 <Button size="small" color="primary">
-                    Share
+                    Book
                 </Button>
             </CardActions>
         </Card>
