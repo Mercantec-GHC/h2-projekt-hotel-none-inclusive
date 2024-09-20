@@ -19,10 +19,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/React/hotel-booking-project/src/pages/Rooms/Rooms.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project/src/pages/Rooms/Rooms.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project/src/pages/Rooms/Rooms.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,6 +254,7 @@
       <workItem from="1726729863074" duration="542000" />
       <workItem from="1726732732469" duration="735000" />
       <workItem from="1726737496966" duration="1707000" />
+      <workItem from="1726815404645" duration="349000" />
     </task>
     <servers />
   </component>
