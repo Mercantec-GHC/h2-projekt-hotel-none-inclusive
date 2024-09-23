@@ -104,8 +104,39 @@ namespace API.Controllers
                 return BadRequest("The room is already booked for the specified date range.");
             }
             
-            // Adds the new booking to the database after mapping the DTO to the Booking entity
-            _context.Bookings.Add(_bookingMapping.MapCreateBookingDTOToBooking(createBookingDTO));
+            // Retrieve the room details to get the price per night
+            var room = await _context.Rooms.FindAsync(createBookingDTO.RoomId);
+            if (room == null)
+            {
+                return BadRequest("Room not found.");
+            }
+
+            // Calculate the total price
+            decimal totalPrice = 0;
+            for (DateTime date = createBookingDTO.BookingStartDate; date < createBookingDTO.BookingEndDate; date = date.AddDays(1)) //Iterates through each day in the date range
+            {
+                decimal pricePerNight = room.PricePerNight;
+                // Apply 20% increase for weekends
+                if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    pricePerNight *= 1.20m;
+                }
+                // Apply 15% increase for July
+                if (date.Month == 7)
+                {
+                    pricePerNight *= 1.15m;
+                }
+        
+                totalPrice += pricePerNight;
+            }
+
+            // Map the DTO to the Booking entity and set the TotalPrice
+            var booking = _bookingMapping.MapCreateBookingDTOToBooking(createBookingDTO);
+            booking.TotalPrice = totalPrice;
+
+
+            // Adds the new booking to the database
+            _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
 
             // Returns a response indicating that the booking was created successfully

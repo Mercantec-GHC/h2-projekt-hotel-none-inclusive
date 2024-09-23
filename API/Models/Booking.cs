@@ -19,6 +19,8 @@ namespace API.Models
         public int UserId { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; } = null!; // Kan evt fjernes.
+        
+        public decimal TotalPrice { get; set; }
 
     }
 
@@ -35,6 +37,8 @@ namespace API.Models
         public int RoomId { get; set; }
         // Foreign key referencing the User entity.
         public int UserId { get; set; }
+        
+        public decimal TotalPrice { get; set; }
 
     }
 
@@ -49,6 +53,8 @@ namespace API.Models
         public int RoomId { get; set; }
         // Foreign key referencing the User entity.
         public int UserId { get; set; }
+        
+        public decimal TotalPrice { get; set; }
     }
 
     // DTO for transferring booking information with additional room and user data.
