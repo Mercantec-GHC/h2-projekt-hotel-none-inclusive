@@ -87,6 +87,12 @@ namespace API.Controllers
                 return BadRequest($"User with ID {createBookingDTO.UserId} does not exist.");
             }
             
+            //Check if the booking start date is before the end date
+            if (createBookingDTO.BookingStartDate > createBookingDTO.BookingEndDate)
+            {
+                return BadRequest("The booking start date must be before the end date.");
+            }
+            
             // Check if the room is already booked for the specified date range
             var isRoomBooked = await _context.Bookings
                 .AnyAsync(b => b.RoomId == createBookingDTO.RoomId &&
