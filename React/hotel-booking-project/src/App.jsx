@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar/Navbar.jsx";
 import LoginPage from "./pages/Login & Signup/LoginPage.jsx"
 import SignupPage from "./pages/Login & Signup/SignupPage.jsx";
 import Rooms from "./pages/Rooms/Rooms.jsx";
+import BookingsPage  from "./pages/BookingsPage/BookingsPage.jsx";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/signup" element={<SignupPage />} />
                         <Route path="/rooms" element={<Rooms />} />
+                        <Route path="/bookings" element={<BookingsPage />} />
                     </Routes>
                 </div>
 

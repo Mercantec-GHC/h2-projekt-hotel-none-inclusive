@@ -29,7 +29,7 @@ function Navbar() {
             </div>
             <div className="nav-links">
                 <NavbarLink icon={<IoBedSharp />} text="Værelser" link="/rooms" />
-                <NavbarLink icon={<IoBookmarksSharp />} text="Mine Bookings" />
+                <NavbarLink icon={<IoBookmarksSharp />} text="Mine Bookings" link="/bookings" />
                 <NavbarLink icon={<IoTicketSharp />} text="Tickets" />
                 {isAuthenticated ? (
                     <button className="navbar-logout-button" onClick={handleOnLogoutButtonClick}>Logout</button>
