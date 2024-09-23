@@ -3,26 +3,34 @@ import InputField from "../../components/Signup & Login/InputField.jsx";
 import FormTitle from "../../components/Signup & Login/FormTitle.jsx";
 import FormButton from "../../components/Signup & Login/FormButton.jsx";
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        console.log('Form Submitted')
+        e.preventDefault();
+        console.log('Form Submitted');
         try {
             console.log({email, password});
             const response = await axios.post("https://localhost:7207/api/Auth/login",
                 {email, password}
             );
 
-            localStorage.setItem('token', response.data);
-            console.log('Login successful');
-
+            if (response.status === 200) {
+                localStorage.setItem('token', response.data);
+                console.log('Login successful');
+                navigate('/'); // Redirect to homepage
+            } else {
+                setError('Login failed. Please check your credentials.');
+            }
         } catch (error) {
             console.error('Authentication error:', error.response.data);
+            setError('Login failed. Please check your credentials.');
         }
     }
 
@@ -51,6 +59,7 @@ function LoginPage() {
 
                 <FormButton type="submit" text="Log In" />
             </form>
+            {error && <p className="error-message">{error}</p>}
         </div>
     )
 }
