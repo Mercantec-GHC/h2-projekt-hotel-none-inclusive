@@ -18,17 +18,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Controllers/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/UsersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240919083539_Initial.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240919083539_Initial.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240923082544_totalprice.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240923082544_totalprice.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/DBContextModelSnapshot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Models/Booking.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Models/Booking.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Models/User.cs" afterDir="false" />
-    </list>
+    <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
