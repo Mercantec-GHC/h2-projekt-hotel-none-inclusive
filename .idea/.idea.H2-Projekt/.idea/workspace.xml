@@ -20,17 +20,6 @@
   <component name="ChangeListManager">
     <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/API/API.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Controllers/BookingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/BookingController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Controllers/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/UsersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240914074412_InitialCreate.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240914074412_InitialCreate.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240918080518_APIV2.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240918080518_APIV2.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240918084110_APIV3.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240918084110_APIV3.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/DBContextModelSnapshot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Services/UserMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Services/UserMapping.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +53,7 @@
     ".NET Launch Settings Profile.API: https.executor": "Run",
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "AllanV2",
+    "git-widget-placeholder": "EllyasBranch2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -75,9 +64,9 @@
   },
   "keyToStringList": {
     "rider.external.source.directories": [
-      "C:\\Users\\sck\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\sck\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\sck\\AppData\\Local\\Symbols\\src"
+      "C:\\Users\\Ellyas\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
+      "C:\\Users\\Ellyas\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
+      "C:\\Users\\Ellyas\\AppData\\Local\\Symbols\\src"
     ]
   }
 }]]></component>
@@ -295,6 +284,7 @@
       <workItem from="1726641047331" duration="8976000" />
       <workItem from="1726729863074" duration="542000" />
       <workItem from="1726733633452" duration="859000" />
+      <workItem from="1727076418845" duration="297000" />
     </task>
     <servers />
   </component>
