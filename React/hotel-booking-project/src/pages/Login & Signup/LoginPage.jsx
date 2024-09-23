@@ -14,7 +14,7 @@ function LoginPage() {
         console.log('Form Submitted')
         try {
             console.log({email, password});
-            const response = await axios.post("LINK_HERE",
+            const response = await axios.post("https://localhost:7207/api/Auth/login",
                 {email, password}
             );
 

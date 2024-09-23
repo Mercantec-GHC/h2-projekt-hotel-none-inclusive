@@ -15,7 +15,7 @@ function SignupPage() {
         console.log('Form Submitted');
         try {
             console.log({email, password});
-            await axios.post("LINK_HERE",
+            await axios.post("https://localhost:7207/api/Auth/register",
                 {email, password}
             );
             console.log('Register successful');

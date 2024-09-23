@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Models
 {
@@ -7,15 +8,20 @@ namespace API.Models
     {
         // Unique identifier for the user
         public int UserId { get; set; }
-        public string FirstName { get; set; } = null!;
-        public string LastName { get; set; } = null!;
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        [Required]
+        [EmailAddress]
         public string Email { get; set; } = null!;
-        public string Password { get; set; } = null!;
+        public string? Password { get; set; }
+        [Required]
+        public string PasswordHash { get; set; }
+        public string PasswordSalt { get; set; }
         public string? Address { get; set; }
-        public string PhoneNumber { get; set; } = null!;
+        public string? PhoneNumber { get; set; }
         public string? City { get; set; }
         public string? Country { get; set; }
-        public string Zip { get; set; } = null!;
+        public string? Zip { get; set; }
         
         
         public List<Booking> Bookings { get; set; } = new List<Booking>(); // Navigation property
@@ -28,12 +34,12 @@ namespace API.Models
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string Email { get; set; } = null!;
-        public string Password { get; set; } = null!;
+        public string? Password { get; set; }
         public string? Address { get; set; }
         public string? PhoneNumber { get; set; }
         public string? City { get; set; }
         public string? Country { get; set; }
-        public string Zip { get; set; } = null!;
+        public string? Zip { get; set; }
         
     }
 
@@ -48,7 +54,7 @@ namespace API.Models
         public string? PhoneNumber { get; set; }
         public string? City { get; set; }
         public string? Country { get; set; }
-        public string Zip { get; set; } = null!;
+        public string? Zip { get; set; }
         
     }
 
@@ -57,7 +63,7 @@ namespace API.Models
     {
         public int Id { get; set; }
         public string Email { get; set; } = null!;
-        public string Password { get; set; } = null!;
+        public string? Password { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
        
