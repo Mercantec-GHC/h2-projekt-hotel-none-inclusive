@@ -19,14 +19,12 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, roomNum
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        {roomType} - Room {roomNumber}
+                        {roomType}
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                         {description}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        Floor: {floor}
-                    </Typography>
+
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                         Price: ${price}
                     </Typography>

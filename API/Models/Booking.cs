@@ -54,6 +54,8 @@ namespace API.Models
         public int UserId { get; set; }
         
         public decimal TotalPrice { get; set; }
+        
+        public string RoomType { get; set; } = null!;
     }
 
     // DTO for transferring booking information with additional room and user data.

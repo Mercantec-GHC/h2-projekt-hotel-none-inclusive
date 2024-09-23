@@ -89,29 +89,27 @@ namespace API.Controllers
                 return BadRequest("The booking start date must be before the end date.");
             }
             
-            // Check if the room is already booked for the specified date range
-            var isRoomBooked = await _context.Bookings
-                .AnyAsync(b => b.RoomId == createBookingDTO.RoomId &&
-                               b.BookingStartDate < createBookingDTO.BookingEndDate &&
-                               b.BookingEndDate >= createBookingDTO.BookingStartDate);
+            // Fetch the first available room of the requested room type
+            var availableRoom = await _context.Rooms
+                .Where(r => r.RoomType == createBookingDTO.RoomType) 
+                .Where(r => !_context.Bookings
+                    .Any(b => b.RoomId == r.Id &&
+                              b.BookingStartDate < createBookingDTO.BookingEndDate &&
+                              b.BookingEndDate >= createBookingDTO.BookingStartDate)) // Room availability check
+                .FirstOrDefaultAsync();
 
-            if (isRoomBooked)
+            if (availableRoom == null)
             {
-                return BadRequest("The room is already booked for the specified date range.");
+                return BadRequest("No available rooms of the requested type for the specified date range.");
             }
             
-            // Retrieve the room details to get the price per night
-            var room = await _context.Rooms.FindAsync(createBookingDTO.RoomId);
-            if (room == null)
-            {
-                return BadRequest("Room not found.");
-            }
+        
 
             // Calculate the total price
             decimal totalPrice = 0;
             for (DateTime date = createBookingDTO.BookingStartDate; date < createBookingDTO.BookingEndDate; date = date.AddDays(1)) //Iterates through each day in the date range
             {
-                decimal pricePerNight = room.PricePerNight;
+                decimal pricePerNight =  availableRoom.PricePerNight;
                 // Apply 20% increase for weekends
                 if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
                 {
@@ -129,6 +127,7 @@ namespace API.Controllers
             // Map the DTO to the Booking entity and set the TotalPrice
             var booking = _bookingMapping.MapCreateBookingDTOToBooking(createBookingDTO);
             booking.TotalPrice = totalPrice;
+            booking.RoomId = availableRoom.Id; // Assign the available room to the booking
 
 
             // Adds the new booking to the database
