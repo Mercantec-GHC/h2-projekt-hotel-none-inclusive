@@ -92,8 +92,8 @@ namespace API.Controllers
             // Fetch the first available room of the requested room type
             var availableRoom = await _context.Rooms
                 .Where(r => r.RoomType == createBookingDTO.RoomType) 
-                .Where(r => !_context.Bookings
-                    .Any(b => b.RoomId == r.Id &&
+                .Where(r => !_context.Bookings 
+                    .Any(b => b.RoomId == r.Id && 
                               b.BookingStartDate < createBookingDTO.BookingEndDate &&
                               b.BookingEndDate >= createBookingDTO.BookingStartDate)) // Room availability check
                 .FirstOrDefaultAsync();
@@ -102,9 +102,8 @@ namespace API.Controllers
             {
                 return BadRequest("No available rooms of the requested type for the specified date range.");
             }
-            
-        
 
+            
             // Calculate the total price
             decimal totalPrice = 0;
             for (DateTime date = createBookingDTO.BookingStartDate; date < createBookingDTO.BookingEndDate; date = date.AddDays(1)) //Iterates through each day in the date range
