@@ -1,16 +1,20 @@
-import { IoBedSharp } from "react-icons/io5";
-import { IoBookmarksSharp } from "react-icons/io5";
-import { IoTicketSharp } from "react-icons/io5";
+import { IoBedSharp, IoBookmarksSharp, IoTicketSharp } from "react-icons/io5";
 import NavbarLink from "./Navbar Links/NavbarLink.jsx";
-import './Navbar.css'
+import './Navbar.css';
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '../../context/AuthContext';
 
 function Navbar() {
-
     const navigate = useNavigate();
+    const { isAuthenticated, logout } = useAuth();
+
     const handleOnLogoClick = () => navigate('/');
     const handleOnLoginButtonClick = () => navigate('/login');
     const handleOnSignupButtonClick = () => navigate('/signup');
+    const handleOnLogoutButtonClick = () => {
+        logout();
+        navigate('/');
+    };
 
     return (
         <div className="navbar-container">
@@ -24,18 +28,20 @@ function Navbar() {
                 />
             </div>
             <div className="nav-links">
-                <NavbarLink icon={ <IoBedSharp /> } text="Værelser" link="/rooms" />
-                <NavbarLink icon={ <IoBookmarksSharp /> } text="Mine Bookings"/>
-                <NavbarLink icon={ <IoTicketSharp /> } text="Tickets"/>
-
-                <button className="navbar-login-button"
-                        onClick={handleOnLoginButtonClick}>Login</button>
-
-                <button className="navbar-signup-button"
-                        onClick={handleOnSignupButtonClick}>Sign up</button>
+                <NavbarLink icon={<IoBedSharp />} text="Værelser" link="/rooms" />
+                <NavbarLink icon={<IoBookmarksSharp />} text="Mine Bookings" />
+                <NavbarLink icon={<IoTicketSharp />} text="Tickets" />
+                {isAuthenticated ? (
+                    <button className="navbar-logout-button" onClick={handleOnLogoutButtonClick}>Logout</button>
+                ) : (
+                    <>
+                        <button className="navbar-login-button" onClick={handleOnLoginButtonClick}>Login</button>
+                        <button className="navbar-signup-button" onClick={handleOnSignupButtonClick}>Sign up</button>
+                    </>
+                )}
             </div>
         </div>
-    )
+    );
 }
 
-export default Navbar
+export default Navbar;

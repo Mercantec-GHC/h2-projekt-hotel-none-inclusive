@@ -20,6 +20,10 @@
   <component name="ChangeListManager">
     <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project/src/components/Navbar/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project/src/components/Navbar/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project/src/main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project/src/pages/Login &amp; Signup/LoginPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project/src/pages/Login &amp; Signup/LoginPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project/src/pages/Login &amp; Signup/SignupPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project/src/pages/Login &amp; Signup/SignupPage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,7 +295,7 @@
       <workItem from="1726733633452" duration="859000" />
       <workItem from="1727099987785" duration="1003000" />
       <workItem from="1727104630394" duration="681000" />
-      <workItem from="1727108821917" duration="384000" />
+      <workItem from="1727108821917" duration="1460000" />
     </task>
     <servers />
   </component>
