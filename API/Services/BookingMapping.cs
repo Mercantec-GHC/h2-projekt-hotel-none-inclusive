@@ -16,6 +16,7 @@ namespace API.Services
                 RoomId = booking.RoomId,
                 UserId = booking.UserId,
                 PaymentStatus = "",
+                TotalPrice = booking.TotalPrice
             };
         }
     }

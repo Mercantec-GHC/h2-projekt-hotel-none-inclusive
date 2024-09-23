@@ -4,10 +4,6 @@ using API.Models;
 using HotelBooking.Data;
 using API.Services;
 
-//Forklar meningen med at implementere mapping services i API'en (UserMapping, RoomMapping, BookingMapping)
-//Hvordan mapper de i mellem DTO'er og modeller?
-// Ville det være et problem at fjerne DTO og mapping services og i stedet returnere modeller direkte fra API'en?
-// Vinder jeg noget i en simpel applikation, som denne ved at bruge DTO'er og mapping services? eller er det overkill og et unødvendigt ekstra lag af kompleksitet?
 namespace API.Controllers
 {
     // Defines an API controller to handle booking operations
@@ -87,6 +83,12 @@ namespace API.Controllers
                 return BadRequest($"User with ID {createBookingDTO.UserId} does not exist.");
             }
             
+            //Check if the booking start date is before the end date
+            if (createBookingDTO.BookingStartDate > createBookingDTO.BookingEndDate)
+            {
+                return BadRequest("The booking start date must be before the end date.");
+            }
+            
             // Check if the room is already booked for the specified date range
             var isRoomBooked = await _context.Bookings
                 .AnyAsync(b => b.RoomId == createBookingDTO.RoomId &&
@@ -98,8 +100,39 @@ namespace API.Controllers
                 return BadRequest("The room is already booked for the specified date range.");
             }
             
-            // Adds the new booking to the database after mapping the DTO to the Booking entity
-            _context.Bookings.Add(_bookingMapping.MapCreateBookingDTOToBooking(createBookingDTO));
+            // Retrieve the room details to get the price per night
+            var room = await _context.Rooms.FindAsync(createBookingDTO.RoomId);
+            if (room == null)
+            {
+                return BadRequest("Room not found.");
+            }
+
+            // Calculate the total price
+            decimal totalPrice = 0;
+            for (DateTime date = createBookingDTO.BookingStartDate; date < createBookingDTO.BookingEndDate; date = date.AddDays(1)) //Iterates through each day in the date range
+            {
+                decimal pricePerNight = room.PricePerNight;
+                // Apply 20% increase for weekends
+                if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    pricePerNight *= 1.20m;
+                }
+                // Apply 15% increase for July
+                if (date.Month == 7)
+                {
+                    pricePerNight *= 1.15m;
+                }
+        
+                totalPrice += pricePerNight;
+            }
+
+            // Map the DTO to the Booking entity and set the TotalPrice
+            var booking = _bookingMapping.MapCreateBookingDTOToBooking(createBookingDTO);
+            booking.TotalPrice = totalPrice;
+
+
+            // Adds the new booking to the database
+            _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
 
             // Returns a response indicating that the booking was created successfully

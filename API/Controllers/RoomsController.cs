@@ -198,6 +198,12 @@ namespace API.Controllers
         {
             startDate = DateTime.SpecifyKind(startDate, DateTimeKind.Utc); 
             endDate = DateTime.SpecifyKind(endDate, DateTimeKind.Utc);
+            
+            //check that the start date is before the end date
+            if (startDate > endDate)
+            {
+                return BadRequest("The start date must be before the end date.");
+            }
 
             bool isAvailable = !await _context.Bookings //If no bookings overlap with the specified date range, isAvailable will be true
                 .AnyAsync(b => b.RoomId == roomId &&
