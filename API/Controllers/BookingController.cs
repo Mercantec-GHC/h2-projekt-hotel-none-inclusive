@@ -97,12 +97,7 @@ namespace API.Controllers
             {
                 return BadRequest("The room is already booked for the specified date range.");
             }
-
-            if (isRoomBooked)
-            {
-                return BadRequest("The room is already booked for the specified date range.");
-            }
-
+            
             // Adds the new booking to the database after mapping the DTO to the Booking entity
             _context.Bookings.Add(_bookingMapping.MapCreateBookingDTOToBooking(createBookingDTO));
             await _context.SaveChangesAsync();
