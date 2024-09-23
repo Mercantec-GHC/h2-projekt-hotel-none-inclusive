@@ -86,7 +86,18 @@ namespace API.Controllers
             {
                 return BadRequest($"User with ID {createBookingDTO.UserId} does not exist.");
             }
+            
+            // Check if the room is already booked for the specified date range
+            var isRoomBooked = await _context.Bookings
+                .AnyAsync(b => b.RoomId == createBookingDTO.RoomId &&
+                               b.BookingStartDate < createBookingDTO.BookingEndDate &&
+                               b.BookingEndDate >= createBookingDTO.BookingStartDate);
 
+            if (isRoomBooked)
+            {
+                return BadRequest("The room is already booked for the specified date range.");
+            }
+            
             // Adds the new booking to the database after mapping the DTO to the Booking entity
             _context.Bookings.Add(_bookingMapping.MapCreateBookingDTOToBooking(createBookingDTO));
             await _context.SaveChangesAsync();
