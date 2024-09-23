@@ -172,13 +172,12 @@ namespace API.Controllers
                     LastName = UserDTO.LastName,
                     Email = UserDTO.Email,
                     Password = UserDTO.Password,
-                    PasswordRepeat = UserDTO.PasswordRepeat,
                     Address = UserDTO.Address,
                     PhoneNumber = UserDTO.PhoneNumber,
                     City = UserDTO.City,
                     Country = UserDTO.Country,
                     Zip = UserDTO.Zip,
-                    Role = UserDTO.Role
+                    
                 };
 
                 // Add the new user to the database and save changes
