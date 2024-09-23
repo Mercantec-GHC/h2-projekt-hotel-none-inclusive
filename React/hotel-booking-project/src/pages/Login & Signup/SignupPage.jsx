@@ -3,23 +3,27 @@ import InputField from "../../components/Signup & Login/InputField.jsx";
 import FormTitle from "../../components/Signup & Login/FormTitle.jsx";
 import FormButton from "../../components/Signup & Login/FormButton.jsx";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 function SignupPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         console.log('Form Submitted');
         try {
             console.log({email, password});
-            await axios.post("https://localhost:7207/api/Auth/register",
+            const response = await axios.post("https://localhost:7207/api/Auth/register",
                 {email, password}
             );
-            console.log('Register successful');
 
+            if (response.status === 200) {
+                console.log('Register successful');
+                navigate('/'); // Redirect to homepage
+            }
         } catch (error) {
             console.error('Authentication error:', error.response.data);
         }
