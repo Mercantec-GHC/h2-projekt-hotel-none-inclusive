@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
 
-export default function MultiActionAreaCard({ imageURL, price, roomType, roomNumber, description, floor }) {
+export default function MultiActionAreaCard({ imageURL, price, roomType, description, floor }) {
     return (
         <Card sx={{ maxWidth: 345 }}>
             <CardActionArea>
@@ -19,7 +19,7 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, roomNum
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        {roomType} - Room {roomNumber}
+                        {roomType} Room
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                         {description}
