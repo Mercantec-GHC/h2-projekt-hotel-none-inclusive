@@ -15,12 +15,46 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
     const [open, setOpen] = useState(false);
     const [checkInDate, setCheckInDate] = useState(null);
     const [checkOutDate, setCheckOutDate] = useState(null);
+    const [availabilityMessage, setAvailabilityMessage] = useState('');
+    const [totalPrice, setTotalPrice] = useState(null);
 
     const handleClickOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const handleConfirm = () => {
         // Add your booking logic here
         setOpen(false);
+    };
+
+    const checkRoomAvailability = async () => {
+        if (!checkInDate || !checkOutDate) {
+            setAvailabilityMessage('Please select both check-in and check-out dates.');
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                `https://localhost:7207/api/Rooms/CheckRoomAvailability?roomType=${roomType}&startDate=${checkInDate.toISOString()}&endDate=${checkOutDate.toISOString()}`
+            );
+            // Check if the response is JSON
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.indexOf('application/json') !== -1) {
+                const data = await response.json();
+                if (response.ok) {
+                    setAvailabilityMessage('Room is available.');
+                    setTotalPrice(data.totalPrice);
+                } else {
+                    setAvailabilityMessage(data.message || 'Room is not available for the selected dates.');
+                    setTotalPrice(null);
+                }
+            } else {
+                const text = await response.text();
+                setAvailabilityMessage(text || 'Room is not available for the selected dates.');
+                setTotalPrice(null);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setAvailabilityMessage('An error occurred while checking availability.');
+        }
     };
 
     const today = new Date();
@@ -102,6 +136,9 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
                         <Button onClick={handleClose} color="secondary">Cancel</Button>
                         <Button onClick={handleConfirm} color="primary">Confirm</Button>
                     </Box>
+                    <Button onClick={checkRoomAvailability} color="primary">Check Room Availability</Button>
+                    {availabilityMessage && <Typography variant="body2">{availabilityMessage}</Typography>}
+                    {totalPrice !== null && <Typography variant="body2">Total Price: ${totalPrice}</Typography>}
                 </Box>
             </Modal>
         </Card>
