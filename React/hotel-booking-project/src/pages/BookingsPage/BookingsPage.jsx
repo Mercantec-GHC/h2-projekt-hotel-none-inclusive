@@ -15,8 +15,12 @@ const BookingsPage = () => {
                     throw new Error('No token found');
                 }
 
-                const { email } = JSON.parse(atob(token.split('.')[1])); // Decode JWT token to get email
-                console.log(email);
+                const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT token to get payload
+                const email = payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
+                if (!email) {
+                    throw new Error('Email not found in token');
+                }
+
                 const response = await axios.get(`https://localhost:7207/api/Booking/user/${email}`);
                 setBookings(response.data);
             } catch (err) {
@@ -38,10 +42,13 @@ const BookingsPage = () => {
             <ul>
                 {bookings.map((booking, index) => (
                     <li key={index}>
-                        <p>Booking Date: {new Date(booking.BookingDate).toLocaleDateString()}</p>
-                        <p>Start Date: {new Date(booking.BookingStartDate).toLocaleDateString()}</p>
-                        <p>End Date: {new Date(booking.BookingEndDate).toLocaleDateString()}</p>
-                        <p>Room: {booking.RoomInfo.name}</p>
+                        <p>Booking Date: {new Date(booking.bookingDate).toLocaleDateString()}</p>
+                        <p>Start Date: {new Date(booking.bookingStartDate).toLocaleDateString()}</p>
+                        <p>End Date: {new Date(booking.bookingEndDate).toLocaleDateString()}</p>
+                        <p>Room: {booking.roomInfo ? booking.roomInfo.roomNumber : 'N/A'}</p>
+                        <p>Room Type: {booking.roomInfo ? booking.roomInfo.roomType : 'N/A'}</p>
+                        <p>Description: {booking.roomInfo ? booking.roomInfo.description : 'N/A'}</p>
+                        <img src={booking.roomInfo ? booking.roomInfo.imageURL : ''} alt="Room" />
                     </li>
                 ))}
             </ul>

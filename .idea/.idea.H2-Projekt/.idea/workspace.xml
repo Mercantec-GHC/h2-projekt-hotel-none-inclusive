@@ -20,7 +20,7 @@
   <component name="ChangeListManager">
     <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/DBContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Migrations/DBContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project/src/pages/BookingsPage/BookingsPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project/src/pages/BookingsPage/BookingsPage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -297,7 +297,7 @@
       <workItem from="1727115452592" duration="641000" />
       <workItem from="1727116278051" duration="1306000" />
       <workItem from="1727170246942" duration="19000" />
-      <workItem from="1727170274149" duration="1273000" />
+      <workItem from="1727170274149" duration="5251000" />
     </task>
     <servers />
   </component>
