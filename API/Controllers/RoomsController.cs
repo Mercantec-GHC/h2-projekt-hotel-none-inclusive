@@ -192,41 +192,38 @@ namespace API.Controllers
             return NoContent();
         }
       
-        //Check Room Availability and calculate total price (EGEN NOTE: BRUG I POST BOOKING)
+        //Check Room Availability and calculate total price
         [HttpGet("CheckRoomAvailability")]
-        public async Task<ActionResult<string>> CheckRoomAvailability(int roomId, DateTime startDate, DateTime endDate)
+        public async Task<ActionResult<string>> CheckRoomAvailability(string roomType, DateTime startDate, DateTime endDate)
         {
-            startDate = DateTime.SpecifyKind(startDate, DateTimeKind.Utc); 
+            startDate = DateTime.SpecifyKind(startDate, DateTimeKind.Utc);
             endDate = DateTime.SpecifyKind(endDate, DateTimeKind.Utc);
-            
-            //check that the start date is before the end date
+
+            // Check that the start date is before the end date
             if (startDate > endDate)
             {
                 return BadRequest("The start date must be before the end date.");
             }
 
-            bool isAvailable = !await _context.Bookings //If no bookings overlap with the specified date range, isAvailable will be true
-                .AnyAsync(b => b.RoomId == roomId &&
-                               ((b.BookingStartDate < startDate && b.BookingEndDate > startDate) || //Checks if a booking starts before the specified start date and ends after the start date.
-                                (b.BookingStartDate < endDate && b.BookingEndDate > endDate) || //Checks if a booking starts before the specified end date and ends after the end date.
-                                (b.BookingStartDate >= startDate && b.BookingEndDate < endDate)));//Checks if a booking starts and ends within the specified date range.
+            // Fetch the first available room of the requested room type
+            var availableRoom = await _context.Rooms
+                .Where(r => r.RoomType == roomType)
+                .Where(r => !_context.Bookings
+                    .Any(b => b.RoomId == r.Id &&
+                              b.BookingStartDate < endDate &&
+                              b.BookingEndDate >= startDate)) // Room availability check
+                .FirstOrDefaultAsync();
 
-            if (!isAvailable)
+            if (availableRoom == null)
             {
-                return NotFound("The room is not available");
+                return BadRequest("No available rooms of the requested type for the specified date range.");
             }
 
-            // Retrieve the room details to get the price per night
-            var room = await _context.Rooms.FindAsync(roomId);
-            if (room == null)
-            {
-                return NotFound("Room not found");
-            }
-
+            // Calculate the total price
             decimal totalPrice = 0;
-            for (DateTime date = startDate; date < endDate; date = date.AddDays(1)) //Iterates through each day in the date range
+            for (DateTime date = startDate; date < endDate; date = date.AddDays(1)) // Iterates through each day in the date range
             {
-                decimal pricePerNight = room.PricePerNight;
+                decimal pricePerNight = availableRoom.PricePerNight;
                 // Apply 20% increase for weekends
                 if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
                 {
@@ -237,7 +234,7 @@ namespace API.Controllers
                 {
                     pricePerNight *= 1.15m;
                 }
-                
+
                 totalPrice += pricePerNight;
             }
 
