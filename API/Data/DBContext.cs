@@ -15,6 +15,8 @@ namespace HotelBooking.Data
 
         // DbSet to represent the 'Rooms' table in the database.
         public DbSet<Room> Rooms { get; set; }
+        
+        public DbSet<MailData> MailDatas { get; set; }
 
         // Constructor that accepts options for configuring the DbContext.
         public DBContext(DbContextOptions<DBContext> options)
