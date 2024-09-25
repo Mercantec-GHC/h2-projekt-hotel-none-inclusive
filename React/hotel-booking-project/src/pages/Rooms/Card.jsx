@@ -20,9 +20,77 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
 
     const handleClickOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const handleConfirm = () => {
-        // Add your booking logic here
-        setOpen(false);
+    const handleConfirm = async () => {
+        if (!checkInDate || !checkOutDate) {
+            setAvailabilityMessage('Please select both check-in and check-out dates.');
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                throw new Error('No token found');
+            }
+
+            const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT token to get payload
+            const email = payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
+            if (!email) {
+                throw new Error('Email not found in token');
+            }
+
+            // Fetch user ID using the email
+            const userResponse = await fetch(`https://localhost:7207/api/Users/email/${encodeURIComponent(email)}`, {
+                headers: {
+                    'accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!userResponse.ok) {
+                console.log(userResponse);
+                throw new Error('Failed to fetch user ID');
+            }
+
+            const userData = await userResponse.json();
+            const userId = userData.id;
+            if (!userId) {
+                throw new Error('User ID not found');
+            }
+
+            const booking = {
+                id: 0,
+                bookingDate: new Date().toISOString(),
+                bookingStartDate: checkInDate.toISOString(),
+                bookingEndDate: checkOutDate.toISOString(),
+                roomId: 0,
+                userId: userId,
+                totalPrice: totalPrice,
+                roomType: roomType
+            };
+
+            console.log('Booking Object:', booking); // Log the booking object
+
+            const response = await fetch('https://localhost:7207/api/Booking', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(booking)
+            });
+
+            if (response.ok) {
+                setAvailabilityMessage('Booking successful.');
+            } else {
+                const errorData = await response.json();
+                setAvailabilityMessage(errorData.message || 'Booking failed.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setAvailabilityMessage('An error occurred while booking the room.');
+        } finally {
+            setOpen(false);
+        }
     };
 
     const checkRoomAvailability = async () => {
