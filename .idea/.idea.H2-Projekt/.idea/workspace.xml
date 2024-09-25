@@ -20,12 +20,7 @@
   <component name="ChangeListManager">
     <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Configuration/MailSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Configuration/MailSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Controllers/MailController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/MailController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Models/MailData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Models/MailData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Services/IMailService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Services/IMailService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Services/MailService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Services/MailService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Controllers/BookingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/BookingController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +54,7 @@
     &quot;.NET Launch Settings Profile.API: https.executor&quot;: &quot;Run&quot;,
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;MikkelV3&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,

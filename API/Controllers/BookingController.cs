@@ -71,10 +71,10 @@ namespace API.Controllers
             // Fetch the first available room of the requested room type
             var availableRoom = await _context.Rooms
                 .Where(r => r.RoomType == createBookingDTO.RoomType) 
-                .Where(r => !_context.Bookings 
+                .Where(r => !_context.Bookings // Check if the room is already booked for the requested date range 
                     .Any(b => b.RoomId == r.Id && 
-                              b.BookingStartDate < createBookingDTO.BookingEndDate &&
-                              b.BookingEndDate >= createBookingDTO.BookingStartDate)) // Room availability check
+                              b.BookingStartDate < createBookingDTO.BookingEndDate && // Check if the booking start date is before the end date
+                              b.BookingEndDate >= createBookingDTO.BookingStartDate)) 
                 .FirstOrDefaultAsync();
 
             if (availableRoom == null)
@@ -102,7 +102,7 @@ namespace API.Controllers
                 totalPrice += pricePerNight;
             }
 
-            // Map the DTO to the Booking entity and set the TotalPrice
+            // Map the DTO to the Booking entity and set the TotalPrice and RoomId
             var booking = _bookingMapping.MapCreateBookingDTOToBooking(createBookingDTO);
             booking.TotalPrice = totalPrice;
             booking.RoomId = availableRoom.Id; // Assign the available room to the booking
