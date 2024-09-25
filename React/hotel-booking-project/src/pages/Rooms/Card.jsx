@@ -87,6 +87,27 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
 
             if (response.ok) {
                 setAvailabilityMessage('Booking successful.');
+
+                // Send a confirmation email
+                const emailResponse = await fetch('https://localhost:7207/Mail', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        emailToId: email,
+                        emailToName: email,
+                        emailSubject: `Booking Confirmation`,
+                        emailBody: `Dear customer,\n\nThank you for booking with us! Here are your booking details:\n\nCheck-in Date: ${new Date(checkInDate).toLocaleDateString()}\nCheck-out Date: ${new Date(checkOutDate).toLocaleDateString()}\n\nWe look forward to your stay!\n\nBest regards,\nThe None Inclusive Hotel`
+                    })
+                });
+
+                if (emailResponse.ok) {
+                    console.log('Confirmation email sent successfully.');
+                } else {
+                    console.error('Failed to send confirmation email.');
+                }
+
             } else {
                 const errorData = await response.json();
                 setAvailabilityMessage(errorData.message || 'Booking failed.');
