@@ -7,6 +7,7 @@ import LoginPage from "./pages/Login & Signup/LoginPage.jsx"
 import SignupPage from "./pages/Login & Signup/SignupPage.jsx";
 import Rooms from "./pages/Rooms/Rooms.jsx";
 import BookingsPage  from "./pages/BookingsPage/BookingsPage.jsx";
+import Contact from "./pages/Contact/Contact.jsx";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
                         <Route path="/signup" element={<SignupPage />} />
                         <Route path="/rooms" element={<Rooms />} />
                         <Route path="/bookings" element={<BookingsPage />} />
+                        <Route path="/contact" element={<Contact />} />
                     </Routes>
                 </div>
 
