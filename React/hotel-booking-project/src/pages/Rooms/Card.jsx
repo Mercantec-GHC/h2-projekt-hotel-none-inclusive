@@ -98,7 +98,7 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
                         emailToId: email,
                         emailToName: email,
                         emailSubject: `Booking Confirmation`,
-                        emailBody: `Dear customer,\n\nThank you for booking with us! Here are your booking details:\n\nCheck-in Date: ${new Date(checkInDate).toLocaleDateString()}\nCheck-out Date: ${new Date(checkOutDate).toLocaleDateString()}\n\nWe look forward to your stay!\n\nBest regards,\nThe None Inclusive Hotel`
+                        emailBody: `Dear customer,\n\nThank you for booking with us! Here are your booking details:\n\nCheck-in Date: ${new Date(checkInDate).toLocaleDateString()}\nCheck-out Date: ${new Date(checkOutDate).toLocaleDateString()}\n\nWe look forward to your stay!\n\nBest regards,\nHotel None Inclusive`
                     })
                 });
 
