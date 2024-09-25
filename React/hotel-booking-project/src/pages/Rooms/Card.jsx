@@ -57,14 +57,20 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
                 throw new Error('User ID not found');
             }
 
+            // Adjust dates for timezone offset
+            const adjustForTimezone = (date) => {
+                const offset = date.getTimezoneOffset();
+                return new Date(date.getTime() - (offset * 60 * 1000)).toISOString();
+            };
+
             const booking = {
                 id: 0,
                 bookingDate: new Date().toISOString(),
-                bookingStartDate: checkInDate.toISOString(),
-                bookingEndDate: checkOutDate.toISOString(),
+                bookingStartDate: adjustForTimezone(checkInDate),
+                bookingEndDate: adjustForTimezone(checkOutDate),
                 roomId: 0,
                 userId: userId,
-                totalPrice: totalPrice,
+                totalPrice: 0,
                 roomType: roomType
             };
 
