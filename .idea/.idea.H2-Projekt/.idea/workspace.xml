@@ -20,12 +20,12 @@
   <component name="ChangeListManager">
     <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Data/DBContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Data/DBContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240924074030_mikkel24sep.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240924074030_mikkel24sep.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240924074223_mikkel24-09.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240924074223_mikkel24-09.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/DBContextModelSnapshot.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Configuration/MailSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Configuration/MailSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Controllers/MailController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/MailController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Models/MailData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Models/MailData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Services/IMailService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Services/IMailService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Services/MailService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Services/MailService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -305,6 +305,7 @@
       <workItem from="1727170274149" duration="5251000" />
       <workItem from="1727249191861" duration="191000" />
       <workItem from="1727249393289" duration="1033000" />
+      <workItem from="1727250504274" duration="1214000" />
     </task>
     <servers />
   </component>

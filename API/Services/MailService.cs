@@ -1,7 +1,6 @@
 using API.Configuration;
 using API.Models;
 using MailKit.Net.Smtp;
-using Microsoft.CodeAnalysis.Options;
 using Microsoft.Extensions.Options;
 using MimeKit;
 
@@ -20,7 +19,7 @@ namespace API.Services
         }
 
         // Method to send an email using MailData input.
-        public bool SendEmail(MailData mailData)
+        public bool SendMail(MailData Mail_Data)
         {
             try
             {
@@ -32,15 +31,15 @@ namespace API.Services
                 email_Message.From.Add(email_From);
 
                 // Set the recipient's email address from the MailData input.
-                MailboxAddress email_To = new MailboxAddress(mailData.EmailToName, mailData.EmailToId);
+                MailboxAddress email_To = new MailboxAddress(Mail_Data.EmailToName, Mail_Data.EmailToId);
                 email_Message.To.Add(email_To);
 
                 // Set the subject of the email.
-                email_Message.Subject = mailData.EmailSubject;
+                email_Message.Subject = Mail_Data.EmailSubject;
 
                 // Create the email body and add it to the message.
                 BodyBuilder emailBodyBuilder = new BodyBuilder();
-                emailBodyBuilder.TextBody = mailData.EmailBody;
+                emailBodyBuilder.TextBody = Mail_Data.EmailBody;
                 email_Message.Body = emailBodyBuilder.ToMessageBody();
 
                 // Initialize the SMTP client to send the email.

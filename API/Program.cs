@@ -1,3 +1,4 @@
+using API.Configuration;
 using HotelBooking.Data;
 using Microsoft.EntityFrameworkCore;
 using API.Services;
@@ -24,6 +25,10 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
+
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddTransient<IMailService, MailService>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

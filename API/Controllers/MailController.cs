@@ -19,9 +19,9 @@ public class MailController : ControllerBase
 
     // HTTP POST method to send an email.
     [HttpPost]
-    public bool SendMail(MailData mailData)
+    public bool SendMail(MailData Mail_Data)
     {
         // Calls the SendMail method from the injected mail service to send the provided mail data.
-        return Mail_Service.SendEmail(mailData);
+        return Mail_Service.SendMail(Mail_Data);
     }
 }
