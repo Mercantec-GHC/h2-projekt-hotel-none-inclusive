@@ -1,4 +1,8 @@
+import './Contact.css';
 import { useState } from 'react';
+import FormTitle from "../../components/Signup & Login/FormTitle.jsx";
+import FormButton from "../../components/Signup & Login/FormButton.jsx";
+import InputField from "../../components/Signup & Login/InputField.jsx";
 
 const Contact = () => {
     // Set the default values
@@ -44,33 +48,29 @@ const Contact = () => {
     };
 
     return (
-        <div className="backgroundLogin">
-            <div className="login-container">
-                <div>
-                    <form onSubmit={handleSubmit}>
-                        {/* Removed Email To (ID) and Email To (Name) fields */}
-                        <div>
-                            <label>Subject: </label>
-                            <input
-                                type="text"
-                                value={emailSubject}
-                                onChange={(e) => setEmailSubject(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label>Your Message: </label>
-                            <textarea
-                                value={emailBody}
-                                onChange={(e) => setEmailBody(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <button type="submit">Send Email</button>
-                    </form>
-                    {response && <p>{response}</p>}
-                </div>
-            </div>
+        <div className="contact-container">
+            <FormTitle title="Contact" />
+            <form onSubmit={handleSubmit}>
+                {/* Removed Email To (ID) and Email To (Name) fields */}
+                <InputField
+                    labelText="Subject"
+                    inputType="subject"
+                    inputId="subject"
+                    inputName="subject"
+                    value={emailSubject}
+                    onChange={(e) => setEmailSubject(e.target.value)}
+                />
+                <InputField
+                    labelText="Message"
+                    inputType="message"
+                    inputId="message"
+                    inputName="message"
+                    value={emailBody}
+                    onChange={(e) => setEmailBody(e.target.value)}
+                />
+                <FormButton type="submit" text="Send e-mail" />
+            </form>
+            {response && <p>{response}</p>}
         </div>
     );
 };
