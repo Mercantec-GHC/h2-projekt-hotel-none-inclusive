@@ -6,6 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="51813890-b435-4645-aac1-e96e890b9dad" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/API/API.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Data/DBContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Data/DBContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aspire/Aspire.AppHost/H2.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Aspire/Aspire.AppHost/H2.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aspire/Aspire.ServiceDefaults/Aspire.ServiceDefaults.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Aspire/Aspire.ServiceDefaults/Aspire.ServiceDefaults.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blazor/Blazor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Blazor/Blazor.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainModels/DomainModels.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DomainModels/DomainModels.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,27 +22,28 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2mSjA8wZ0Y9GtCs3OM7ymkq3NWO" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Node.js.facilities.jsx.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "EllyasBranch2",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Node.js.facilities.jsx.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;EllyasBranch2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="dev" type="js.build_tools.npm" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/React/hotel-booking-project/package.json" />
@@ -63,7 +71,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1727076726185</updated>
-      <workItem from="1727076727391" duration="86000" />
+      <workItem from="1727076727391" duration="1789000" />
+      <workItem from="1727128799377" duration="1504000" />
     </task>
     <servers />
   </component>

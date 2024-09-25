@@ -20,6 +20,13 @@
   <component name="ChangeListManager">
     <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/API/API.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Data/DBContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Data/DBContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aspire/Aspire.AppHost/H2.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Aspire/Aspire.AppHost/H2.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aspire/Aspire.ServiceDefaults/Aspire.ServiceDefaults.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Aspire/Aspire.ServiceDefaults/Aspire.ServiceDefaults.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blazor/Blazor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Blazor/Blazor.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DomainModels/DomainModels.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DomainModels/DomainModels.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +46,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="SWEA" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -47,29 +58,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.API: http.executor": "Run",
-    ".NET Launch Settings Profile.API: https.executor": "Run",
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "EllyasBranch2",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.API: http.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.API: https.executor&quot;: &quot;Run&quot;,
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;EllyasBranch2&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\Ellyas\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\Ellyas\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\Ellyas\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\Ellyas\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\Ellyas\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\Ellyas\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.API: https">
     <configuration name="H2: http" type="AspireHostConfiguration" factoryName="Aspire Host" activateToolWindowBeforeRun="false">
       <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Aspire/Aspire.AppHost/H2.csproj" />
@@ -284,13 +296,17 @@
       <workItem from="1726641047331" duration="8976000" />
       <workItem from="1726729863074" duration="542000" />
       <workItem from="1726733633452" duration="859000" />
-      <workItem from="1727076418845" duration="297000" />
+      <workItem from="1727076418845" duration="5235000" />
+      <workItem from="1727128814699" duration="3770000" />
+      <workItem from="1727132678783" duration="1232000" />
+      <workItem from="1727247544736" duration="441000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />

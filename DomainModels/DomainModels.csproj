@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.3.3" />
     <PackageReference Include="BootstrapBlazor" Version="8.9.0" />
+    <PackageReference Include="MailKit" Version="4.7.1.1" />
   </ItemGroup>
 
 </Project>
