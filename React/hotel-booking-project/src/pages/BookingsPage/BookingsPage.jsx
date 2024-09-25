@@ -23,6 +23,7 @@ const BookingsPage = () => {
 
                 const response = await axios.get(`https://localhost:7207/api/Booking/user/${email}`);
                 setBookings(response.data);
+                console.log(response.data); // Log the bookings data to inspect the structure
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -32,6 +33,20 @@ const BookingsPage = () => {
 
         fetchBookings();
     }, []);
+
+    const handleDelete = async (bookingId) => {
+        if (!bookingId) {
+            setError('Invalid booking ID');
+            return;
+        }
+
+        try {
+            await axios.delete(`https://localhost:7207/api/Booking/${bookingId}`);
+            setBookings(bookings.filter(booking => booking.id !== bookingId));
+        } catch (err) {
+            setError(err.message);
+        }
+    };
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
@@ -47,8 +62,7 @@ const BookingsPage = () => {
                         <p>End Date: {new Date(booking.bookingEndDate).toLocaleDateString()}</p>
                         <p>Room: {booking.roomInfo ? booking.roomInfo.roomNumber : 'N/A'}</p>
                         <p>Room Type: {booking.roomInfo ? booking.roomInfo.roomType : 'N/A'}</p>
-                        <p>Description: {booking.roomInfo ? booking.roomInfo.description : 'N/A'}</p>
-                        <img src={booking.roomInfo ? booking.roomInfo.imageURL : ''} alt="Room" />
+                        <button onClick={() => handleDelete(booking.id)}>Delete</button>
                     </li>
                 ))}
             </ul>

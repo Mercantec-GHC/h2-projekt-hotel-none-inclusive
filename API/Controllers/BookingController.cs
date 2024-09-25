@@ -185,6 +185,7 @@ namespace API.Controllers
 
             var bookingWAllData = bookings.Select(b => new BookingWAllData
             {
+                Id = b.Id,
                 BookingDate = b.BookingDate,
                 BookingStartDate = b.BookingStartDate,
                 BookingEndDate = b.BookingEndDate,
