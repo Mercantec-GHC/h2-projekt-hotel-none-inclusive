@@ -53,7 +53,7 @@ namespace API.Controllers
         // POST: api/Booking
         // Creates a new booking
         [HttpPost]
-        public async Task<ActionResult<Booking>> PostBooking(CreateBookingDTO createBookingDTO)
+        public async Task<ActionResult<Booking>> PostBooking(CreateBookingDTO createBookingDTO) 
         {
             // Check if UserId references a valid user
             var user = await _context.Users.FindAsync(createBookingDTO.UserId);
@@ -70,12 +70,12 @@ namespace API.Controllers
             
             // Fetch the first available room of the requested room type
             var availableRoom = await _context.Rooms
-                .Where(r => r.RoomType == createBookingDTO.RoomType) 
+                .Where(r => r.RoomType == createBookingDTO.RoomType) // Check if the room type matches the requested room type
                 .Where(r => !_context.Bookings // Check if the room is already booked for the requested date range 
                     .Any(b => b.RoomId == r.Id && 
-                              b.BookingStartDate < createBookingDTO.BookingEndDate && // Check if the booking start date is before the end date
+                              b.BookingStartDate < createBookingDTO.BookingEndDate && 
                               b.BookingEndDate >= createBookingDTO.BookingStartDate)) 
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync();// Fetch the first available room
 
             if (availableRoom == null)
             {

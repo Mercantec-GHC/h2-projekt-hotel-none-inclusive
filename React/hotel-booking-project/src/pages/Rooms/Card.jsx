@@ -22,7 +22,7 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
     const handleClose = () => setOpen(false);
     const handleConfirm = async () => {
         if (!checkInDate || !checkOutDate) {
-            setAvailabilityMessage('Please select both check-in and check-out dates.');
+            setAvailabilityMessage('Vælg venligst check-in og check-ud datoer.');
             return;
         }
 
@@ -86,7 +86,7 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
             });
 
             if (response.ok) {
-                setAvailabilityMessage('Booking successful.');
+                setAvailabilityMessage('Booking gennemført.');
 
                 // Send a confirmation email
                 const emailResponse = await fetch('https://localhost:7207/Mail', {
@@ -103,18 +103,18 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
                 });
 
                 if (emailResponse.ok) {
-                    console.log('Confirmation email sent successfully.');
+                    console.log('Bekræftelsesmail sendt succesfuldt.');
                 } else {
-                    console.error('Failed to send confirmation email.');
+                    console.error('Kunne ikke sende bekræftelsesmail.');
                 }
 
             } else {
                 const errorData = await response.json();
-                setAvailabilityMessage(errorData.message || 'Booking failed.');
+                setAvailabilityMessage(errorData.message || 'Booking mislykkedes.');
             }
         } catch (error) {
             console.error('Error:', error);
-            setAvailabilityMessage('An error occurred while booking the room.');
+            setAvailabilityMessage('Der opstod en fejl under booking af værelset.');
         } finally {
             setOpen(false);
         }
@@ -122,7 +122,7 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
 
     const checkRoomAvailability = async () => {
         if (!checkInDate || !checkOutDate) {
-            setAvailabilityMessage('Please select both check-in and check-out dates.');
+            setAvailabilityMessage('Vælg venligst både indtjeknings- og udtjekningsdatoer.');
             return;
         }
 
@@ -135,20 +135,20 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
             if (contentType && contentType.indexOf('application/json') !== -1) {
                 const data = await response.json();
                 if (response.ok) {
-                    setAvailabilityMessage('Room is available.');
+                    setAvailabilityMessage('Rummet er ledigt.');
                     setTotalPrice(data.totalPrice);
                 } else {
-                    setAvailabilityMessage(data.message || 'Room is not available for the selected dates.');
+                    setAvailabilityMessage(data.message || 'Rummet er desværre ikke ledigt på de valgte datoer.');
                     setTotalPrice(null);
                 }
             } else {
                 const text = await response.text();
-                setAvailabilityMessage(text || 'Room is not available for the selected dates.');
+                setAvailabilityMessage(text || 'Rummet er desværre ikke ledigt på de valgte datoer.');
                 setTotalPrice(null);
             }
         } catch (error) {
             console.error('Error:', error);
-            setAvailabilityMessage('An error occurred while checking availability.');
+            setAvailabilityMessage('Der opstod en fejl under tjek af ledighed.');
         }
     };
 
@@ -164,16 +164,16 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    {roomType} Room
+                    {roomType} Rum
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                     {description}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Floor: {floor}
+                    Etage: {floor}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Price: ${price}
+                    Pris: DKK {price}
                 </Typography>
             </CardContent>
             <CardActions>
@@ -205,7 +205,7 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
                     }}
                 >
                     <Typography id="modal-title" variant="h6" component="h2">
-                        Select Check-in and Check-out Dates
+                        Vælg Check-in og Check-ud Datoer
                     </Typography>
                     <DatePicker
                         selected={checkInDate}
@@ -214,7 +214,7 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
                         startDate={checkInDate}
                         endDate={checkOutDate}
                         minDate={today}
-                        placeholderText="Check-in Date"
+                        placeholderText="Check-in Dato"
                         inline
                     />
                     <DatePicker
@@ -224,16 +224,16 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
                         startDate={checkInDate}
                         endDate={checkOutDate}
                         minDate={checkInDate || today}
-                        placeholderText="Check-out Date"
+                        placeholderText="Check-ud Dato"
                         inline
                     />
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                        <Button onClick={handleClose} color="secondary">Cancel</Button>
-                        <Button onClick={handleConfirm} color="primary">Confirm</Button>
+                        <Button onClick={handleClose} color="secondary">Annuller</Button>
+                        <Button onClick={handleConfirm} color="primary">Bekræft</Button>
                     </Box>
-                    <Button onClick={checkRoomAvailability} color="primary">Check Room Availability</Button>
+                    <Button onClick={checkRoomAvailability} color="primary">Tjek om værelset er ledigt</Button>
                     {availabilityMessage && <Typography variant="body2">{availabilityMessage}</Typography>}
-                    {totalPrice !== null && <Typography variant="body2">Total Price: ${totalPrice}</Typography>}
+                    {totalPrice !== null && <Typography variant="body2">Samlet Pris: DKK{totalPrice}</Typography>}
                 </Box>
             </Modal>
         </Card>
