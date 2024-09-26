@@ -20,9 +20,7 @@
   <component name="ChangeListManager">
     <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Controllers/BookingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/BookingController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project/src/pages/Home/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project/src/pages/Home/Home.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project/src/pages/Rooms/Card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project/src/pages/Rooms/Card.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Controllers/RoomsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/RoomsController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -303,7 +301,7 @@
       <workItem from="1727249191861" duration="191000" />
       <workItem from="1727249393289" duration="1033000" />
       <workItem from="1727250504274" duration="1214000" />
-      <workItem from="1727335595067" duration="1774000" />
+      <workItem from="1727335595067" duration="2243000" />
     </task>
     <servers />
   </component>

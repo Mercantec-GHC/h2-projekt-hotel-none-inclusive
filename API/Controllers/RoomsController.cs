@@ -238,7 +238,7 @@ namespace API.Controllers
                 totalPrice += pricePerNight;
             }
 
-            return Ok($"The room is available. Total price is {totalPrice}");
+            return Ok($"Værelset er ledigt. Den samlede pris er {totalPrice} DKK");
         }
     }
 }
