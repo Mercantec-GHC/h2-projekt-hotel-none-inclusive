@@ -216,7 +216,7 @@ namespace API.Controllers
 
             if (availableRoom == null)
             {
-                return BadRequest("No available rooms of the requested type for the specified date range.");
+                return BadRequest("Der er ingen ledige værelser af den ønskede type i det angivne datointerval");
             }
 
             // Calculate the total price
