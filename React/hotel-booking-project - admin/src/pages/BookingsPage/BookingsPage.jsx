@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './BookingsPage.css';
+import {TextField} from "@mui/material";
 
 const BookingsPage = () => {
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         const fetchBookings = async () => {
@@ -35,14 +37,27 @@ const BookingsPage = () => {
         }
     };
 
+    const filteredBookings = bookings.filter(booking =>
+        (booking.userInfo && booking.userInfo.email.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (booking.roomInfo && booking.roomInfo.roomType.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
 
     return (
         <div className="bookings-page">
             <h1>Alle Bookings</h1>
+            <TextField
+                label="Søg med email eller værelsestype"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+            />
             <ul>
-                {bookings.map((booking, index) => (
+                {filteredBookings.map((booking, index) => (
                     <li key={index}>
                         <p>Booking Dato: {new Date(booking.bookingDate).toLocaleDateString()}</p>
                         <p>Start Dato: {new Date(booking.bookingStartDate).toLocaleDateString()}</p>
