@@ -14,7 +14,7 @@ function Home() {
             </div>
 
             <section className="homepage-first-section" draggable="false">
-                <h1 className="homepage-first-section-title">Velkommen til None Inclusive</h1>
+                <h1 className="homepage-first-section-title">Admin</h1>
                 <p className="homepage-first-section-subtitle">Oplev uovertruffen komfort og elegance i hjertet af
                     byen.</p>
                 <button className="homepage-first-section-button">Book din oplevelse</button>

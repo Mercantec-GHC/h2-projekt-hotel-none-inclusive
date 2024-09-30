@@ -8,6 +8,7 @@ import SignupPage from "./pages/Login & Signup/SignupPage.jsx";
 import Rooms from "./pages/Rooms/Rooms.jsx";
 import BookingsPage  from "./pages/BookingsPage/BookingsPage.jsx";
 import Contact from "./pages/Contact/Contact.jsx";
+import UsersPage from "./pages/Users/UsersPage.jsx";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
                         <Route path="/rooms" element={<Rooms />} />
                         <Route path="/bookings" element={<BookingsPage />} />
                         <Route path="/contact" element={<Contact />} />
+                        <Route path="/users" element={<UsersPage />} />
                     </Routes>
                 </div>
 
