@@ -14,7 +14,7 @@ function UsersPage() {
     }, []);
 
     const deleteUser = (userId) => {
-        if (window.confirm('Are you sure you want to delete this user?')) {
+        if (window.confirm('Er du sikker på at du vil slette brugeren?')) {
             fetch(`https://localhost:7207/api/Users/${userId}`, {
                 method: 'DELETE',
             })
@@ -35,9 +35,9 @@ function UsersPage() {
 
     return (
         <div className="users-container">
-            <h1>Users</h1>
+            <h1>Brugere</h1>
             <TextField
-                label="Search by email"
+                label="Søg med email"
                 variant="outlined"
                 fullWidth
                 margin="normal"
@@ -59,7 +59,7 @@ function UsersPage() {
                                 color="secondary"
                                 onClick={() => deleteUser(user.id)}
                             >
-                                Delete
+                                Slet
                             </Button>
                         </CardContent>
                     </Card>
