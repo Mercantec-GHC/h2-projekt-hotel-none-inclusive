@@ -18,7 +18,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="" />
+    <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project - admin/src/pages/BookingsPage/BookingsPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project - admin/src/pages/BookingsPage/BookingsPage.jsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
