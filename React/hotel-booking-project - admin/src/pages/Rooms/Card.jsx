@@ -10,6 +10,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import TextField from '@mui/material/TextField';
 
 export default function MultiActionAreaCard({ imageURL, price, roomType, description, floor }) {
     const [open, setOpen] = useState(false);
@@ -17,44 +18,90 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
     const [checkOutDate, setCheckOutDate] = useState(null);
     const [availabilityMessage, setAvailabilityMessage] = useState('');
     const [totalPrice, setTotalPrice] = useState(null);
+    const [email, setEmail] = useState('');
 
     const handleClickOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const generateRandomPassword = () => {
+        const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let password = '';
+        for (let i = 0; i < 8; i++) {
+            password += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return password;
+    };
+
     const handleConfirm = async () => {
         if (!checkInDate || !checkOutDate) {
             setAvailabilityMessage('Please select both check-in and check-out dates.');
             return;
         }
 
+        if (!email) {
+            setAvailabilityMessage('Please enter an email.');
+            return;
+        }
+
         try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                throw new Error('No token found');
-            }
+            let userId;
+            let newPassword = null;
 
-            const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT token to get payload
-            const email = payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
-            if (!email) {
-                throw new Error('Email not found in token');
-            }
-
-            // Fetch user ID using the email
-            const userResponse = await fetch(`https://localhost:7207/api/Users/email/${encodeURIComponent(email)}`, {
+            // Check if the email is already in the database
+            const checkEmailResponse = await fetch(`https://localhost:7207/api/Users/email/${encodeURIComponent(email)}`, {
+                method: 'GET',
                 headers: {
-                    'accept': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'accept': 'text/plain'
                 }
             });
 
-            if (!userResponse.ok) {
-                console.log(userResponse);
-                throw new Error('Failed to fetch user ID');
-            }
+            if (checkEmailResponse.ok) {
+                const userData = await checkEmailResponse.json();
+                userId = userData.id;
+            } else if (checkEmailResponse.status === 404) {
+                // If the email is not found, register a new user
+                newPassword = generateRandomPassword();
+                const registerResponse = await fetch('https://localhost:7207/api/Auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'accept': 'text/plain'
+                    },
+                    body: JSON.stringify({ email, password: newPassword })
+                });
 
-            const userData = await userResponse.json();
-            const userId = userData.id;
-            if (!userId) {
-                throw new Error('User ID not found');
+                if (!registerResponse.ok) {
+                    throw new Error('Failed to register user');
+                }
+
+                const registerData = await registerResponse.json();
+                userId = registerData.userId;
+
+                if (!userId) {
+                    throw new Error('User ID not found after registration');
+                }
+
+                // Send an email with the new password
+                const passwordEmailResponse = await fetch('https://localhost:7207/Mail', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        emailToId: email,
+                        emailToName: email,
+                        emailSubject: `Welcome to Hotel None Inclusive`,
+                        emailBody: `Dear customer,\n\nThank you for registering with us! Here is your password: ${newPassword}\n\nPlease keep it safe.\n\nBest regards,\nHotel None Inclusive`
+                    })
+                });
+
+                if (passwordEmailResponse.ok) {
+                    console.log('Password email sent successfully.');
+                } else {
+                    console.error('Failed to send password email.');
+                }
+            } else {
+                throw new Error('Failed to check email');
             }
 
             // Adjust dates for timezone offset
@@ -80,7 +127,6 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(booking)
             });
@@ -227,9 +273,18 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
                         placeholderText="Check-out Date"
                         inline
                     />
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                        <Button onClick={handleClose} color="secondary">Cancel</Button>
-                        <Button onClick={handleConfirm} color="primary">Confirm</Button>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', flexDirection: 'column', gap: 2 }}>
+                        <TextField
+                            label="Kunde Email"
+                            variant="outlined"
+                            fullWidth
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                            <Button onClick={handleClose} color="secondary">Cancel</Button>
+                            <Button onClick={handleConfirm} color="primary">Confirm</Button>
+                        </Box>
                     </Box>
                     <Button onClick={checkRoomAvailability} color="primary">Check Room Availability</Button>
                     {availabilityMessage && <Typography variant="body2">{availabilityMessage}</Typography>}
