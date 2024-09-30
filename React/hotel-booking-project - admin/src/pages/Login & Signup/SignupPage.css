@@ -1,0 +1,15 @@
+.signup-container {
+    background: white;
+    color: black;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+    margin-top: 50px;
+}
+
+.signup-container form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+}

@@ -1,0 +1,22 @@
+/*.navbar-nav-link-container {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    height: 50px;*/
+/*    margin: 0 10px;*/
+/*}*/
+
+.navbar-nav-link-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.navbar-nav-link-container:hover {
+    transform: scale(1.05);
+}
+
+.navbar-nav-link-container:active {
+    transform: scale(0.95);
+}
