@@ -216,7 +216,7 @@ namespace API.Controllers
 
             if (availableRoom == null)
             {
-                return BadRequest("No available rooms of the requested type for the specified date range.");
+                return BadRequest("Der er ingen ledige værelser af den ønskede type i det angivne datointerval");
             }
 
             // Calculate the total price
@@ -238,7 +238,7 @@ namespace API.Controllers
                 totalPrice += pricePerNight;
             }
 
-            return Ok($"The room is available. Total price is {totalPrice}");
+            return Ok($"Værelset er ledigt. Den samlede pris er {totalPrice} DKK");
         }
     }
 }

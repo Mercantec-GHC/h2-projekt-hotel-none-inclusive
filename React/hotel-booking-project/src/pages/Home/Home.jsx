@@ -17,11 +17,11 @@ function Home() {
                 <h1 className="homepage-first-section-title">Velkommen til None Inclusive</h1>
                 <p className="homepage-first-section-subtitle">Oplev uovertruffen komfort og elegance i hjertet af
                     byen.</p>
-                <button className="homepage-first-section-button">Book din oplevelse</button>
+                <a href="/rooms" className="homepage-first-section-button">Book din oplevelse</a>
             </section>
 
             <section className="homepage-second-section" draggable="false">
-                <div className="homepage-second-section-facility-container">
+            <div className="homepage-second-section-facility-container">
                     <h1 className="homepage-second-section-facility-title">Faciliteter</h1>
                     <Marquee velocity={25}>
                         {facilities.map((facility) => {

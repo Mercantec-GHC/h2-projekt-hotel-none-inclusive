@@ -20,9 +20,8 @@
   <component name="ChangeListManager">
     <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Controllers/RoomsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/RoomsController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/React/hotel-booking-project/src/components/Navbar/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project/src/components/Navbar/Navbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project/src/pages/BookingsPage/BookingsPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project/src/pages/BookingsPage/BookingsPage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +55,7 @@
     &quot;.NET Launch Settings Profile.API: https.executor&quot;: &quot;Run&quot;,
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;MikkelV3&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -303,10 +302,7 @@
       <workItem from="1727249191861" duration="191000" />
       <workItem from="1727249393289" duration="1033000" />
       <workItem from="1727250504274" duration="1214000" />
-      <workItem from="1727251929000" duration="1794000" />
-      <workItem from="1727260003871" duration="721000" />
-      <workItem from="1727261152084" duration="623000" />
-      <workItem from="1727270266700" duration="137000" />
+      <workItem from="1727335595067" duration="3232000" />
     </task>
     <servers />
   </component>
