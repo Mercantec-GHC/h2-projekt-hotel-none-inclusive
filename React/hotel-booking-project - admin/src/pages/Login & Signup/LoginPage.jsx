@@ -19,9 +19,22 @@ function LoginPage() {
         try {
             const response = await axios.post("https://localhost:7207/api/Auth/login", { email, password });
             if (response.status === 200) {
-                localStorage.setItem('token', response.data);
-                login();
-                navigate('/');
+                const token = response.data;
+                localStorage.setItem('token', token);
+
+                // Fetch user details
+                const userResponse = await axios.get(`https://localhost:7207/api/Users/email/${email}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (userResponse.status === 200 && userResponse.data.isAdmin) {
+                    login();
+                    navigate('/');
+                } else {
+                    setError('Login failed. You do not have admin privileges.');
+                }
             } else {
                 setError('Login failed. Please check your credentials.');
             }
@@ -31,31 +44,31 @@ function LoginPage() {
         }
     };
 
-return (
-    <div className="login-container">
-        <FormTitle title="Log In" />
-        <form onSubmit={handleSubmit}>
-            <InputField
-                labelText="Email"
-                inputType="email"
-                inputId="email"
-                inputName="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <InputField
-                labelText="Password"
-                inputType="password"
-                inputId="password"
-                inputName="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <FormButton type="submit" text="Log In" />
-        </form>
-        {error && <p className="error-message">{error}</p>}
-    </div>
-);
+    return (
+        <div className="login-container">
+            <FormTitle title="Log In" />
+            <form onSubmit={handleSubmit}>
+                <InputField
+                    labelText="Email"
+                    inputType="email"
+                    inputId="email"
+                    inputName="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <InputField
+                    labelText="Password"
+                    inputType="password"
+                    inputId="password"
+                    inputName="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <FormButton type="submit" text="Log In" />
+            </form>
+            {error && <p className="error-message">{error}</p>}
+        </div>
+    );
 }
 
 export default LoginPage;

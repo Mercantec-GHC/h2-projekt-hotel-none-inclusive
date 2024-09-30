@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import './App.css'
 import Home from "./pages/Home/Home.jsx";
 import Footer from "./components/Footer/Footer.jsx";
@@ -9,9 +9,20 @@ import Rooms from "./pages/Rooms/Rooms.jsx";
 import BookingsPage  from "./pages/BookingsPage/BookingsPage.jsx";
 import Contact from "./pages/Contact/Contact.jsx";
 import UsersPage from "./pages/Users/UsersPage.jsx";
+import {useEffect} from "react";
+import {useAuth} from "./context/AuthContext.jsx";
 
 
 function App() {
+
+    const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/login');
+        }
+    })
 
     return (
         <>

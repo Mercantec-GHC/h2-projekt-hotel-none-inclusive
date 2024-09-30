@@ -17,6 +17,7 @@ namespace API.Services
                 City = user.City,
                 Country = user.Country,
                 Zip = user.Zip,
+                IsAdmin = user.IsAdmin,
             };
             return userGetDTO;
         }
