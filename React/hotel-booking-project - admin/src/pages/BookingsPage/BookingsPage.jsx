@@ -53,13 +53,29 @@ const BookingsPage = () => {
         }
     };
 
+    const updatePaymentStatus = async (bookingId, newStatus) => {
+        if (newStatus === undefined) {
+            setError('Invalid payment status');
+            return;
+        }
+
+        try {
+            await axios.put(`https://localhost:7207/api/Booking/${bookingId}`, { paymentStatus: newStatus });
+            setBookings(bookings.map(booking =>
+                booking.id === bookingId ? { ...booking, paymentStatus: newStatus } : booking
+            ));
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
     const filteredBookings = bookings.filter(booking => {
         const matchesSearchQuery =
             (booking.userInfo && booking.userInfo.email.toLowerCase().includes(searchQuery.toLowerCase())) ||
             (booking.roomInfo && booking.roomInfo.roomType.toLowerCase().includes(searchQuery.toLowerCase()));
 
         const bookingMonth = (new Date(booking.bookingStartDate).getMonth() + 1).toString();
-        const matchesSearchMonth = searchMonth === '' || bookingMonth === searchMonth;
+        const matchesSearchMonth = searchMonth === "" || bookingMonth === searchMonth;
 
         // Return true only if both conditions are satisfied
         return matchesSearchQuery && matchesSearchMonth;
@@ -76,7 +92,7 @@ const BookingsPage = () => {
                 label="Søg med email eller værelsestype"
                 variant="outlined"
                 fullWidth
-                margin="normal"
+                margin="dense"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -88,7 +104,7 @@ const BookingsPage = () => {
                 fullWidth
                 displayEmpty
                 variant="outlined"
-                margin="normal"
+                margin="dense"
             >
                 <MenuItem value="">Alle måneder</MenuItem> {/* Option for selecting all months */}
                 {monthOptions.map(month => (
@@ -106,8 +122,10 @@ const BookingsPage = () => {
                         <p>Værelses-nummer: {booking.roomInfo ? booking.roomInfo.roomNumber : 'N/A'}</p>
                         <p>Værelses Type: {booking.roomInfo ? booking.roomInfo.roomType : 'N/A'}</p>
                         <p>Email: {booking.userInfo ? `${booking.userInfo.email} ` : 'N/A'}</p>
-                        <p>Betalings status: {booking.paymentStatus ? 'Betalt' : 'Ingen betaling modtaget'}</p>
+                        <p style={{color: booking.paymentStatus ? 'green' : 'red'}}>Betalings
+                            status: {booking.paymentStatus ? 'Betalt' : 'Ingen betaling modtaget'}</p>
                         <button onClick={() => handleDelete(booking.id)}>Delete</button>
+                        <button onClick={() => updatePaymentStatus(booking.id, true)}>Tilføj betaling</button>
                     </li>
                 ))}
             </ul>
