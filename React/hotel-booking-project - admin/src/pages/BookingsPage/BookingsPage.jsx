@@ -60,7 +60,7 @@ const BookingsPage = () => {
         }
 
         try {
-            await axios.put(`https://localhost:7207/api/Booking/${bookingId}`, { paymentStatus: newStatus });
+            await axios.put(`https://localhost:7207/api/Booking/${bookingId}/paymentStatus`, { paymentStatus: newStatus });
             setBookings(bookings.map(booking =>
                 booking.id === bookingId ? { ...booking, paymentStatus: newStatus } : booking
             ));
