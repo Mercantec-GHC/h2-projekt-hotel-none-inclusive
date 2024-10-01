@@ -54,11 +54,6 @@ const BookingsPage = () => {
     };
 
     const updatePaymentStatus = async (bookingId, newStatus) => {
-        if (newStatus === undefined) {
-            setError('Invalid payment status');
-            return;
-        }
-
         try {
             await axios.put(`https://localhost:7207/api/Booking/${bookingId}/paymentStatus`, { paymentStatus: newStatus });
             setBookings(bookings.map(booking =>
@@ -92,7 +87,7 @@ const BookingsPage = () => {
                 label="Søg med email eller værelsestype"
                 variant="outlined"
                 fullWidth
-                margin="dense"
+                margin="normal"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -104,7 +99,7 @@ const BookingsPage = () => {
                 fullWidth
                 displayEmpty
                 variant="outlined"
-                margin="dense"
+                margin="normal"
             >
                 <MenuItem value="">Alle måneder</MenuItem> {/* Option for selecting all months */}
                 {monthOptions.map(month => (
@@ -124,8 +119,13 @@ const BookingsPage = () => {
                         <p>Email: {booking.userInfo ? `${booking.userInfo.email} ` : 'N/A'}</p>
                         <p style={{color: booking.paymentStatus ? 'green' : 'red'}}>Betalings
                             status: {booking.paymentStatus ? 'Betalt' : 'Ingen betaling modtaget'}</p>
+                        <input
+                            type="checkbox"
+                            checked={booking.paymentStatus}
+                            onChange={(e) => updatePaymentStatus(booking.id, e.target.checked)}
+                        />
+                        <label>{booking.paymentStatus ? 'Fjern betaling' : 'Tilføj betaling'}</label>
                         <button onClick={() => handleDelete(booking.id)}>Slet Booking</button>
-                        <button onClick={() => updatePaymentStatus(booking.id, true)}>Tilføj betaling</button>
                     </li>
                 ))}
             </ul>
