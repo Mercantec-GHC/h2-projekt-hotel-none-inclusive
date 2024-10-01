@@ -219,25 +219,23 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            if (!booking.PaymentStatus)
-            {
-                booking.PaymentStatus = true;
-                _context.Entry(booking).State = EntityState.Modified;
+            // Toggle the PaymentStatus
+            booking.PaymentStatus = !booking.PaymentStatus;
+            _context.Entry(booking).State = EntityState.Modified;
 
-                try
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!BookingExists(id))
                 {
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!BookingExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
             }
 
