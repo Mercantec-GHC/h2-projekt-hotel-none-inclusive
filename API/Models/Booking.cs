@@ -72,6 +72,8 @@ namespace API.Models
         public UserGetDTO UserInfo { get; set; }
         // Information about the room that was booked.
         public GetRoomDTO RoomInfo { get; set; }
+        
+        public decimal TotalPrice { get; set; }
     }
 
 }

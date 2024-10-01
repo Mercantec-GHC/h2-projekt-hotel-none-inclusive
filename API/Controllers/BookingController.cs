@@ -34,6 +34,7 @@ namespace API.Controllers
                 BookingStartDate = b.BookingStartDate,
                 BookingEndDate = b.BookingEndDate,
                 PaymentStatus = b.PaymentStatus,
+                TotalPrice = b.TotalPrice,
                 UserInfo = _userMapping.MapUserToUserGetDTO(b.User),
                 RoomInfo = _roomMapping.MapRoomToGetRoomDTO(b.Room)
             }).ToList();
