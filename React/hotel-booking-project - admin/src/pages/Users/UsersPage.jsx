@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, Button, TextField } from '@mui/material';
-
+import { Card, CardContent, Typography, Button, TextField, Checkbox, FormControlLabel } from '@mui/material';
 
 function UsersPage() {
     const [users, setUsers] = useState([]);
@@ -9,7 +8,14 @@ function UsersPage() {
     useEffect(() => {
         fetch('https://localhost:7207/api/Users')
             .then(response => response.json())
-            .then(data => setUsers(data))
+            .then(data => {
+                const userPromises = data.map(user =>
+                    fetch(`https://localhost:7207/api/Users/id/${user.id}`)
+                        .then(response => response.json())
+                        .then(userData => ({ ...user, isAdmin: userData.isAdmin }))
+                );
+                Promise.all(userPromises).then(usersWithAdminStatus => setUsers(usersWithAdminStatus));
+            })
             .catch(error => console.error('Error fetching users:', error));
     }, []);
 
@@ -27,6 +33,23 @@ function UsersPage() {
                 })
                 .catch(error => console.error('Error deleting user:', error));
         }
+    };
+
+    const handleAdminChange = (userId, isAdmin) => {
+        const url = `https://localhost:7207/api/Users/${isAdmin ? 'remove-admin' : 'make-admin'}/${userId}`;
+        fetch(url, {
+            method: 'PUT',
+        })
+            .then(response => {
+                if (response.ok) {
+                    setUsers(users.map(user =>
+                        user.id === userId ? { ...user, isAdmin: !isAdmin } : user
+                    ));
+                } else {
+                    console.error('Error updating user admin status:', response.statusText);
+                }
+            })
+            .catch(error => console.error('Error updating user admin status:', error));
     };
 
     const filteredUsers = users.filter(user =>
@@ -49,11 +72,20 @@ function UsersPage() {
                     <Card key={user.id} sx={{marginBottom: 2}}>
                         <CardContent>
                             <Typography variant="h5" component="div">
-                                {user.name}
+                                {user.firstName} {user.lastName}
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 Email: {user.email}
                             </Typography>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={user.isAdmin}
+                                        onChange={() => handleAdminChange(user.id, user.isAdmin)}
+                                    />
+                                }
+                                label="Admin"
+                            />
                             <Button
                                 variant="contained"
                                 color="secondary"

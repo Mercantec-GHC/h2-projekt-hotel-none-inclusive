@@ -208,5 +208,40 @@ namespace API.Controllers
 
             return Ok(bookingWAllData);
         }
+        
+        // New endpoint to update payment status
+        [HttpPut("{id}/paymentstatus")]
+        public async Task<IActionResult> UpdatePaymentStatus(int id)
+        {
+            var booking = await _context.Bookings.FindAsync(id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+
+            if (!booking.PaymentStatus)
+            {
+                booking.PaymentStatus = true;
+                _context.Entry(booking).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!BookingExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+
+            return NoContent();
+        }
     }
 }
