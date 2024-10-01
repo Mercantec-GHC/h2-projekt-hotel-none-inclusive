@@ -29,9 +29,11 @@ namespace API.Controllers
             var bookings = await _context.Bookings.Include(b => b.User).Include(b => b.Room).ToListAsync();
             var bookingWAllData = bookings.Select(b => new BookingWAllData
             {
+                Id = b.Id,
                 BookingDate = b.BookingDate,
                 BookingStartDate = b.BookingStartDate,
                 BookingEndDate = b.BookingEndDate,
+                PaymentStatus = b.PaymentStatus,
                 UserInfo = _userMapping.MapUserToUserGetDTO(b.User),
                 RoomInfo = _roomMapping.MapRoomToGetRoomDTO(b.Room)
             }).ToList();

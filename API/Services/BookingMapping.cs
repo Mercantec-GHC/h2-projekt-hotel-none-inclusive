@@ -15,7 +15,7 @@ namespace API.Services
                 BookingEndDate = DateTime.SpecifyKind(booking.BookingEndDate.Date, DateTimeKind.Utc),
                 RoomId = booking.RoomId,
                 UserId = booking.UserId,
-                PaymentStatus = "",
+                PaymentStatus = false,
                 TotalPrice = booking.TotalPrice
             };
         }

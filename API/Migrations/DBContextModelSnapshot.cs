@@ -39,9 +39,8 @@ namespace API.Migrations
                     b.Property<DateTime>("BookingStartDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("PaymentStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<bool>("PaymentStatus")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("RoomId")
                         .HasColumnType("integer");

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20240925073921_Initial")]
+    [Migration("20241001080605_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -42,9 +42,8 @@ namespace API.Migrations
                     b.Property<DateTime>("BookingStartDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("PaymentStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<bool>("PaymentStatus")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("RoomId")
                         .HasColumnType("integer");
@@ -121,6 +120,9 @@ namespace API.Migrations
 
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .HasColumnType("text");

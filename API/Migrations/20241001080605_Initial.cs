@@ -42,6 +42,7 @@ namespace API.Migrations
                     Password = table.Column<string>(type: "text", nullable: true),
                     PasswordHash = table.Column<string>(type: "text", nullable: false),
                     PasswordSalt = table.Column<string>(type: "text", nullable: false),
+                    IsAdmin = table.Column<bool>(type: "boolean", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: true),
                     PhoneNumber = table.Column<string>(type: "text", nullable: true),
                     City = table.Column<string>(type: "text", nullable: true),
@@ -62,7 +63,7 @@ namespace API.Migrations
                     BookingDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     BookingStartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     BookingEndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    PaymentStatus = table.Column<string>(type: "text", nullable: false),
+                    PaymentStatus = table.Column<bool>(type: "boolean", nullable: false),
                     RoomId = table.Column<int>(type: "integer", nullable: false),
                     UserId = table.Column<int>(type: "integer", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "numeric", nullable: false)

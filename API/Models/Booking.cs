@@ -13,7 +13,7 @@ namespace API.Models
         public Room Room { get; set; } = null!;
 
         // PaymentStatus (String = Unpaid/Paid)
-        public string PaymentStatus { get; set; } = null!;
+        public bool PaymentStatus { get; set; } = false;
         public int RoomId { get; set; }
         // Foreign key to User
         public int UserId { get; set; }
@@ -32,7 +32,7 @@ namespace API.Models
         public DateTime BookingStartDate { get; set; }
         public DateTime BookingEndDate { get; set; }
         // PaymentStatus (String = Unpaid/Paid)
-        public string PaymentStatus { get; set; } = null!;
+        public bool PaymentStatus { get; set; } = false;
         // Foreign key referencing the Room entity.
         public int RoomId { get; set; }
         // Foreign key referencing the User entity.
@@ -57,6 +57,7 @@ namespace API.Models
         public decimal TotalPrice { get; set; }
         
         public string RoomType { get; set; } = null!;
+        public bool PaymentStatus { get; set; } = false;
     }
 
     // DTO for transferring booking information with additional room and user data.
@@ -66,6 +67,7 @@ namespace API.Models
         public DateTime BookingDate { get; set; }
         public DateTime BookingStartDate { get; set; }
         public DateTime BookingEndDate { get; set; }
+        public bool PaymentStatus { get; set; }
         // Information about the user who made the booking.
         public UserGetDTO UserInfo { get; set; }
         // Information about the room that was booked.
