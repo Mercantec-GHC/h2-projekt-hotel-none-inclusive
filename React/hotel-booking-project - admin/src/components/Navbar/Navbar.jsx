@@ -28,7 +28,7 @@ function Navbar() {
                 />
             </div>
             <div className="nav-links">
-                <NavbarLink icon={<IoBedSharp />} text="Værelser" link="/rooms" />
+                <NavbarLink icon={<IoBedSharp />} text="Book værelse for kunde" link="/rooms" />
                 <NavbarLink icon={<IoBookmarksSharp />} text="Bookings" link="/bookings" />
                 <NavbarLink icon={<IoTicketSharp />} text="Brugere" link="/users" />
                 {isAuthenticated ? (

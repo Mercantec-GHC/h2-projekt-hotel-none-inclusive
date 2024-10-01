@@ -216,10 +216,10 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
                     {description}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Floor: {floor}
+                    Etage: {floor}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Price: ${price}
+                    Pris: {price} DKK pr. nat
                 </Typography>
             </CardContent>
             <CardActions>
