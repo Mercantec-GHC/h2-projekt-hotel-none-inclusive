@@ -1,4 +1,5 @@
 import { IoBedSharp, IoBookmarksSharp, IoTicketSharp } from "react-icons/io5";
+import { FaUser, FaPlusCircle } from "react-icons/fa";
 import NavbarLink from "./Navbar Links/NavbarLink.jsx";
 import './Navbar.css';
 import { useNavigate } from "react-router-dom";
@@ -28,9 +29,10 @@ function Navbar() {
                 />
             </div>
             <div className="nav-links">
+                <NavbarLink icon={<FaPlusCircle />} text="Opret værelse" link="/create-room" />
                 <NavbarLink icon={<IoBedSharp />} text="Book værelse for kunde" link="/rooms" />
                 <NavbarLink icon={<IoBookmarksSharp />} text="Bookings" link="/bookings" />
-                <NavbarLink icon={<IoTicketSharp />} text="Brugere" link="/users" />
+                <NavbarLink icon={<FaUser />} text="Brugere" link="/users" />
                 {isAuthenticated ? (
                     <button className="navbar-logout-button" onClick={handleOnLogoutButtonClick}>Logout</button>
                 ) : (

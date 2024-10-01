@@ -11,6 +11,7 @@ import Contact from "./pages/Contact/Contact.jsx";
 import UsersPage from "./pages/Users/UsersPage.jsx";
 import {useEffect} from "react";
 import {useAuth} from "./context/AuthContext.jsx";
+import CreateRoomPage from "./pages/CreateRoom/CreateRoomPage.jsx";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
                         <Route path="/bookings" element={<BookingsPage />} />
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/users" element={<UsersPage />} />
+                        <Route path="/create-room" element={<CreateRoomPage />} />
                     </Routes>
                 </div>
 

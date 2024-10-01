@@ -33,7 +33,6 @@
 .nav-links {
     display: flex;
     justify-content: space-around;
-    width: 30%;
 }
 
 .nav-links p, button {
@@ -75,7 +74,7 @@
     font-size: 1rem;
     font-weight: bold;
     transition: 0.2s ease-in-out;
-    margin: 0;
+    margin-right: 0;
 }
 
 .navbar-signup-button:hover {
