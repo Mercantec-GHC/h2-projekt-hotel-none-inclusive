@@ -106,6 +106,7 @@ const BookingsPage = () => {
                         <p>Værelses-nummer: {booking.roomInfo ? booking.roomInfo.roomNumber : 'N/A'}</p>
                         <p>Værelses Type: {booking.roomInfo ? booking.roomInfo.roomType : 'N/A'}</p>
                         <p>Email: {booking.userInfo ? `${booking.userInfo.email} ` : 'N/A'}</p>
+                        <p>Betalings status: {booking.paymentStatus ? 'Betalt' : 'Ingen betaling modtaget'}</p>
                         <button onClick={() => handleDelete(booking.id)}>Delete</button>
                     </li>
                 ))}
