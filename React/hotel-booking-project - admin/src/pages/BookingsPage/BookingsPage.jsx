@@ -124,7 +124,7 @@ const BookingsPage = () => {
                         <p>Email: {booking.userInfo ? `${booking.userInfo.email} ` : 'N/A'}</p>
                         <p style={{color: booking.paymentStatus ? 'green' : 'red'}}>Betalings
                             status: {booking.paymentStatus ? 'Betalt' : 'Ingen betaling modtaget'}</p>
-                        <button onClick={() => handleDelete(booking.id)}>Delete</button>
+                        <button onClick={() => handleDelete(booking.id)}>Slet Booking</button>
                         <button onClick={() => updatePaymentStatus(booking.id, true)}>Tilføj betaling</button>
                     </li>
                 ))}
