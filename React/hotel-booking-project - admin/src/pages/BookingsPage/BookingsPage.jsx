@@ -58,7 +58,7 @@ const BookingsPage = () => {
             (booking.userInfo && booking.userInfo.email.toLowerCase().includes(searchQuery.toLowerCase())) ||
             (booking.roomInfo && booking.roomInfo.roomType.toLowerCase().includes(searchQuery.toLowerCase()));
 
-        const bookingMonth = (new Date(booking.bookingDate).getMonth() + 1).toString();
+        const bookingMonth = (new Date(booking.bookingStartDate).getMonth() + 1).toString();
         const matchesSearchMonth = searchMonth === '' || bookingMonth === searchMonth;
 
         // Return true only if both conditions are satisfied
