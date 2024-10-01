@@ -20,14 +20,8 @@
   <component name="ChangeListManager">
     <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Controllers/BookingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/BookingController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240925073921_Initial.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240925073921_Initial.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240930115817_addIsAdminColumn.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/20240930115817_addIsAdminColumn.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Migrations/DBContextModelSnapshot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Models/Booking.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Models/Booking.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Services/BookingMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Services/BookingMapping.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Controllers/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/UsersController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project - admin/src/pages/Users/UsersPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project - admin/src/pages/Users/UsersPage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +55,7 @@
     ".NET Launch Settings Profile.API: https.executor": "Run",
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "MakeUserAdmin",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -314,6 +308,7 @@
       <workItem from="1727724788477" duration="980000" />
       <workItem from="1727726044895" duration="203000" />
       <workItem from="1727767808291" duration="2000000" />
+      <workItem from="1727770726741" duration="1740000" />
     </task>
     <servers />
   </component>

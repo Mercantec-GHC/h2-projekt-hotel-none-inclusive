@@ -218,13 +218,94 @@ namespace API.Controllers
             return NoContent(); // Return NoContent on successful deletion
         }
         
-
-        
         // Helper method to check if a user exists by their ID
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.UserId == id);
         }
         
+        
+        // PUT: api/Users/make-admin/{id}
+        // Updates a user to be an admin by their ID
+        [HttpPut("make-admin/{id}")]
+        public async Task<IActionResult> MakeUserAdmin(int id)
+        {
+            // Find the user in the database by their ID
+            var user = await _context.Users.FindAsync(id);
+
+            // If the user does not exist, return NotFound
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Update the IsAdmin field
+            user.IsAdmin = true;
+
+            // Mark the user as modified in the database context
+            _context.Entry(user).State = EntityState.Modified;
+
+            // Save changes to the database
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // If the user no longer exists, return NotFound
+                if (!_context.Users.Any(u => u.UserId == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw; // Re-throw exception if any other issue occurs
+                }
+            }
+
+            return NoContent(); // Return NoContent on successful update
+        }
+        
+        
+        // PUT: api/Users/remove-admin/{id}
+        // Updates a user to remove admin rights by their ID
+        [HttpPut("remove-admin/{id}")]
+        public async Task<IActionResult> RemoveUserAdmin(int id)
+        {
+            // Find the user in the database by their ID
+            var user = await _context.Users.FindAsync(id);
+
+            // If the user does not exist, return NotFound
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Update the IsAdmin field
+            user.IsAdmin = false;
+
+            // Mark the user as modified in the database context
+            _context.Entry(user).State = EntityState.Modified;
+
+            // Save changes to the database
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // If the user no longer exists, return NotFound
+                if (!_context.Users.Any(u => u.UserId == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw; // Re-throw exception if any other issue occurs
+                }
+            }
+
+            return NoContent(); // Return NoContent on successful update
+        }
     }
 }
