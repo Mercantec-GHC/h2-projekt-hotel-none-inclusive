@@ -56,9 +56,20 @@ const BookingsPage = () => {
     const updatePaymentStatus = async (bookingId, newStatus) => {
         try {
             await axios.put(`https://localhost:7207/api/Booking/${bookingId}/paymentStatus`, { paymentStatus: newStatus });
-            setBookings(bookings.map(booking =>
-                booking.id === bookingId ? { ...booking, paymentStatus: newStatus } : booking
-            ));
+            setBookings(bookings.map(booking => {
+                if (booking.id === bookingId) {
+                    return {
+                        id: booking.id,
+                        bookingDate: booking.bookingDate,
+                        bookingStartDate: booking.bookingStartDate,
+                        bookingEndDate: booking.bookingEndDate,
+                        roomInfo: booking.roomInfo,
+                        userInfo: booking.userInfo,
+                        paymentStatus: newStatus
+                    };
+                }
+                return booking;
+            }));
         } catch (err) {
             setError(err.message);
         }
