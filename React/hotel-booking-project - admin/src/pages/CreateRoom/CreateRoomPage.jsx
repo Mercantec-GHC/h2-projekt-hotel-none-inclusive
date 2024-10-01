@@ -7,6 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 function CreateRoomPage() {
     const [roomType, setRoomType] = React.useState('');
@@ -15,35 +16,63 @@ function CreateRoomPage() {
     const [floor, setFloor] = React.useState('');
     const [description, setDescription] = React.useState('');
     const [imageLink, setImageLink] = React.useState('');
+    const [successMessage, setSuccessMessage] = React.useState('');
 
     const handleChange = (event) => {
         setRoomType(event.target.value);
     };
 
-    const handleButtonClick = () => {
+    const handleButtonClick = async () => {
         const roomDetails = {
-            roomType,
             roomNumber,
+            roomType,
             pricePerNight,
             floor,
             description,
-            imageLink
+            imageURL: imageLink
         };
-        console.log(roomDetails);
+
+        try {
+            const response = await fetch('https://localhost:7207/api/Rooms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'accept': 'text/plain'
+                },
+                body: JSON.stringify(roomDetails)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Room created successfully:', data);
+                setSuccessMessage('Værelset blev oprettet');
+                // Clear the input fields
+                setRoomType('');
+                setRoomNumber('');
+                setPricePerNight('');
+                setFloor('');
+                setDescription('');
+                setImageLink('');
+            } else {
+                console.error('Failed to create room:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
         <div className="create-room-page-container">
-            <h1>Create Room</h1>
+            <h1>Opret Værelse</h1>
             <div className="create-room-flex">
                 <Box className="create-room-box" sx={{ maxWidth: '40ch' }}>
                     <FormControl fullWidth sx={{ marginRight: '0.5rem' }}>
-                        <InputLabel id="create-room-dropdown-label">Room Type</InputLabel>
+                        <InputLabel id="create-room-dropdown-label">Type</InputLabel>
                         <Select
                             labelId="create-room-dropdown-label"
                             id="create-room-dropdown-select"
                             value={roomType}
-                            label="Room Type"
+                            label="Type"
                             onChange={handleChange}
                         >
                             <MenuItem value="Standard">Standard</MenuItem>
@@ -100,7 +129,8 @@ function CreateRoomPage() {
                 </Box>
             </div>
             <br />
-            <Button variant="contained" onClick={handleButtonClick}>Create Room</Button>
+            <Button variant="contained" onClick={handleButtonClick}>Opret værelse</Button>
+            {successMessage && <Typography variant="body2" color="success">{successMessage}</Typography>}
         </div>
     )
 }

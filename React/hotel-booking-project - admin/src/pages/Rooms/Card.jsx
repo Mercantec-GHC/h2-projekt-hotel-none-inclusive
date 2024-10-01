@@ -210,7 +210,7 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    {roomType} Room
+                    {roomType} Værelse
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                     {description}
@@ -224,7 +224,7 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
             </CardContent>
             <CardActions>
                 <Button size="small" color="primary" onClick={handleClickOpen}>
-                    Book
+                    Reserver
                 </Button>
             </CardActions>
             <Modal
