@@ -12,7 +12,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import TextField from '@mui/material/TextField';
 
-export default function MultiActionAreaCard({ imageURL, price, roomType, description, floor }) {
+export default function MultiActionAreaCard({ imageURL, price, roomType, description, floor, roomNumber }) {
     const [open, setOpen] = useState(false);
     const [checkInDate, setCheckInDate] = useState(null);
     const [checkOutDate, setCheckOutDate] = useState(null);
@@ -217,6 +217,9 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                     Etage: {floor}
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    Værelsesnummer: {roomNumber}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                     Pris: {price} DKK pr. nat

@@ -31,6 +31,7 @@ function Navbar() {
             <div className="nav-links">
                 <NavbarLink icon={<FaPlusCircle />} text="Opret værelse" link="/create-room" />
                 <NavbarLink icon={<IoBedSharp />} text="Book værelse for kunde" link="/rooms" />
+                <NavbarLink icon={<IoBedSharp />} text="Se alle værelser" link="/all-rooms" />
                 <NavbarLink icon={<IoBookmarksSharp />} text="Bookings" link="/bookings" />
                 <NavbarLink icon={<FaUser />} text="Brugere" link="/users" />
                 {isAuthenticated ? (

@@ -2,27 +2,17 @@ import React, { useEffect, useState } from 'react';
 import MultiActionAreaCard from './Card';
 import './Rooms.css';
 
-function Rooms() {
+const AllRooms = () => {
     const [rooms, setRooms] = useState([]);
 
     useEffect(() => {
         fetch('https://localhost:7207/api/Rooms')
             .then(response => response.json())
             .then(data => {
-                const uniqueRooms = [];
-                const roomTypes = new Set(); // Set to store unique room types
-
-                data.forEach(room => {
-                    if (!roomTypes.has(room.roomType)) { // Check if the room type is unique
-                        roomTypes.add(room.roomType); // Add the room type to the set
-                        uniqueRooms.push(room); // Add the room to the uniqueRooms array
-                    }
-                });
-
-                setRooms(uniqueRooms);
+                setRooms(data); // Set all rooms data
             })
             .catch(error => console.error('Error fetching rooms:', error));
-    }, []);
+    }, []); // Empty array as second argument to only run the effect once
 
     return (
         <div className="rooms-container">
@@ -30,16 +20,15 @@ function Rooms() {
                 <MultiActionAreaCard
                     key={room.id}
                     roomType={room.roomType}
+                    roomNumber={room.roomNumber}
                     price={room.price}
                     floor={room.floor}
                     description={room.description}
                     imageURL={room.imageURL}
-                    roomNumber={"Tildelt ved booking"}
-
                 />
             ))}
         </div>
     );
-}
+};
 
-export default Rooms;
+export default AllRooms;
