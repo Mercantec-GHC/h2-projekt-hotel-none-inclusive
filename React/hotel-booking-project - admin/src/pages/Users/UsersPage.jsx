@@ -4,6 +4,7 @@ import { Card, CardContent, Typography, Button, TextField, Checkbox, FormControl
 function UsersPage() {
     const [users, setUsers] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [newUserEmail, setNewUserEmail] = useState('');
 
     useEffect(() => {
         fetch('https://localhost:7207/api/Users')
@@ -52,6 +53,54 @@ function UsersPage() {
             .catch(error => console.error('Error updating user admin status:', error));
     };
 
+    const generateRandomPassword = () => {
+        return Math.random().toString(36).slice(-8);
+    };
+
+    const createUser = () => {
+        const password = generateRandomPassword();
+        fetch('https://localhost:7207/api/Auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'accept': 'text/plain'
+            },
+            body: JSON.stringify({ email: newUserEmail, password })
+        })
+            .then(response => response.json())
+            .then(newUser => {
+                setUsers([...users, newUser]);
+                setNewUserEmail('');
+                sendEmail(newUserEmail, password);
+            })
+            .catch(error => console.error('Error creating user:', error));
+    };
+
+    const sendEmail = (email, password) => {
+        fetch('https://localhost:7207/Mail', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'accept': 'text/plain'
+            },
+            body: JSON.stringify({
+                emailToId: email,
+                emailToName: email,
+                emailSubject: 'Welcome to Hotel None Inclusive',
+                emailBody: `Dear customer,\n\nThank you for registering with us! Here is your password: ${password}\n\nPlease keep it safe.\n\nBest regards,\nHotel None Inclusive`
+            })
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result) {
+                    console.log('Email sent successfully');
+                } else {
+                    console.error('Error sending email');
+                }
+            })
+            .catch(error => console.error('Error sending email:', error));
+    };
+
     const filteredUsers = users.filter(user =>
         user.email.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -59,6 +108,21 @@ function UsersPage() {
     return (
         <div className="users-container">
             <h1>Brugere</h1>
+            <TextField
+                label="Ny bruger email"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={newUserEmail}
+                onChange={(e) => setNewUserEmail(e.target.value)}
+            />
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={createUser}
+            >
+                Opret bruger
+            </Button>
             <TextField
                 label="Søg med email"
                 variant="outlined"
