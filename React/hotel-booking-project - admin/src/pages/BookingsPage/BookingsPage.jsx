@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './BookingsPage.css';
-import { MenuItem, TextField, Select} from "@mui/material";
+import { MenuItem, TextField, Select, Dialog, DialogActions, DialogContent, DialogTitle, Button } from "@mui/material";
 
 const BookingsPage = () => {
     const [bookings, setBookings] = useState([]);
@@ -9,6 +9,9 @@ const BookingsPage = () => {
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchMonth, setSearchMonth] = useState('');
+    const [emailPopupOpen, setEmailPopupOpen] = useState(false);
+    const [selectedBooking, setSelectedBooking] = useState(null);
+    const [emailMessage, setEmailMessage] = useState('');
 
     const monthOptions = [
         { value: '1', label: 'Januar' },
@@ -59,12 +62,7 @@ const BookingsPage = () => {
             setBookings(bookings.map(booking => {
                 if (booking.id === bookingId) {
                     return {
-                        id: booking.id,
-                        bookingDate: booking.bookingDate,
-                        bookingStartDate: booking.bookingStartDate,
-                        bookingEndDate: booking.bookingEndDate,
-                        roomInfo: booking.roomInfo,
-                        userInfo: booking.userInfo,
+                        ...booking,
                         paymentStatus: newStatus
                     };
                 }
@@ -75,6 +73,41 @@ const BookingsPage = () => {
         }
     };
 
+    const handleSendEmail = async () => {
+        if (!selectedBooking || !emailMessage) return;
+
+        try {
+            const emailData = {
+                emailToId: selectedBooking.userInfo.email,
+                emailToName: selectedBooking.userInfo.email,
+                emailSubject: 'Booking Details',
+                emailBody: emailMessage,
+            };
+
+            await axios.post('https://localhost:7207/Mail', emailData, {
+                headers: {
+                    'accept': 'text/plain',
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            setEmailPopupOpen(false);
+            setEmailMessage('');
+        } catch (err) {
+            setError('Failed to send email: ' + err.message);
+        }
+    };
+
+    const openEmailPopup = (booking) => {
+        setSelectedBooking(booking);
+        setEmailPopupOpen(true);
+    };
+
+    const closeEmailPopup = () => {
+        setEmailPopupOpen(false);
+        setEmailMessage('');
+    };
+
     const filteredBookings = bookings.filter(booking => {
         const matchesSearchQuery =
             (booking.userInfo && booking.userInfo.email.toLowerCase().includes(searchQuery.toLowerCase())) ||
@@ -83,10 +116,8 @@ const BookingsPage = () => {
         const bookingMonth = (new Date(booking.bookingStartDate).getMonth() + 1).toString();
         const matchesSearchMonth = searchMonth === "" || bookingMonth === searchMonth;
 
-        // Return true only if both conditions are satisfied
         return matchesSearchQuery && matchesSearchMonth;
     });
-
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
@@ -102,7 +133,6 @@ const BookingsPage = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
             />
-            {/* Month Select */}
             <Select
                 label="Søg med måned"
                 value={searchMonth}
@@ -112,7 +142,7 @@ const BookingsPage = () => {
                 variant="outlined"
                 margin="normal"
             >
-                <MenuItem value="">Alle måneder</MenuItem> {/* Option for selecting all months */}
+                <MenuItem value="">Alle måneder</MenuItem>
                 {monthOptions.map(month => (
                     <MenuItem key={month.value} value={month.value}>
                         {month.label}
@@ -129,8 +159,9 @@ const BookingsPage = () => {
                         <p>Værelses Type: {booking.roomInfo ? booking.roomInfo.roomType : 'N/A'}</p>
                         <p>Email: {booking.userInfo ? `${booking.userInfo.email} ` : 'N/A'}</p>
                         <p>Total pris: {booking.totalPrice} DKK</p>
-                        <p style={{color: booking.paymentStatus ? 'green' : 'red'}}>Betalings
-                            status: {booking.paymentStatus ? 'Betalt' : 'Ingen betaling modtaget'}</p>
+                        <p style={{ color: booking.paymentStatus ? 'green' : 'red' }}>
+                            Betalingsstatus: {booking.paymentStatus ? 'Betalt' : 'Ingen betaling modtaget'}
+                        </p>
                         <input
                             type="checkbox"
                             checked={booking.paymentStatus}
@@ -138,9 +169,30 @@ const BookingsPage = () => {
                         />
                         <label>{booking.paymentStatus ? 'Fjern betaling' : 'Tilføj betaling'}</label>
                         <button onClick={() => handleDelete(booking.id)}>Slet Booking</button>
+                        <button onClick={() => openEmailPopup(booking)}>Send Email</button>
                     </li>
                 ))}
             </ul>
+
+            {/* Email Popup */}
+            <Dialog open={emailPopupOpen} onClose={closeEmailPopup}>
+                <DialogTitle>Send Email</DialogTitle>
+                <DialogContent>
+                    <TextField
+                        label="Besked"
+                        variant="outlined"
+                        fullWidth
+                        multiline
+                        rows={4}
+                        value={emailMessage}
+                        onChange={(e) => setEmailMessage(e.target.value)}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={closeEmailPopup} color="secondary">Cancel</Button>
+                    <Button onClick={handleSendEmail} color="primary">Send</Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 };
