@@ -24,7 +24,7 @@ function App() {
         if (!isAuthenticated) {
             navigate('/login');
         }
-    })
+    }, [isAuthenticated, navigate]);
 
     return (
         <>
