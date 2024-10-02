@@ -20,8 +20,7 @@
   <component name="ChangeListManager">
     <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project - admin/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project - admin/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project - admin/src/context/AuthContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project - admin/src/context/AuthContext.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project/src/context/AuthContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project/src/context/AuthContext.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,22 +48,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.API: http.executor": "Run",
-    ".NET Launch Settings Profile.API: https.executor": "Run",
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.API: http.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.API: https.executor&quot;: &quot;Run&quot;,
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.API: https">
     <configuration name="H2: http" type="AspireHostConfiguration" factoryName="Aspire Host" activateToolWindowBeforeRun="false">
       <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Aspire/Aspire.AppHost/H2.csproj" />
@@ -315,6 +314,7 @@
       <workItem from="1727854387497" duration="630000" />
       <workItem from="1727855988684" duration="630000" />
       <workItem from="1727870594555" duration="275000" />
+      <workItem from="1727870944678" duration="307000" />
     </task>
     <servers />
   </component>
