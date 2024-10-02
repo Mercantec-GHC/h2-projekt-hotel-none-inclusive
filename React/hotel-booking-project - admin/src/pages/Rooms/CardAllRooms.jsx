@@ -28,7 +28,7 @@ const CardAllRooms = ({roomId, roomType, roomNumber, price, floor, description, 
                     Etage: {floor}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Værelsesnummer: {roomNumber ? roomNumber : 'will be assigned'}
+                    Værelsesnummer: {roomNumber }
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                     Pris: {price} DKK pr. nat
