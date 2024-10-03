@@ -20,7 +20,7 @@
   <component name="ChangeListManager">
     <list default="true" id="085ee52c-c79a-4680-be4b-e1ddd5be3bfe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.H2-Projekt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project/src/context/AuthContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project/src/context/AuthContext.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/hotel-booking-project - admin/src/pages/Rooms/Card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/React/hotel-booking-project - admin/src/pages/Rooms/Card.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -315,6 +315,8 @@
       <workItem from="1727855988684" duration="630000" />
       <workItem from="1727870594555" duration="275000" />
       <workItem from="1727870944678" duration="307000" />
+      <workItem from="1727938843268" duration="1314000" />
+      <workItem from="1727949410022" duration="203000" />
     </task>
     <servers />
   </component>

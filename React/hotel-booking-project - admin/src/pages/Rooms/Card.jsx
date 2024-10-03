@@ -251,7 +251,7 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
                     }}
                 >
                     <Typography id="modal-title" variant="h6" component="h2">
-                        Select Check-in and Check-out Dates
+                        Vælg Check-ind og Check-ud datoer
                     </Typography>
                     <DatePicker
                         selected={checkInDate}
@@ -260,7 +260,7 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
                         startDate={checkInDate}
                         endDate={checkOutDate}
                         minDate={today}
-                        placeholderText="Check-in Date"
+                        placeholderText="Check-ind Dato"
                         inline
                     />
                     <DatePicker
@@ -270,7 +270,7 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
                         startDate={checkInDate}
                         endDate={checkOutDate}
                         minDate={checkInDate || today}
-                        placeholderText="Check-out Date"
+                        placeholderText="Check-ud Dato"
                         inline
                     />
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', flexDirection: 'column', gap: 2 }}>
@@ -282,13 +282,13 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                            <Button onClick={handleClose} color="secondary">Cancel</Button>
-                            <Button onClick={handleConfirm} color="primary">Confirm</Button>
+                            <Button onClick={handleClose} color="secondary">Afbryd</Button>
+                            <Button onClick={handleConfirm} color="primary">Bekræft</Button>
                         </Box>
                     </Box>
-                    <Button onClick={checkRoomAvailability} color="primary">Check Room Availability</Button>
+                    <Button onClick={checkRoomAvailability} color="primary">Tjek Værelsestilgængelighed</Button>
                     {availabilityMessage && <Typography variant="body2">{availabilityMessage}</Typography>}
-                    {totalPrice !== null && <Typography variant="body2">Total Price: ${totalPrice}</Typography>}
+                    {totalPrice !== null && <Typography variant="body2">Total Pris: {totalPrice} DKK</Typography>}
                 </Box>
             </Modal>
         </Card>
