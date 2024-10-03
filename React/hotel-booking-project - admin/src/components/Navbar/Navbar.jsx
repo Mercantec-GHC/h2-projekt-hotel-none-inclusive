@@ -11,7 +11,6 @@ function Navbar() {
 
     const handleOnLogoClick = () => navigate('/');
     const handleOnLoginButtonClick = () => navigate('/login');
-    const handleOnSignupButtonClick = () => navigate('/signup');
     const handleOnLogoutButtonClick = () => {
         logout();
         navigate('/');
@@ -39,7 +38,6 @@ function Navbar() {
                 ) : (
                     <>
                         <button className="navbar-login-button" onClick={handleOnLoginButtonClick}>Login</button>
-                        <button className="navbar-signup-button" onClick={handleOnSignupButtonClick}>Sign up</button>
                     </>
                 )}
             </div>
