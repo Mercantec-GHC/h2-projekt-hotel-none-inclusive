@@ -34,7 +34,7 @@ function Rooms() {
                     floor={room.floor}
                     description={room.description}
                     imageURL={room.imageURL}
-                    roomNumber={"Tildelt ved booking"}
+
 
                 />
             ))}
