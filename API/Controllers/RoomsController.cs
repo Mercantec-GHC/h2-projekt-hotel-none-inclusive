@@ -23,7 +23,7 @@ namespace API.Controllers
         }
 
     
-        // GET: api/Rooms
+        // GET: api/Rooms - MARKERET TIL GENNEMGANG !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // Retrieves a list of rooms with selected fields
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetRoomDTO>>> GetRooms()

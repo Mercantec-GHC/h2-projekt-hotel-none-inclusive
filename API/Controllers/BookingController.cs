@@ -53,12 +53,14 @@ namespace API.Controllers
             return Ok(bookingDTO);
         }
 
-        // POST: api/Booking
+        // POST: api/Booking - MARKERET TIL GENNEMGANG !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // Creates a new booking
         [HttpPost]
         public async Task<ActionResult<Booking>> PostBooking(CreateBookingDTO createBookingDTO) 
+        
         {
-            // Check if UserId references a valid user
+            
+            // Check if the user exists
             var user = await _context.Users.FindAsync(createBookingDTO.UserId);
             if (user == null)
             {
@@ -210,7 +212,7 @@ namespace API.Controllers
             return Ok(bookingWAllData);
         }
         
-        // New endpoint to update payment status
+        // New endpoint to update payment status - MARKERET TIL GENNEMGANG !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         [HttpPut("{id}/paymentstatus")]
         public async Task<IActionResult> UpdatePaymentStatus(int id)
         {
