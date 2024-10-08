@@ -5,7 +5,6 @@ import FormButton from "../../components/Signup & Login/FormButton.jsx";
 import InputField from "../../components/Signup & Login/InputField.jsx";
 
 const Contact = () => {
-    // Set the default values
     const [emailToId] = useState('noreply@leeloo.dk');
     const [emailToName] = useState('Support');
     const [emailSubject, setEmailSubject] = useState('');
@@ -33,9 +32,7 @@ const Contact = () => {
             });
 
             if (res.ok) {
-                // const result = await res.json();
                 setResponse('Email sent successfully!');
-                // Clear the subject and body fields after sending
                 setEmailSubject('');
                 setEmailBody('');
             } else {
@@ -51,7 +48,6 @@ const Contact = () => {
         <div className="contact-container">
             <FormTitle title="Contact" />
             <form onSubmit={handleSubmit}>
-                {/* Removed Email To (ID) and Email To (Name) fields */}
                 <InputField
                     labelText="Subject"
                     inputType="subject"

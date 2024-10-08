@@ -32,6 +32,8 @@ function CreateRoomPage() {
             imageURL: imageLink
         };
 
+        console.log(roomDetails);
+
         try {
             const response = await fetch('https://localhost:7207/api/Rooms', {
                 method: 'POST',
@@ -46,7 +48,6 @@ function CreateRoomPage() {
                 const data = await response.json();
                 console.log('Room created successfully:', data);
                 setSuccessMessage('Værelset blev oprettet');
-                // Clear the input fields
                 setRoomType('');
                 setRoomNumber('');
                 setPricePerNight('');

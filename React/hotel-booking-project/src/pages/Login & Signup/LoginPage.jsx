@@ -16,6 +16,7 @@ function LoginPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log({ email, password });
         try {
             const response = await axios.post("https://localhost:7207/api/Auth/login", { email, password });
             if (response.status === 200) {
@@ -31,31 +32,31 @@ function LoginPage() {
         }
     };
 
-return (
-    <div className="login-container">
-        <FormTitle title="Log In" />
-        <form onSubmit={handleSubmit}>
-            <InputField
-                labelText="Email"
-                inputType="email"
-                inputId="email"
-                inputName="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <InputField
-                labelText="Password"
-                inputType="password"
-                inputId="password"
-                inputName="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <FormButton type="submit" text="Log In" />
-        </form>
-        {error && <p className="error-message">{error}</p>}
-    </div>
-);
+    return (
+        <div className="login-container">
+            <FormTitle title="Log In" />
+            <form onSubmit={handleSubmit}>
+                <InputField
+                    labelText="Email"
+                    inputType="email"
+                    inputId="email"
+                    inputName="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <InputField
+                    labelText="Password"
+                    inputType="password"
+                    inputId="password"
+                    inputName="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <FormButton type="submit" text="Log In" />
+            </form>
+            {error && <p className="error-message">{error}</p>}
+        </div>
+    );
 }
 
 export default LoginPage;

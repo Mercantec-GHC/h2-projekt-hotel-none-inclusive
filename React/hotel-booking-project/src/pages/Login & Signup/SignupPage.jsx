@@ -15,6 +15,7 @@ function SignupPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log({ email, password });
         try {
             const response = await axios.post("https://localhost:7207/api/Auth/register", { email, password });
             if (response.status === 200) {
