@@ -5,7 +5,7 @@ namespace API.Services
 {
     public class BookingMapping
     {
-        public Booking MapCreateBookingDTOToBooking(CreateBookingDTO booking)
+        public Booking MapCreateBookingDTOToBooking(CreateBookingDTO booking) // This method maps a CreateBookingDTO object to a Booking object.
         {
             return new Booking
             {

@@ -26,33 +26,34 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
             return;
         }
 
+
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('token'); // Get the token from local storage
             if (!token) {
                 throw new Error('No token found');
             }
 
             const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT token to get payload
-            const email = payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
+            const email = payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"]; // Extract email from token
             if (!email) {
                 throw new Error('Email not found in token');
             }
 
             // Fetch user ID using the email
-            const userResponse = await fetch(`https://localhost:7207/api/Users/email/${encodeURIComponent(email)}`, {
+            const userResponse = await fetch(`https://localhost:7207/api/Users/email/${encodeURIComponent(email)}`, { // Fetch user ID using the email
                 headers: {
                     'accept': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             });
 
-            if (!userResponse.ok) {
+            if (!userResponse.ok) { // Check if the response is not OK
                 console.log(userResponse);
                 throw new Error('Failed to fetch user ID');
             }
 
-            const userData = await userResponse.json();
-            const userId = userData.id;
+            const userData = await userResponse.json(); // Parse the response JSON
+            const userId = userData.id; // Extract the user ID
             if (!userId) {
                 throw new Error('User ID not found');
             }
@@ -63,6 +64,7 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
                 return new Date(date.getTime() - (offset * 60 * 1000)).toISOString();
             };
 
+            // Create a booking object
             const booking = {
                 id: 0,
                 bookingDate: new Date().toISOString(),
@@ -76,11 +78,12 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
 
             console.log('Booking Object:', booking); // Log the booking object
 
+            // Send a POST request to create a booking
             const response = await fetch('https://localhost:7207/api/Booking', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Content-Type': 'application/json', // Set the content type to JSON
+                    'Authorization': `Bearer ${token}` // Set the authorization header
                 },
                 body: JSON.stringify(booking)
             });
@@ -95,8 +98,8 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        emailToId: email,
-                        emailToName: email,
+                        emailToId: email, // Send the email to the user
+                        emailToName: email, // Set the name to the email
                         emailSubject: `Booking Confirmation`,
                         emailBody: `Dear customer,\n\nThank you for booking with us! Here are your booking details:\n\nCheck-in Date: ${new Date(checkInDate).toLocaleDateString()}\nCheck-out Date: ${new Date(checkOutDate).toLocaleDateString()}\n\nWe look forward to your stay!\n\nBest regards,\nHotel None Inclusive`
                     })
@@ -120,6 +123,7 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
         }
     };
 
+    // Function to check room availability
     const checkRoomAvailability = async () => {
         if (!checkInDate || !checkOutDate) {
             setAvailabilityMessage('Vælg venligst både indtjeknings- og udtjekningsdatoer.');
@@ -154,6 +158,7 @@ export default function MultiActionAreaCard({ imageURL, price, roomType, descrip
 
     const today = new Date();
 
+    // CARD COMPONENT
     return (
         <Card sx={{ maxWidth: 345 }}>
             <CardMedia

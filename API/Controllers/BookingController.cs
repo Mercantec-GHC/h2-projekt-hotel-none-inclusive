@@ -8,14 +8,14 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookingController : ControllerBase
+    public class BookingController : ControllerBase // This class is a controller for handling HTTP requests related to bookings.
     {
         private readonly DBContext _context;
         private readonly UserMapping _userMapping;
         private readonly RoomMapping _roomMapping;
         private readonly BookingMapping _bookingMapping;
 
-        public BookingController(DBContext context, UserMapping userMapping, RoomMapping roomMapping, BookingMapping bookingMapping)
+        public BookingController(DBContext context, UserMapping userMapping, RoomMapping roomMapping, BookingMapping bookingMapping) // Constructor to inject the database context and mapping services
         {
             _context = context;
             _userMapping = userMapping;
@@ -74,12 +74,12 @@ namespace API.Controllers
             }
             
             // Fetch the first available room of the requested room type
-            var availableRoom = await _context.Rooms
+            var availableRoom = await _context.Rooms//ef core query
                 .Where(r => r.RoomType == createBookingDTO.RoomType) // Check if the room type matches the requested room type
                 .Where(r => !_context.Bookings // Check if the room is already booked for the requested date range 
-                    .Any(b => b.RoomId == r.Id && 
+                    .Any(b => b.RoomId == r.Id && //any booking that has the same room id + dates that overlap
                               b.BookingStartDate < createBookingDTO.BookingEndDate && 
-                              b.BookingEndDate >= createBookingDTO.BookingStartDate)) 
+                              b.BookingEndDate >= createBookingDTO.BookingStartDate))
                 .FirstOrDefaultAsync();// Fetch the first available room
 
             if (availableRoom == null)

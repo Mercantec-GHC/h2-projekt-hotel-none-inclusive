@@ -7,7 +7,7 @@ function Rooms() {
 
     useEffect(() => {
         fetch('https://localhost:7207/api/Rooms')
-            .then(response => response.json())
+            .then(response => response.json())// Parse the response as JSON
             .then(data => {
                 const uniqueRooms = [];
                 const roomTypes = new Set(); // Set to store unique room types
